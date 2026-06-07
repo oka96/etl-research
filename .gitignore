@@ -1,0 +1,8 @@
+.DS_Store
+local-setup/camel-wallet-pipeline/target/
+local-setup/rocketmq-streams-wallet-poc/target/
+local-setup/rocketmq-connect-src/**/target/
+local-setup/rocketmq-eventbridge-1.1.0/log.path_IS_UNDEFINED/
+local-setup/rocketmq-eventbridge-1.1.0/rocketmq_eventbridge.mv.db
+local-setup/rocketmq-connect-src/
+local-setup/apache-streampark_2.12-2.1.5-incubating-bin/

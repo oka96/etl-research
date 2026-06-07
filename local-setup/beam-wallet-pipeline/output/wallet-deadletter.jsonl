@@ -1,0 +1,1 @@
+{"amount": 80.0, "currency": "MYR", "event_id": "evt-002", "event_type": "wallet.payment.rejected", "pipeline": "beam-direct-wallet-poc", "risk_tier": "STANDARD", "wallet_id": "wallet-1002"}

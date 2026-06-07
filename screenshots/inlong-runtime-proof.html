@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Apache InLong Local Runtime Proof</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 720px;
+      background: #111318;
+      color: #eef2f8;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .page {
+      width: 1280px;
+      height: 720px;
+      padding: 36px;
+      background:
+        linear-gradient(145deg, rgba(255, 122, 24, 0.14), transparent 34%),
+        linear-gradient(320deg, rgba(59, 130, 246, 0.12), transparent 38%),
+        #111318;
+    }
+
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 28px;
+      margin-bottom: 26px;
+    }
+
+    .title h1 {
+      margin: 0 0 10px;
+      font-size: 38px;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .title p {
+      margin: 0;
+      max-width: 760px;
+      color: #b8c2d6;
+      font-size: 18px;
+      line-height: 1.45;
+    }
+
+    .badge {
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 14px 16px;
+      min-width: 210px;
+      text-align: right;
+    }
+
+    .badge .label {
+      color: #9aa9c1;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    .badge .value {
+      margin-top: 7px;
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffb36b;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 18px;
+    }
+
+    .card {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(17, 19, 24, 0.82);
+      border-radius: 8px;
+      padding: 22px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+    }
+
+    .card h2 {
+      margin: 0 0 16px;
+      font-size: 21px;
+      letter-spacing: 0;
+    }
+
+    .rows {
+      display: grid;
+      gap: 12px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 12px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .row:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .key {
+      color: #93a3ba;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    .value {
+      color: #f5f7fb;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .ok {
+      color: #7ee787;
+      font-weight: 700;
+    }
+
+    .warn {
+      color: #ffd166;
+      font-weight: 700;
+    }
+
+    .err {
+      color: #ff7b72;
+      font-weight: 700;
+    }
+
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font: 15px/1.38 Menlo, Consolas, monospace;
+      color: #dbe7ff;
+    }
+
+    .footer {
+      margin-top: 18px;
+      color: #8fa0bb;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="header">
+      <div class="title">
+        <h1>Apache InLong Local Runtime Proof</h1>
+        <p>Official Docker compose control-plane slice was started locally: dashboard, manager, and MySQL. The dashboard rendered, while the manager API stayed unhealthy in this laptop run.</p>
+      </div>
+      <div class="badge">
+        <div class="label">Proof Date</div>
+        <div class="value">2026-06-08 MYT</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h2>Live Service Checks</h2>
+        <div class="rows">
+          <div class="row">
+            <div class="key">Compose</div>
+            <div class="value">Started with <code>docker compose --env-file local-setup/inlong/.env -f local-setup/inlong/docker-compose.yml up -d mysql manager dashboard</code></div>
+          </div>
+          <div class="row">
+            <div class="key">Dashboard</div>
+            <div class="value"><span class="ok">HTTP 200</span> on <code>http://localhost/</code>, title <code>InLong</code>. Browser screenshot saved as <code>screenshots/inlong-dashboard.png</code>.</div>
+          </div>
+          <div class="row">
+            <div class="key">Containers</div>
+            <div class="value"><span class="ok">dashboard</span> up, <span class="ok">mysql</span> healthy, <span class="warn">manager</span> up on port 8083.</div>
+          </div>
+          <div class="row">
+            <div class="key">Manager API</div>
+            <div class="value"><span class="err">curl (52) Empty reply from server</span> for <code>http://localhost:8083/</code>; dashboard displayed repeated <code>http error</code> toasts.</div>
+          </div>
+          <div class="row">
+            <div class="key">Scope</div>
+            <div class="value">Local setup and UI/control-plane proof only. No wallet event E2E pipeline was validated with InLong in this pass.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Captured Runtime Evidence</h2>
+        <pre>docker compose ps:
+dashboard  inlong/dashboard:latest  Up 5 minutes  0.0.0.0:80->80/tcp
+manager    inlong/manager:latest    Up 5 minutes  0.0.0.0:8083->8083/tcp
+mysql      mysql:8.0.28             Up 5 minutes (healthy)
+
+manager logs:
+Starting InlongManagerMain v2.4.0-SNAPSHOT
+using Java 1.8.0_452
+Tomcat initialized with port(s): 8083 (http)
+Root WebApplicationContext initialized in 24863 ms
+
+observed startup issues:
+sed: unknown option to 's'
+ERROR 2003: cannot connect to MySQL at first boot
+manager CPU remained high under amd64 emulation</pre>
+      </div>
+    </section>
+
+    <div class="footer">Detailed command output: local-setup/proofs/inlong-*.txt and local-setup/proofs/inlong-manager-runtime.log</div>
+  </main>
+</body>
+</html>

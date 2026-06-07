@@ -1,0 +1,14 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   661  100   661    0     0   159k      0 --:--:-- --:--:-- --:--:--  161k
+HTTP/1.1 200 OK
+Server: nginx/1.29.6
+Date: Sun, 07 Jun 2026 18:41:09 GMT
+Content-Type: text/html
+Content-Length: 661
+Last-Modified: Mon, 16 Mar 2026 09:40:21 GMT
+Connection: keep-alive
+ETag: "69b7d005-295"
+Accept-Ranges: bytes
+
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><link rel="icon" href="/favicon.svg"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="Web site created using create-react-app"/><link rel="apple-touch-icon" href="/logo192.png"/><link rel="manifest" href="/manifest.json"/><title>InLong</title><script defer="defer" src="/static/js/main.3afa9904.js"></script><link href="/static/css/main.d0c2a9fb.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root" style="height:100%"></div></body></html>

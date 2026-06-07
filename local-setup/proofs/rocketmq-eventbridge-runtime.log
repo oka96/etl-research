@@ -1,0 +1,542 @@
+18:30:19,107 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+18:30:19,107 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.groovy]
+18:30:19,107 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [jar:file:/workspace/local-setup/rocketmq-eventbridge-1.1.0/rocketmq-eventbridge.jar!/BOOT-INF/classes!/logback.xml]
+18:30:19,124 |-INFO in ch.qos.logback.core.joran.spi.ConfigurationWatchList@68fb2c38 - URL [jar:file:/workspace/local-setup/rocketmq-eventbridge-1.1.0/rocketmq-eventbridge.jar!/BOOT-INF/classes!/logback.xml] is not of type file
+18:30:19,172 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - debug attribute not set
+18:30:19,175 |-INFO in ch.qos.logback.classic.joran.action.JMXConfiguratorAction - begin
+18:30:19,215 |-ERROR in ch.qos.logback.core.joran.spi.Interpreter@15:72 - no applicable action for [springProperty], current ElementPath  is [[configuration][springProperty]]
+18:30:19,216 |-ERROR in ch.qos.logback.core.joran.spi.Interpreter@16:72 - no applicable action for [springProperty], current ElementPath  is [[configuration][springProperty]]
+18:30:19,216 |-ERROR in ch.qos.logback.core.joran.spi.Interpreter@17:74 - no applicable action for [springProperty], current ElementPath  is [[configuration][springProperty]]
+18:30:19,216 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+18:30:19,239 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [STDOUT]
+18:30:19,244 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+18:30:19,282 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+18:30:19,287 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [PROJECT]
+18:30:19,292 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@1451043227 - setting totalSizeCap to 10 GB
+18:30:19,294 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@1451043227 - No compression will be used
+18:30:19,295 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@1451043227 - Will use the pattern log.path_IS_UNDEFINED/app.name_IS_UNDEFINED/app.name_IS_UNDEFINED.%d{yyyy-MM-dd}.log for the active file
+18:30:19,297 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - The date pattern is 'yyyy-MM-dd' from file name pattern 'log.path_IS_UNDEFINED/app.name_IS_UNDEFINED/app.name_IS_UNDEFINED.%d{yyyy-MM-dd}.log'.
+18:30:19,297 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Roll-over at midnight.
+18:30:19,299 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Setting initial period to Sun Jun 07 18:28:55 UTC 2026
+18:30:19,300 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+18:30:19,302 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[PROJECT] - Active log file name: log.path_IS_UNDEFINED/app.name_IS_UNDEFINED/app.name_IS_UNDEFINED.log
+18:30:19,302 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[PROJECT] - File property is set to [log.path_IS_UNDEFINED/app.name_IS_UNDEFINED/app.name_IS_UNDEFINED.log]
+18:30:19,303 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+18:30:19,303 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [ACCESS]
+18:30:19,303 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@783286238 - setting totalSizeCap to 3 GB
+18:30:19,303 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@783286238 - No compression will be used
+18:30:19,303 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@783286238 - Will use the pattern log.path_IS_UNDEFINED/app.name_IS_UNDEFINED/access.%d{yyyy-MM-dd}.log for the active file
+18:30:19,303 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - The date pattern is 'yyyy-MM-dd' from file name pattern 'log.path_IS_UNDEFINED/app.name_IS_UNDEFINED/access.%d{yyyy-MM-dd}.log'.
+18:30:19,303 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Roll-over at midnight.
+18:30:19,304 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Setting initial period to Sun Jun 07 18:28:55 UTC 2026
+18:30:19,304 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+18:30:19,304 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[ACCESS] - Active log file name: log.path_IS_UNDEFINED/app.name_IS_UNDEFINED/access.log
+18:30:19,304 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[ACCESS] - File property is set to [log.path_IS_UNDEFINED/app.name_IS_UNDEFINED/access.log]
+18:30:19,305 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [accessLog] to DEBUG
+18:30:19,305 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [accessLog] to false
+18:30:19,305 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [ACCESS] to Logger[accessLog]
+18:30:19,305 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [STDOUT] to Logger[accessLog]
+18:30:19,305 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to DEBUG
+18:30:19,305 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [STDOUT] to Logger[ROOT]
+18:30:19,305 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [PROJECT] to Logger[ROOT]
+18:30:19,305 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
+18:30:19,305 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@59690aa4 - Registering current configuration as safe fallback point
+
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.0.2.RELEASE)
+
+2026-06-07
+                18:30:19.528@@@@@@@@[background-preinit]@@INFO@@o.h.validator.internal.util.Version[21]@@HV000001: Hibernate Validator 6.0.9.Final
+2026-06-07
+                18:30:19.619@@@@@@@@[main]@@INFO@@org.apache.rocketmq.eventbridge.Main[87]@@Starting Main v1.1.0 on 8dc76f7373e8 with PID 11 (/workspace/local-setup/rocketmq-eventbridge-1.1.0/rocketmq-eventbridge.jar started by root in /workspace/local-setup/rocketmq-eventbridge-1.1.0)
+2026-06-07
+                18:30:19.620@@@@@@@@[main]@@INFO@@org.apache.rocketmq.eventbridge.Main[87]@@The following profiles are active: local
+2026-06-07
+                18:30:19.668@@@@@@@@[main]@@INFO@@o.s.b.w.r.c.AnnotationConfigReactiveWebServerApplicationContext[87]@@Refreshing org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@2acf57e3: startup date [Sun Jun 07 18:30:19 UTC 2026]; root of context hierarchy
+2026-06-07
+                18:30:20.054@@@@@@@@[background-preinit]@@WARN@@o.s.h.c.j.Jackson2ObjectMapperBuilder[87]@@For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+2026-06-07
+                18:30:20.476@@@@@@@@[main]@@INFO@@o.s.b.f.a.AutowiredAnnotationBeanPostProcessor[87]@@JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2026-06-07
+                18:30:20.513@@@@@@@@[main]@@INFO@@o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker[87]@@Bean 'validatorConfiguration' of type [org.apache.rocketmq.eventbridge.config.ValidatorConfiguration$$EnhancerBySpringCGLIB$$e44d7c6d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2026-06-07
+                18:30:20.535@@@@@@@@[main]@@INFO@@o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker[87]@@Bean 'validator' of type [org.hibernate.validator.internal.engine.ValidatorImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2026-06-07
+                18:30:20.891@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/bus/createEventBus],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.bus.CreateEventBusResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventBusController.createEventBus(org.apache.rocketmq.eventbridge.adapter.api.dto.bus.CreateEventBusRequest)
+2026-06-07
+                18:30:20.892@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/bus/deleteEventBus],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.bus.DeleteEventBusResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventBusController.deleteEventBus(org.apache.rocketmq.eventbridge.adapter.api.dto.bus.DeleteEventBusRequest)
+2026-06-07
+                18:30:20.892@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/bus/getEventBus],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.bus.GetEventBusResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventBusController.getEventBus(org.apache.rocketmq.eventbridge.adapter.api.dto.bus.GetEventBusRequest)
+2026-06-07
+                18:30:20.893@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/bus/listEventBuses],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.bus.ListEventBusesResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventBusController.listEventBuses(org.apache.rocketmq.eventbridge.adapter.api.dto.bus.ListEventBusesRequest)
+2026-06-07
+                18:30:20.896@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/rule/listEventRules],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.rule.ListRulesResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventRuleController.listRules(org.apache.rocketmq.eventbridge.adapter.api.dto.rule.ListRulesRequest)
+2026-06-07
+                18:30:20.896@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/rule/enableEventRule],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.rule.EnableRuleResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventRuleController.enableRule(org.apache.rocketmq.eventbridge.adapter.api.dto.rule.EnableRuleRequest)
+2026-06-07
+                18:30:20.896@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/rule/disableEventRule],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.rule.DisableRuleResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventRuleController.disableRule(org.apache.rocketmq.eventbridge.adapter.api.dto.rule.DisableRuleRequest)
+2026-06-07
+                18:30:20.897@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/rule/getEventRule],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.rule.GetRuleResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventRuleController.getRule(org.apache.rocketmq.eventbridge.adapter.api.dto.rule.GetRuleRequest)
+2026-06-07
+                18:30:20.897@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/rule/deleteEventRule],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.rule.DeleteRuleResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventRuleController.deleteRule(org.apache.rocketmq.eventbridge.adapter.api.dto.rule.DeleteRuleRequest)
+2026-06-07
+                18:30:20.897@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/rule/createEventRule],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.rule.CreateRuleResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventRuleController.createRule(org.apache.rocketmq.eventbridge.adapter.api.dto.rule.CreateRuleRequest)
+2026-06-07
+                18:30:20.897@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/rule/updateEventRule],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.rule.UpdateRuleResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventRuleController.updateRule(org.apache.rocketmq.eventbridge.adapter.api.dto.rule.UpdateRuleRequest)
+2026-06-07
+                18:30:20.900@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/webhook/putEvents]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.data.PutEventsResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventDataController.putHttpEvents(org.springframework.web.server.ServerWebExchange,java.util.Map<java.lang.String, java.lang.String>,byte[],java.lang.String)
+2026-06-07
+                18:30:20.900@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/putEvents],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.data.PutEventsResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventDataController.putEvents(java.util.Map<java.lang.String, java.lang.String>,byte[])
+2026-06-07
+                18:30:20.901@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/type/listEventTypes],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.type.ListEventTypesResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventTypeController.listEventTypes(org.apache.rocketmq.eventbridge.adapter.api.dto.type.ListEventTypesRequest)
+2026-06-07
+                18:30:20.905@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/source/listEventSources],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.source.ListEventSourcesResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventSourceController.listEventSources(org.apache.rocketmq.eventbridge.adapter.api.dto.source.ListEventSourcesRequest)
+2026-06-07
+                18:30:20.905@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/source/createEventSource],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.source.CreateEventSourceResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventSourceController.createEventSource(org.apache.rocketmq.eventbridge.adapter.api.dto.source.CreateEventSourceRequest)
+2026-06-07
+                18:30:20.905@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/source/deleteEventSource],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.source.DeleteEventSourceResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventSourceController.deleteEventSource(org.apache.rocketmq.eventbridge.adapter.api.dto.source.DeleteEventSourceRequest)
+2026-06-07
+                18:30:20.905@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/source/updateEventSource],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.source.UpdateEventSourceResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventSourceController.updateEventSource(org.apache.rocketmq.eventbridge.adapter.api.dto.source.UpdateEventSourceRequest)
+2026-06-07
+                18:30:20.906@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/source/getEventSource],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.source.GetEventSourceResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventSourceController.getEventSource(org.apache.rocketmq.eventbridge.adapter.api.dto.source.GetEventSourceRequest)
+2026-06-07
+                18:30:20.908@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/target/listEventTargets],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.target.ListTargetsResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventTargetController.listEventTargets(org.apache.rocketmq.eventbridge.adapter.api.dto.target.ListTargetsRequest)
+2026-06-07
+                18:30:20.908@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/target/createEventTargets],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.target.CreateTargetsResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventTargetController.createTargets(org.apache.rocketmq.eventbridge.adapter.api.dto.target.CreateTargetsRequest)
+2026-06-07
+                18:30:20.909@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/target/updateEventTargets],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.target.UpdateTargetsResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventTargetController.updateTargets(org.apache.rocketmq.eventbridge.adapter.api.dto.target.UpdateTargetsRequest)
+2026-06-07
+                18:30:20.909@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/target/deleteEventTargets],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.target.DeleteTargetsResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventTargetController.deleteTargets(org.apache.rocketmq.eventbridge.adapter.api.dto.target.DeleteTargetsRequest)
+2026-06-07
+                18:30:20.913@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/api-destination/createApiDestination],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.CreateApiDestinationResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ApiDestinationController.createApiDestination(org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.CreateApiDestinationRequest)
+2026-06-07
+                18:30:20.913@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/api-destination/updateApiDestination],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.UpdateApiDestinationResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ApiDestinationController.updateApiDestination(org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.UpdateApiDestinationRequest)
+2026-06-07
+                18:30:20.913@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/api-destination/getApiDestination],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.GetApiDestinationResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ApiDestinationController.getApiDestination(org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.GetApiDestinationRequest)
+2026-06-07
+                18:30:20.913@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/api-destination/deleteApiDestination],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.DeleteApiDestinationResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ApiDestinationController.deleteApiDestination(org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.DeleteApiDestinationRequest)
+2026-06-07
+                18:30:20.914@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/api-destination/listApiDestinations],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.ListApiDestinationsResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ApiDestinationController.listApiDestinations(org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.ListApiDestinationsRequest)
+2026-06-07
+                18:30:20.917@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/connection/createConnection],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.connection.CreateConnectionResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ConnectionController.createConnection(org.apache.rocketmq.eventbridge.adapter.api.dto.connection.CreateConnectionRequest)
+2026-06-07
+                18:30:20.917@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/connection/updateConnection],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.connection.UpdateConnectionResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ConnectionController.updateConnection(org.apache.rocketmq.eventbridge.adapter.api.dto.connection.UpdateConnectionRequest)
+2026-06-07
+                18:30:20.917@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/connection/listConnections],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.connection.ListConnectionResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ConnectionController.listConnections(org.apache.rocketmq.eventbridge.adapter.api.dto.connection.ListConnectionRequest)
+2026-06-07
+                18:30:20.917@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/connection/getConnection],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.connection.GetConnectionResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ConnectionController.getConnection(org.apache.rocketmq.eventbridge.adapter.api.dto.connection.GetConnectionRequest)
+2026-06-07
+                18:30:20.918@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/connection/deleteConnection],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.connection.DeleteConnectionResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ConnectionController.deleteConnection(org.apache.rocketmq.eventbridge.adapter.api.dto.connection.DeleteConnectionRequest)
+2026-06-07
+                18:30:20.918@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/connection/selectOneConnection],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.connection.GetConnectionResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ConnectionController.selectOneConnection(org.apache.rocketmq.eventbridge.adapter.api.dto.connection.GetConnectionRequest)
+2026-06-07
+                18:30:20.918@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/connection/listEnumsResponse],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.connection.ListEnumsResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ConnectionController.listEnumsResponse()
+2026-06-07
+                18:30:20.961@@@@@@@@[main]@@INFO@@o.s.w.r.h.SimpleUrlHandlerMapping[87]@@Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.reactive.resource.ResourceWebHandler]
+2026-06-07
+                18:30:20.961@@@@@@@@[main]@@INFO@@o.s.w.r.h.SimpleUrlHandlerMapping[87]@@Mapped URL path [/**] onto handler of type [class org.springframework.web.reactive.resource.ResourceWebHandler]
+2026-06-07
+                18:30:21.005@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.ControllerMethodResolver[87]@@Looking for @ControllerAdvice: org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@2acf57e3: startup date [Sun Jun 07 18:30:19 UTC 2026]; root of context hierarchy
+2026-06-07
+                18:30:21.196@@@@@@@@[main]@@WARN@@com.zaxxer.hikari.HikariConfig[1081]@@ hikaricp - idleTimeout is close to or more than maxLifetime, disabling it.
+2026-06-07
+                18:30:21.197@@@@@@@@[main]@@INFO@@com.zaxxer.hikari.HikariDataSource[80]@@ hikaricp - Starting...
+2026-06-07
+                18:30:21.300@@@@@@@@[main]@@INFO@@com.zaxxer.hikari.HikariDataSource[82]@@ hikaricp - Start completed.
+2026-06-07
+                18:30:22.175@@@@@@@@[main]@@INFO@@o.a.r.e.a.r.common.plugin.Plugin[161]@@Loading plugin from: /workspace/local-setup/rocketmq-eventbridge-1.1.0/plugin/connect-eventbridge-transform-1.1.0-jar-with-dependencies.jar
+2026-06-07
+                18:30:22.366@@@@@@@@[main]@@INFO@@org.reflections.Reflections[229]@@Reflections took 173 ms to scan 1 urls, producing 886 keys and 3590 values [using 4 cores]
+2026-06-07
+                18:30:22.379@@@@@@@@[main]@@INFO@@o.a.r.e.a.r.common.plugin.Plugin[161]@@Loading plugin from: /workspace/local-setup/rocketmq-eventbridge-1.1.0/plugin/eventbridge-connect-file-1.1.0-jar-with-dependencies.jar
+2026-06-07
+                18:30:22.387@@@@@@@@[main]@@INFO@@org.reflections.Reflections[229]@@Reflections took 8 ms to scan 1 urls, producing 59 keys and 199 values [using 4 cores]
+2026-06-07
+                18:30:22.388@@@@@@@@[main]@@INFO@@o.a.r.e.a.r.common.plugin.Plugin[161]@@Loading plugin from: /workspace/local-setup/rocketmq-eventbridge-1.1.0/plugin/connect-filter-transform-1.1.0-jar-with-dependencies.jar
+2026-06-07
+                18:30:22.520@@@@@@@@[main]@@INFO@@org.reflections.Reflections[229]@@Reflections took 132 ms to scan 1 urls, producing 884 keys and 3588 values [using 4 cores]
+2026-06-07
+                18:30:22.557@@@@@@@@[main]@@INFO@@o.f.c.i.license.VersionPrinter[37]@@Flyway Community Edition 8.5.7 by Redgate
+2026-06-07
+                18:30:22.557@@@@@@@@[main]@@INFO@@o.f.c.i.license.VersionPrinter[37]@@See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.7
+2026-06-07
+                18:30:22.558@@@@@@@@[main]@@INFO@@o.f.c.i.license.VersionPrinter[37]@@
+2026-06-07
+                18:30:22.570@@@@@@@@[main]@@INFO@@o.f.c.i.d.base.BaseDatabaseType[37]@@Database: jdbc:h2:./rocketmq_eventbridge (H2 1.4)
+2026-06-07
+                18:30:22.608@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbValidate[37]@@Successfully validated 9 migrations (execution time 00:00.014s)
+2026-06-07
+                18:30:22.617@@@@@@@@[main]@@INFO@@o.f.c.i.s.JdbcTableSchemaHistory[37]@@Creating Schema History table "PUBLIC"."flyway_schema_history" ...
+2026-06-07
+                18:30:22.649@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Current version of schema "PUBLIC": << Empty Schema >>
+2026-06-07
+                18:30:22.657@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "1 - baseline"
+2026-06-07
+                18:30:22.682@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "2 - baseline"
+2026-06-07
+                18:30:22.693@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "3 - change target transform type"
+2026-06-07
+                18:30:22.705@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "4 - register source acs mns"
+2026-06-07
+                18:30:22.717@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "5 - register target acs dingtalk"
+2026-06-07
+                18:30:22.723@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "6 - register target acs eventbridge"
+2026-06-07
+                18:30:22.732@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "7 - update event connection table structure"
+2026-06-07
+                18:30:22.737@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "8 - update unique key"
+2026-06-07
+                18:30:22.744@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "9 - init file target class"
+2026-06-07
+                18:30:22.751@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Successfully applied 9 migrations to schema "PUBLIC", now at version v9 (execution time 00:00.112s)
+2026-06-07
+                18:30:22.784@@@@@@@@[main]@@INFO@@o.a.r.e.adapter.runtime.Runtime[65]@@Start init runtime.
+2026-06-07
+                18:30:22.803@@@@@@@@[main]@@INFO@@EventBridgeRuntimer[48]@@Try to start service thread:EventBusListener started:false lastThread:Thread[EventBusListener,5,main]
+2026-06-07
+                18:30:22.804@@@@@@@@[main]@@INFO@@EventBridgeRuntimer[55]@@Start service thread:EventBusListener started:true lastThread:Thread[EventBusListener,5,main]
+2026-06-07
+                18:30:22.941@@@@@@@@[main]@@INFO@@o.a.r.eventbridge.demo.DefaultDemo[62]@@init demo
+2026-06-07
+                18:30:22.982@@@@@@@@[main]@@INFO@@o.a.r.eventbridge.demo.DefaultDemo[75]@@Create demo eventbus:demo-bus
+2026-06-07
+                18:30:23.047@@@@@@@@[main]@@INFO@@o.a.r.eventbridge.demo.DefaultDemo[87]@@Create demo event rule:demo-rule
+Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
+2026-06-07
+                18:30:23.299@@@@@@@@[main]@@INFO@@o.s.j.e.a.AnnotationMBeanExporter[87]@@Registering beans for JMX exposure on startup
+2026-06-07
+                18:30:23.300@@@@@@@@[main]@@INFO@@o.s.j.e.a.AnnotationMBeanExporter[87]@@Bean with name 'dataSource' has been autodetected for JMX exposure
+2026-06-07
+                18:30:23.310@@@@@@@@[main]@@INFO@@o.s.j.e.a.AnnotationMBeanExporter[87]@@Located MBean 'dataSource': registering with JMX server as MBean [com.zaxxer.hikari:name=dataSource,type=HikariDataSource]
+2026-06-07
+                18:30:23.352@@@@@@@@[reactor-http-nio-1]@@INFO@@r.ipc.netty.tcp.BlockingNettyContext[238]@@Started HttpServer on /0:0:0:0:0:0:0:0:7001
+2026-06-07
+                18:30:23.352@@@@@@@@[main]@@INFO@@o.s.b.w.e.netty.NettyWebServer[87]@@Netty started on port(s): 7001
+2026-06-07
+                18:30:23.358@@@@@@@@[main]@@INFO@@org.apache.rocketmq.eventbridge.Main[87]@@Started Main in 4.307 seconds (JVM running for 4.706)
+2026-06-07
+                18:30:25.822@@@@@@@@[Remoting-TargetRunnerConfigOnDBObserver_1]@@INFO@@EventBusListener[251]@@runnerName -default-demo-bus-demo-rule-demo-target- refresh context by refresh type -ADD- succeed
+2026-06-07
+                18:30:25.836@@@@@@@@[Remoting-TargetRunnerConfigOnDBObserver_1]@@INFO@@o.a.r.e.a.s.r.r.c.LitePullConsumerImpl[82]@@RocketmqPullConsumer start.
+2026-06-07
+                18:30:25.836@@@@@@@@[Remoting-TargetRunnerConfigOnDBObserver_1]@@INFO@@EventBridgeRuntimer[48]@@Try to start service thread:ConsumeWorker started:false lastThread:Thread[ConsumeWorker,5,main]
+2026-06-07
+                18:30:25.837@@@@@@@@[Remoting-TargetRunnerConfigOnDBObserver_1]@@INFO@@EventBridgeRuntimer[55]@@Start service thread:ConsumeWorker started:true lastThread:Thread[ConsumeWorker,5,main]
+2026-06-07
+                18:31:03.903@@@@@@@@[reactor-http-nio-3]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://localhost:17001/putEvents | requestParam : {} | requestMethod : POST | requestBody : "{\"event_id\":\"evt-eb-001\",\"amount\":188.80,\"currency\":\"MYR\"}"
+2026-06-07
+                18:31:21.308@@@@@@@@[reactor-http-nio-4]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://localhost:17001/bus/listEventBuses | requestParam : {} | requestMethod : POST | requestBody : "{}"
+2026-06-07
+                18:31:21.360@@@@@@@@[reactor-http-nio-1]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://localhost:17001/rule/listEventRules | requestParam : {} | requestMethod : POST | requestBody : "{\"eventBusName\":\"demo-bus\"}"
+2026-06-07
+                18:31:21.385@@@@@@@@[reactor-http-nio-1]@@ERROR@@accessLog[64]@@Catch unexpected exception.
+java.lang.NumberFormatException: null
+	at java.lang.Integer.parseInt(Integer.java:542)
+	at java.lang.Integer.parseInt(Integer.java:615)
+	at org.apache.rocketmq.eventbridge.adapter.persistence.rule.mybatis.repository.MybatisEventRuleRepository.listEventRules(MybatisEventRuleRepository.java:74)
+	at org.apache.rocketmq.eventbridge.adapter.persistence.rule.mybatis.repository.MybatisEventRuleRepository$$FastClassBySpringCGLIB$$823a1a7d.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:746)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:139)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:185)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:688)
+	at org.apache.rocketmq.eventbridge.adapter.persistence.rule.mybatis.repository.MybatisEventRuleRepository$$EnhancerBySpringCGLIB$$a2d1a156.listEventRules(<generated>)
+	at org.apache.rocketmq.eventbridge.domain.model.rule.EventRuleService.listEventRules(EventRuleService.java:102)
+	at org.apache.rocketmq.eventbridge.domain.model.rule.EventRuleService$$FastClassBySpringCGLIB$$611ea6cd.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:684)
+	at org.apache.rocketmq.eventbridge.domain.model.rule.EventRuleService$$EnhancerBySpringCGLIB$$a2813650.listEventRules(<generated>)
+	at org.apache.rocketmq.eventbridge.adapter.api.controller.EventRuleController.lambda$listRules$5(EventRuleController.java:125)
+	at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.onNext(FluxMapFuseable.java:107)
+	at reactor.core.publisher.Operators$ScalarSubscription.request(Operators.java:1637)
+	at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.request(FluxMapFuseable.java:156)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.request(FluxPeekFuseable.java:138)
+	at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.request(FluxMapFuseable.java:156)
+	at org.springframework.http.server.reactive.ChannelSendOperator$WriteBarrier.onSubscribe(ChannelSendOperator.java:163)
+	at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.onSubscribe(FluxMapFuseable.java:90)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onSubscribe(FluxPeekFuseable.java:172)
+	at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.onSubscribe(FluxMapFuseable.java:90)
+	at reactor.core.publisher.MonoCurrentContext.subscribe(MonoCurrentContext.java:33)
+	at reactor.core.publisher.MonoMapFuseable.subscribe(MonoMapFuseable.java:59)
+	at reactor.core.publisher.MonoPeekFuseable.subscribe(MonoPeekFuseable.java:74)
+	at reactor.core.publisher.FluxSourceMonoFuseable.subscribe(FluxSourceMonoFuseable.java:38)
+	at reactor.core.publisher.FluxMapFuseable.subscribe(FluxMapFuseable.java:63)
+	at org.springframework.http.server.reactive.ChannelSendOperator.subscribe(ChannelSendOperator.java:74)
+	at reactor.core.publisher.MonoOnErrorResume.subscribe(MonoOnErrorResume.java:44)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:150)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1080)
+	at reactor.core.publisher.MonoFlatMap$FlatMapInner.onNext(MonoFlatMap.java:241)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:73)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onNext(FluxPeekFuseable.java:198)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onNext(FluxPeekFuseable.java:198)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1080)
+	at reactor.core.publisher.MonoIgnoreThen$ThenAcceptInner.onNext(MonoIgnoreThen.java:290)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1080)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:144)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1080)
+	at reactor.core.publisher.MonoZip$ZipCoordinator.signal(MonoZip.java:241)
+	at reactor.core.publisher.MonoZip$ZipInner.onNext(MonoZip.java:323)
+	at reactor.core.publisher.FluxPeek$PeekSubscriber.onNext(FluxPeek.java:185)
+	at reactor.core.publisher.FluxDefaultIfEmpty$DefaultIfEmptySubscriber.onNext(FluxDefaultIfEmpty.java:92)
+	at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onNext(FluxSwitchIfEmpty.java:67)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:73)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1080)
+	at reactor.core.publisher.MonoSingle$SingleSubscriber.onComplete(MonoSingle.java:171)
+	at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:130)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.checkTerminated(FluxFlatMap.java:773)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.drainLoop(FluxFlatMap.java:543)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.drain(FluxFlatMap.java:523)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onComplete(FluxFlatMap.java:409)
+	at reactor.core.publisher.DrainUtils.postCompleteDrain(DrainUtils.java:131)
+	at reactor.core.publisher.DrainUtils.postComplete(DrainUtils.java:186)
+	at reactor.core.publisher.FluxMapSignal$FluxMapSignalSubscriber.onComplete(FluxMapSignal.java:213)
+	at reactor.core.publisher.FluxPeek$PeekSubscriber.onComplete(FluxPeek.java:245)
+	at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:130)
+	at reactor.core.publisher.FluxPeek$PeekSubscriber.onComplete(FluxPeek.java:245)
+	at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:130)
+	at reactor.ipc.netty.channel.FluxReceive.terminateReceiver(FluxReceive.java:377)
+	at reactor.ipc.netty.channel.FluxReceive.drainReceiver(FluxReceive.java:202)
+	at reactor.ipc.netty.channel.FluxReceive.request(FluxReceive.java:110)
+	at reactor.core.publisher.FluxMap$MapSubscriber.request(FluxMap.java:149)
+	at reactor.core.publisher.FluxPeek$PeekSubscriber.request(FluxPeek.java:130)
+	at reactor.core.publisher.FluxMap$MapSubscriber.request(FluxMap.java:149)
+	at reactor.core.publisher.FluxPeek$PeekSubscriber.request(FluxPeek.java:130)
+	at reactor.core.publisher.FluxMapSignal$FluxMapSignalSubscriber.request(FluxMapSignal.java:225)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onSubscribe(FluxFlatMap.java:332)
+	at reactor.core.publisher.FluxMapSignal$FluxMapSignalSubscriber.onSubscribe(FluxMapSignal.java:115)
+	at reactor.core.publisher.FluxPeek$PeekSubscriber.onSubscribe(FluxPeek.java:163)
+	at reactor.core.publisher.FluxMap$MapSubscriber.onSubscribe(FluxMap.java:86)
+	at reactor.core.publisher.FluxPeek$PeekSubscriber.onSubscribe(FluxPeek.java:163)
+	at reactor.core.publisher.FluxMap$MapSubscriber.onSubscribe(FluxMap.java:86)
+	at reactor.ipc.netty.channel.FluxReceive.startReceiver(FluxReceive.java:273)
+	at reactor.ipc.netty.channel.FluxReceive.subscribe(FluxReceive.java:124)
+	at reactor.core.publisher.FluxMap.subscribe(FluxMap.java:62)
+	at reactor.ipc.netty.ByteBufFlux.subscribe(ByteBufFlux.java:242)
+	at reactor.core.publisher.FluxPeek.subscribe(FluxPeek.java:83)
+	at reactor.ipc.netty.ByteBufFlux.subscribe(ByteBufFlux.java:242)
+	at reactor.core.publisher.FluxMap.subscribe(FluxMap.java:62)
+	at reactor.core.publisher.FluxPeek.subscribe(FluxPeek.java:83)
+	at reactor.core.publisher.FluxMapSignal.subscribe(FluxMapSignal.java:69)
+	at reactor.core.publisher.FluxFlatMap.subscribe(FluxFlatMap.java:97)
+	at reactor.core.publisher.FluxMap.subscribe(FluxMap.java:62)
+	at reactor.core.publisher.MonoSingle.subscribe(MonoSingle.java:58)
+	at reactor.core.publisher.MonoOnErrorResume.subscribe(MonoOnErrorResume.java:44)
+	at reactor.core.publisher.MonoSwitchIfEmpty.subscribe(MonoSwitchIfEmpty.java:44)
+	at reactor.core.publisher.MonoDefaultIfEmpty.subscribe(MonoDefaultIfEmpty.java:37)
+	at reactor.core.publisher.MonoPeek.subscribe(MonoPeek.java:71)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:3080)
+	at reactor.core.publisher.MonoZip.subscribe(MonoZip.java:128)
+	at reactor.core.publisher.MonoFlatMap.subscribe(MonoFlatMap.java:60)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.drain(MonoIgnoreThen.java:148)
+	at reactor.core.publisher.MonoIgnoreThen.subscribe(MonoIgnoreThen.java:56)
+	at reactor.core.publisher.MonoPeekFuseable.subscribe(MonoPeekFuseable.java:74)
+	at reactor.core.publisher.MonoPeekFuseable.subscribe(MonoPeekFuseable.java:74)
+	at reactor.core.publisher.MonoOnErrorResume.subscribe(MonoOnErrorResume.java:44)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:150)
+	at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onNext(FluxSwitchIfEmpty.java:67)
+	at reactor.core.publisher.MonoNext$NextSubscriber.onNext(MonoNext.java:76)
+	at reactor.core.publisher.FluxConcatMap$ConcatMapImmediate.innerNext(FluxConcatMap.java:271)
+	at reactor.core.publisher.FluxConcatMap$ConcatMapInner.onNext(FluxConcatMap.java:803)
+	at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.onNext(FluxMapFuseable.java:115)
+	at reactor.core.publisher.Operators$ScalarSubscription.request(Operators.java:1637)
+	at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.request(FluxMapFuseable.java:156)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.set(Operators.java:1451)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onSubscribe(Operators.java:1325)
+	at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.onSubscribe(FluxMapFuseable.java:90)
+	at reactor.core.publisher.MonoJust.subscribe(MonoJust.java:54)
+	at reactor.core.publisher.MonoMapFuseable.subscribe(MonoMapFuseable.java:59)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:3080)
+	at reactor.core.publisher.FluxConcatMap$ConcatMapImmediate.drain(FluxConcatMap.java:418)
+	at reactor.core.publisher.FluxConcatMap$ConcatMapImmediate.onSubscribe(FluxConcatMap.java:210)
+	at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:128)
+	at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:61)
+	at reactor.core.publisher.FluxConcatMap.subscribe(FluxConcatMap.java:121)
+	at reactor.core.publisher.MonoNext.subscribe(MonoNext.java:40)
+	at reactor.core.publisher.MonoSwitchIfEmpty.subscribe(MonoSwitchIfEmpty.java:44)
+	at reactor.core.publisher.MonoFlatMap.subscribe(MonoFlatMap.java:60)
+	at reactor.core.publisher.MonoFlatMap.subscribe(MonoFlatMap.java:60)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.MonoSubscriberContext.subscribe(MonoSubscriberContext.java:47)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.MonoSubscriberContext.subscribe(MonoSubscriberContext.java:47)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.MonoOnErrorResume.subscribe(MonoOnErrorResume.java:44)
+	at reactor.core.publisher.MonoOnErrorResume.subscribe(MonoOnErrorResume.java:44)
+	at reactor.core.publisher.MonoOnErrorResume.subscribe(MonoOnErrorResume.java:44)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:3080)
+	at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.drain(MonoIgnoreThen.java:167)
+	at reactor.core.publisher.MonoIgnoreThen.subscribe(MonoIgnoreThen.java:56)
+	at reactor.core.publisher.MonoPeekFuseable.subscribe(MonoPeekFuseable.java:70)
+	at reactor.core.publisher.MonoPeekTerminal.subscribe(MonoPeekTerminal.java:61)
+	at reactor.ipc.netty.channel.ChannelOperations.applyHandler(ChannelOperations.java:380)
+	at reactor.ipc.netty.http.server.HttpServerOperations.onHandlerStart(HttpServerOperations.java:397)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:163)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:404)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:463)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:884)
+	at java.lang.Thread.run(Thread.java:750)
+2026-06-07
+                18:31:44.876@@@@@@@@[reactor-http-nio-3]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://localhost:17001/rule/listEventRules | requestParam : {} | requestMethod : POST | requestBody : "{\"eventBusName\":\"demo-bus\",\"maxResults\":10,\"nextToken\":\"0\"}"
+2026-06-07
+                18:31:44.877@@@@@@@@[reactor-http-nio-2]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://localhost:17001/target/listEventTargets | requestParam : {} | requestMethod : POST | requestBody : "{\"eventBusName\":\"demo-bus\",\"eventRuleName\":\"demo-rule\",\"maxResults\":10,\"nextToken\":\"0\"}"
+2026-06-07
+                18:31:44.890@@@@@@@@[reactor-http-nio-2]@@ERROR@@accessLog[64]@@Catch unexpected exception.
+java.lang.NullPointerException: null
+	at org.apache.rocketmq.eventbridge.adapter.api.converter.EventTargetDTOConverter.convertRunOptionsDTO(EventTargetDTOConverter.java:69)
+	at org.apache.rocketmq.eventbridge.adapter.api.converter.EventTargetDTOConverter.convert(EventTargetDTOConverter.java:57)
+	at org.apache.rocketmq.eventbridge.adapter.api.controller.EventTargetController.lambda$null$3(EventTargetController.java:98)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1384)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:566)
+	at org.apache.rocketmq.eventbridge.adapter.api.controller.EventTargetController.lambda$listEventTargets$4(EventTargetController.java:99)
+	at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.onNext(FluxMapFuseable.java:107)
+	at reactor.core.publisher.Operators$ScalarSubscription.request(Operators.java:1637)
+	at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.request(FluxMapFuseable.java:156)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.request(FluxPeekFuseable.java:138)
+	at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.request(FluxMapFuseable.java:156)
+	at org.springframework.http.server.reactive.ChannelSendOperator$WriteBarrier.onSubscribe(ChannelSendOperator.java:163)
+	at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.onSubscribe(FluxMapFuseable.java:90)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onSubscribe(FluxPeekFuseable.java:172)
+	at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.onSubscribe(FluxMapFuseable.java:90)
+	at reactor.core.publisher.MonoCurrentContext.subscribe(MonoCurrentContext.java:33)
+	at reactor.core.publisher.MonoMapFuseable.subscribe(MonoMapFuseable.java:59)
+	at reactor.core.publisher.MonoPeekFuseable.subscribe(MonoPeekFuseable.java:74)
+	at reactor.core.publisher.FluxSourceMonoFuseable.subscribe(FluxSourceMonoFuseable.java:38)
+	at reactor.core.publisher.FluxMapFuseable.subscribe(FluxMapFuseable.java:63)
+	at org.springframework.http.server.reactive.ChannelSendOperator.subscribe(ChannelSendOperator.java:74)
+	at reactor.core.publisher.MonoOnErrorResume.subscribe(MonoOnErrorResume.java:44)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:150)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1080)
+	at reactor.core.publisher.MonoFlatMap$FlatMapInner.onNext(MonoFlatMap.java:241)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:73)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onNext(FluxPeekFuseable.java:198)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onNext(FluxPeekFuseable.java:198)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1080)
+	at reactor.core.publisher.MonoIgnoreThen$ThenAcceptInner.onNext(MonoIgnoreThen.java:290)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1080)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:144)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1080)
+	at reactor.core.publisher.MonoZip$ZipCoordinator.signal(MonoZip.java:241)
+	at reactor.core.publisher.MonoZip$ZipInner.onNext(MonoZip.java:323)
+	at reactor.core.publisher.FluxPeek$PeekSubscriber.onNext(FluxPeek.java:185)
+	at reactor.core.publisher.FluxDefaultIfEmpty$DefaultIfEmptySubscriber.onNext(FluxDefaultIfEmpty.java:92)
+	at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onNext(FluxSwitchIfEmpty.java:67)
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:73)
+	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1080)
+	at reactor.core.publisher.MonoSingle$SingleSubscriber.onComplete(MonoSingle.java:171)
+	at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:130)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.checkTerminated(FluxFlatMap.java:773)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.drainLoop(FluxFlatMap.java:543)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.drain(FluxFlatMap.java:523)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onComplete(FluxFlatMap.java:409)
+	at reactor.core.publisher.DrainUtils.postCompleteDrain(DrainUtils.java:131)
+	at reactor.core.publisher.DrainUtils.postComplete(DrainUtils.java:186)
+	at reactor.core.publisher.FluxMapSignal$FluxMapSignalSubscriber.onComplete(FluxMapSignal.java:213)
+	at reactor.core.publisher.FluxPeek$PeekSubscriber.onComplete(FluxPeek.java:245)
+	at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:130)
+	at reactor.core.publisher.FluxPeek$PeekSubscriber.onComplete(FluxPeek.java:245)
+	at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:130)
+	at reactor.ipc.netty.channel.FluxReceive.terminateReceiver(FluxReceive.java:377)
+	at reactor.ipc.netty.channel.FluxReceive.drainReceiver(FluxReceive.java:202)
+	at reactor.ipc.netty.channel.FluxReceive.request(FluxReceive.java:110)
+	at reactor.core.publisher.FluxMap$MapSubscriber.request(FluxMap.java:149)
+	at reactor.core.publisher.FluxPeek$PeekSubscriber.request(FluxPeek.java:130)
+	at reactor.core.publisher.FluxMap$MapSubscriber.request(FluxMap.java:149)
+	at reactor.core.publisher.FluxPeek$PeekSubscriber.request(FluxPeek.java:130)
+	at reactor.core.publisher.FluxMapSignal$FluxMapSignalSubscriber.request(FluxMapSignal.java:225)
+	at reactor.core.publisher.FluxFlatMap$FlatMapMain.onSubscribe(FluxFlatMap.java:332)
+	at reactor.core.publisher.FluxMapSignal$FluxMapSignalSubscriber.onSubscribe(FluxMapSignal.java:115)
+	at reactor.core.publisher.FluxPeek$PeekSubscriber.onSubscribe(FluxPeek.java:163)
+	at reactor.core.publisher.FluxMap$MapSubscriber.onSubscribe(FluxMap.java:86)
+	at reactor.core.publisher.FluxPeek$PeekSubscriber.onSubscribe(FluxPeek.java:163)
+	at reactor.core.publisher.FluxMap$MapSubscriber.onSubscribe(FluxMap.java:86)
+	at reactor.ipc.netty.channel.FluxReceive.startReceiver(FluxReceive.java:273)
+	at reactor.ipc.netty.channel.FluxReceive.subscribe(FluxReceive.java:124)
+	at reactor.core.publisher.FluxMap.subscribe(FluxMap.java:62)
+	at reactor.ipc.netty.ByteBufFlux.subscribe(ByteBufFlux.java:242)
+	at reactor.core.publisher.FluxPeek.subscribe(FluxPeek.java:83)
+	at reactor.ipc.netty.ByteBufFlux.subscribe(ByteBufFlux.java:242)
+	at reactor.core.publisher.FluxMap.subscribe(FluxMap.java:62)
+	at reactor.core.publisher.FluxPeek.subscribe(FluxPeek.java:83)
+	at reactor.core.publisher.FluxMapSignal.subscribe(FluxMapSignal.java:69)
+	at reactor.core.publisher.FluxFlatMap.subscribe(FluxFlatMap.java:97)
+	at reactor.core.publisher.FluxMap.subscribe(FluxMap.java:62)
+	at reactor.core.publisher.MonoSingle.subscribe(MonoSingle.java:58)
+	at reactor.core.publisher.MonoOnErrorResume.subscribe(MonoOnErrorResume.java:44)
+	at reactor.core.publisher.MonoSwitchIfEmpty.subscribe(MonoSwitchIfEmpty.java:44)
+	at reactor.core.publisher.MonoDefaultIfEmpty.subscribe(MonoDefaultIfEmpty.java:37)
+	at reactor.core.publisher.MonoPeek.subscribe(MonoPeek.java:71)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:3080)
+	at reactor.core.publisher.MonoZip.subscribe(MonoZip.java:128)
+	at reactor.core.publisher.MonoFlatMap.subscribe(MonoFlatMap.java:60)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.drain(MonoIgnoreThen.java:148)
+	at reactor.core.publisher.MonoIgnoreThen.subscribe(MonoIgnoreThen.java:56)
+	at reactor.core.publisher.MonoPeekFuseable.subscribe(MonoPeekFuseable.java:74)
+	at reactor.core.publisher.MonoPeekFuseable.subscribe(MonoPeekFuseable.java:74)
+	at reactor.core.publisher.MonoOnErrorResume.subscribe(MonoOnErrorResume.java:44)
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:150)
+	at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onNext(FluxSwitchIfEmpty.java:67)
+	at reactor.core.publisher.MonoNext$NextSubscriber.onNext(MonoNext.java:76)
+	at reactor.core.publisher.FluxConcatMap$ConcatMapImmediate.innerNext(FluxConcatMap.java:271)
+	at reactor.core.publisher.FluxConcatMap$ConcatMapInner.onNext(FluxConcatMap.java:803)
+	at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.onNext(FluxMapFuseable.java:115)
+	at reactor.core.publisher.Operators$ScalarSubscription.request(Operators.java:1637)
+	at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.request(FluxMapFuseable.java:156)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.set(Operators.java:1451)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onSubscribe(Operators.java:1325)
+	at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.onSubscribe(FluxMapFuseable.java:90)
+	at reactor.core.publisher.MonoJust.subscribe(MonoJust.java:54)
+	at reactor.core.publisher.MonoMapFuseable.subscribe(MonoMapFuseable.java:59)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:3080)
+	at reactor.core.publisher.FluxConcatMap$ConcatMapImmediate.drain(FluxConcatMap.java:418)
+	at reactor.core.publisher.FluxConcatMap$ConcatMapImmediate.onSubscribe(FluxConcatMap.java:210)
+	at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:128)
+	at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:61)
+	at reactor.core.publisher.FluxConcatMap.subscribe(FluxConcatMap.java:121)
+	at reactor.core.publisher.MonoNext.subscribe(MonoNext.java:40)
+	at reactor.core.publisher.MonoSwitchIfEmpty.subscribe(MonoSwitchIfEmpty.java:44)
+	at reactor.core.publisher.MonoFlatMap.subscribe(MonoFlatMap.java:60)
+	at reactor.core.publisher.MonoFlatMap.subscribe(MonoFlatMap.java:60)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.MonoSubscriberContext.subscribe(MonoSubscriberContext.java:47)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.MonoSubscriberContext.subscribe(MonoSubscriberContext.java:47)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52)
+	at reactor.core.publisher.MonoOnErrorResume.subscribe(MonoOnErrorResume.java:44)
+	at reactor.core.publisher.MonoOnErrorResume.subscribe(MonoOnErrorResume.java:44)
+	at reactor.core.publisher.MonoOnErrorResume.subscribe(MonoOnErrorResume.java:44)
+	at reactor.core.publisher.Mono.subscribe(Mono.java:3080)
+	at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.drain(MonoIgnoreThen.java:167)
+	at reactor.core.publisher.MonoIgnoreThen.subscribe(MonoIgnoreThen.java:56)
+	at reactor.core.publisher.MonoPeekFuseable.subscribe(MonoPeekFuseable.java:70)
+	at reactor.core.publisher.MonoPeekTerminal.subscribe(MonoPeekTerminal.java:61)
+	at reactor.ipc.netty.channel.ChannelOperations.applyHandler(ChannelOperations.java:380)
+	at reactor.ipc.netty.http.server.HttpServerOperations.onHandlerStart(HttpServerOperations.java:397)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:163)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:404)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:463)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:884)
+	at java.lang.Thread.run(Thread.java:750)
+2026-06-07
+                18:31:44.976@@@@@@@@[reactor-http-nio-4]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://localhost:17001/bus/getEventBus | requestParam : {} | requestMethod : POST | requestBody : "{\"eventBusName\":\"demo-bus\"}"
+2026-06-07
+                18:32:10.098@@@@@@@@[reactor-http-nio-1]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://localhost:17001/bus/getEventBus | requestParam : {} | requestMethod : POST | requestBody : "{\"eventBusName\":\"demo-bus\"}"
+2026-06-07
+                18:32:10.114@@@@@@@@[reactor-http-nio-2]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://localhost:17001/rule/listEventRules | requestParam : {} | requestMethod : POST | requestBody : "{\"eventBusName\":\"demo-bus\",\"maxResults\":10,\"nextToken\":\"0\"}"
+2026-06-07
+                18:32:10.130@@@@@@@@[reactor-http-nio-3]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://localhost:17001/putEvents | requestParam : {} | requestMethod : POST | requestBody : "{\"event_id\":\"evt-eb-002\",\"amount\":388.80,\"currency\":\"MYR\"}"

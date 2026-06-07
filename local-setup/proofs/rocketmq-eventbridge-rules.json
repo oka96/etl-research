@@ -1,0 +1,1 @@
+{"requestId":"153655d5-f2aa-40c1-8b27-bb367b77c69f","code":null,"message":null,"eventRules":[{"eventBusName":"demo-bus","eventRuleName":"demo-rule","description":"A demo rule.","filterPattern":"{}","status":"1","gmtCreate":"2026-06-07T18:30:23.046+0000","gmtModify":"2026-06-07T18:30:23.046+0000"}],"nextToken":null,"total":1,"maxResults":10}

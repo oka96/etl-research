@@ -1,0 +1,5 @@
+time="2026-06-08T02:41:09+08:00" level=warning msg="/Users/oka/Documents/etl-research/local-setup/inlong/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+NAME        IMAGE                     COMMAND                  SERVICE     CREATED         STATUS                   PORTS
+dashboard   inlong/dashboard:latest   "/docker-entrypoint.…"   dashboard   5 minutes ago   Up 5 minutes             0.0.0.0:80->80/tcp, [::]:80->80/tcp
+manager     inlong/manager:latest     "bin/manager-docker.…"   manager     5 minutes ago   Up 5 minutes             0.0.0.0:8083->8083/tcp, [::]:8083->8083/tcp
+mysql       mysql:8.0.28              "docker-entrypoint.s…"   mysql       5 minutes ago   Up 5 minutes (healthy)   0.0.0.0:3306->3306/tcp, [::]:3306->3306/tcp, 33060/tcp

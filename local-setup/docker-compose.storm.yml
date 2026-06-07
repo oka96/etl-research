@@ -1,0 +1,60 @@
+services:
+  storm-zookeeper:
+    image: zookeeper:3.9
+    container_name: etl-research-storm-zookeeper
+    networks:
+      storm-net:
+        aliases:
+          - zookeeper
+    ports:
+      - "12181:2181"
+
+  storm-nimbus:
+    image: storm:latest
+    container_name: etl-research-storm-nimbus
+    command: ["storm", "nimbus"]
+    restart: on-failure
+    depends_on:
+      - storm-zookeeper
+    networks:
+      storm-net:
+        aliases:
+          - nimbus
+    environment:
+      STORM_ZOOKEEPER_SERVERS: '["storm-zookeeper"]'
+      NIMBUS_SEEDS: '["storm-nimbus"]'
+    ports:
+      - "16627:6627"
+
+  storm-supervisor:
+    image: storm:latest
+    container_name: etl-research-storm-supervisor
+    command: ["storm", "supervisor"]
+    restart: on-failure
+    depends_on:
+      - storm-nimbus
+      - storm-zookeeper
+    networks:
+      - storm-net
+    environment:
+      STORM_ZOOKEEPER_SERVERS: '["storm-zookeeper"]'
+      NIMBUS_SEEDS: '["storm-nimbus"]'
+
+  storm-ui:
+    image: storm:latest
+    container_name: etl-research-storm-ui
+    command: ["storm", "ui"]
+    restart: on-failure
+    depends_on:
+      - storm-nimbus
+      - storm-zookeeper
+    networks:
+      - storm-net
+    environment:
+      STORM_ZOOKEEPER_SERVERS: '["storm-zookeeper"]'
+      NIMBUS_SEEDS: '["storm-nimbus"]'
+    ports:
+      - "18087:8080"
+
+networks:
+  storm-net:

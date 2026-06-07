@@ -1,0 +1,2 @@
+{"amount": 250.5, "currency": "MYR", "event_id": "evt-001", "event_type": "wallet.payment.authorized", "pipeline": "beam-direct-wallet-poc", "risk_tier": "STANDARD", "wallet_id": "wallet-1001"}
+{"amount": 1500.0, "currency": "MYR", "event_id": "evt-003", "event_type": "wallet.payment.authorized", "pipeline": "beam-direct-wallet-poc", "risk_tier": "HIGH", "wallet_id": "wallet-1003"}

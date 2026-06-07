@@ -1,0 +1,39 @@
+http:
+  enabled: true
+  address: 0.0.0.0:4195
+
+input:
+  kafka_franz:
+    seed_brokers:
+      - redpanda:9092
+    topics:
+      - wallet-events
+    consumer_group: bento-wallet-poc
+    start_from_oldest: true
+
+pipeline:
+  processors:
+    - bloblang: |
+        root = this
+        root.pipeline = "bento-wallet-poc"
+        root.processed_at = now()
+        root.risk_tier = if this.amount.or(0) >= 1000 {
+          "HIGH"
+        } else {
+          "STANDARD"
+        }
+
+output:
+  switch:
+    cases:
+      - check: this.event_type == "wallet.payment.authorized" && this.amount.or(0) >= 100
+        output:
+          kafka_franz:
+            seed_brokers:
+              - redpanda:9092
+            topic: wallet-filtered
+      - output:
+          kafka_franz:
+            seed_brokers:
+              - redpanda:9092
+            topic: wallet-deadletter

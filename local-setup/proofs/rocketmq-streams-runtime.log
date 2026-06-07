@@ -1,0 +1,2 @@
+Starting RocketMQ Streams wallet PoC source=wallet-streams-events-rmq sink=wallet-streams-filtered-rmq namesrv=rocketmq-namesrv:9876
+2026-06-07 18:21:55.233 [ROCKETMQ_STREAMS_walletStreamsPoc_0] INFO  o.a.rocketmq.streams.core.running.WorkerThread - worker thread=[ROCKETMQ_STREAMS_walletStreamsPoc_0], start task success, jobId:walletStreamsPoc

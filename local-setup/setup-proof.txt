@@ -1,0 +1,200 @@
+Local setup proof
+Verified: 2026-06-08 01:49 MYT
+Workspace: /Users/oka/Documents/etl-research
+
+Base command:
+docker compose -f local-setup/docker-compose.kafka-poc.yml up -d --build
+
+Extended candidate command:
+docker compose -f local-setup/docker-compose.kafka-poc.yml --profile extended up -d spark-master spark-worker pulsar
+
+RocketMQ target-broker command:
+docker compose -f local-setup/docker-compose.kafka-poc.yml --profile rocketmq up -d rocketmq-namesrv rocketmq-broker rocketmq-dashboard
+
+StreamPark local proof command:
+cd local-setup/apache-streampark_2.12-2.1.5-incubating-bin
+JAVA_HOME=/Users/oka/Library/Java/JavaVirtualMachines/corretto-17.0.10/Contents/Home ./bin/streampark.sh start_docker
+
+Dinky local proof command:
+docker run -d --name etl-research-dinky -p 18888:8888 dinkydocker/dinky-standalone-server:1.2.5-flink1.20
+
+Storm local proof command:
+docker compose -f local-setup/docker-compose.storm.yml up -d
+
+Spring Cloud Data Flow local proof command:
+DATAFLOW_VERSION=2.10.2 SKIPPER_VERSION=2.9.2 docker compose -p etl-scdf -f local-setup/scdf/docker-compose.yml -f local-setup/scdf/docker-compose-kafka.yml -f local-setup/scdf/docker-compose-mariadb.yml up -d dataflow-server skipper-server
+
+StreamPipes local proof command:
+docker compose --env-file local-setup/streampipes/.env -p etl-streampipes -f local-setup/streampipes/docker-compose.yml up -d
+
+Local services verified during this run:
+- Redpanda broker: etl-research-redpanda, localhost:19092
+- Redpanda Console: etl-research-redpanda-console, http://localhost:18080
+- Apache Flink: etl-research-flink-jobmanager/taskmanager, http://localhost:18081
+- Apache NiFi: etl-research-nifi, https://localhost:18443/nifi
+- Node-RED: etl-research-node-red, http://localhost:1880
+- Apache Kafka Connect: etl-research-kafka-connect, http://localhost:18083
+- Bento: etl-research-bento, http://localhost:14195
+- LF Edge eKuiper: etl-research-ekuiper, http://localhost:19081
+- Apache Camel Spring Boot PoC: etl-research-camel-wallet, http://localhost:18084
+- Apache Spark master/worker: etl-research-spark-master/worker, http://localhost:18088
+- Apache Pulsar standalone: etl-research-pulsar, http://localhost:18085 and pulsar://localhost:16650
+- Apache RocketMQ NameServer/broker/dashboard: etl-research-rocketmq-namesrv/broker/dashboard, http://localhost:18086
+- Apache RocketMQ Streams SDK app: etl-research-rocketmq-streams proof container, stopped after E2E verification
+- Apache RocketMQ Connect standalone worker: etl-research-rocketmq-connect, http://localhost:18082, stopped after screenshot to reduce laptop load
+- Apache RocketMQ EventBridge: etl-research-rocketmq-eventbridge, http://localhost:17001, stopped after screenshot to reduce laptop load
+- Spring Cloud Data Flow: dataflow-server/skipper/dataflow-kafka/dataflow-kafka-zookeeper/dataflow-mariadb, http://localhost:9393/dashboard, then stopped after screenshot to reduce laptop load
+- Apache StreamPipes: backend/ui/couchdb/influxdb/nats/extensions-all-iiot, http://localhost, then stopped after screenshot to reduce laptop load
+- Apache InLong: dashboard/manager/mysql from official compose files, http://localhost, then stopped after screenshot to reduce laptop load
+- Apache StreamPark local binary: http://localhost:10000, then stopped after screenshot to reduce laptop load
+- Dinky standalone: etl-research-dinky, http://localhost:18888
+- Apache Storm: etl-research-storm-zookeeper/nimbus/supervisor/ui, http://localhost:18087
+
+Kafka-compatible topics:
+- wallet-events
+- wallet-filtered
+- wallet-deadletter
+- _connect_configs
+- _connect_offsets
+- _connect_status
+
+Verified wallet-event flow:
+- Input sample: local-setup/proofs/sample-wallet-events.jsonl
+- Bento consumed wallet-events and wrote:
+  - evt-001, evt-003 to wallet-filtered with pipeline=bento-wallet-poc
+  - evt-002 to wallet-deadletter with pipeline=bento-wallet-poc
+- Apache Camel Spring Boot consumed wallet-events and wrote:
+  - evt-001, evt-003 to wallet-filtered with pipeline=camel-spring-wallet-poc
+  - evt-002 to wallet-deadletter with pipeline=camel-spring-wallet-poc
+- Apache Beam DirectRunner read the sample JSONL file and wrote:
+  - evt-001, evt-003 to local-setup/beam-wallet-pipeline/output/wallet-filtered.jsonl
+  - evt-002 to local-setup/beam-wallet-pipeline/output/wallet-deadletter.jsonl
+- Apache SeaTunnel ran local streaming config local-setup/seatunnel/seatunnel-kafka-wallet.conf and wrote:
+  - evt-seatunnel-001 to wallet-filtered with pipeline=seatunnel-wallet-poc and risk_tier=STANDARD
+  - evt-seatunnel-002 was filtered out by the SQL transform
+- Apache Pulsar standalone created persistent://public/default/wallet-events-poc and retained 5 sample messages on durable subscription proof-sub
+- Apache RocketMQ broker created wallet-events-rmq and wallet-filtered-rmq topics for target-broker validation
+- Apache RocketMQ Streams SDK app consumed wallet-streams-events-rmq and wrote:
+  - evt-rs-001 to wallet-streams-filtered-rmq with risk_tier=STANDARD and pipeline=rocketmq-streams-wallet-poc
+  - evt-rs-003 to wallet-streams-filtered-rmq with risk_tier=HIGH and pipeline=rocketmq-streams-wallet-poc
+  - evt-rs-002 was rejected by the filter
+- Apache RocketMQ Connect standalone worker created source/sink connectors via REST and moved:
+  - wallet-connect-001 and wallet-connect-002 from local-setup/proofs/rocketmq-connect-source.txt to wallet-connect-file-rmq
+  - the same two records back into local-setup/proofs/rocketmq-connect-sink.txt
+- Apache RocketMQ EventBridge 1.1.0 started on Java 8, created demo-bus and demo-rule, accepted CloudEvents through /putEvents with failedEntryCount=0, and stored evt-eb-001 / evt-eb-002 in RocketMQ topic eventbridge%default%demo-bus_1780857022972
+- Spring Cloud Data Flow official compose stack started Data Flow 2.10.2, dashboard UI 3.3.2, Skipper 2.9.2, Kafka, ZooKeeper, and MariaDB; repeated browser/curl requests later became slow under linux/amd64 emulation on Apple Silicon
+- Apache StreamPipes full official compose stack started, UI returned HTTP 200 with title "Apache StreamPipes - Self-Service IIoT Toolbox", browser rendered the login page, and backend auto-setup installed Apache Kafka, Apache RocketMQ, Apache TubeMQ (InLong), REST, MQTT, and Pulsar extensions
+- Apache InLong official compose control-plane slice started dashboard, manager, and MySQL; dashboard returned HTTP 200 with title "InLong" and rendered the data ingestion UI. Manager started Tomcat on 8083 but returned curl (52) Empty reply from server, so this is local setup/UI proof only rather than wallet-event E2E proof
+- Apache StreamPark console started, actuator health returned UP, and admin / streampark login showed the Flink Application workspace with Add New, metrics, and a seeded Flink SQL demo
+- Dinky standalone started and showed the first-run admin setup / Flink SQL development welcome workflow
+- Apache Storm 2.8.8 started with one supervisor, four free slots, and Nimbus leader status
+
+Key verification commands:
+- curl -fsS http://localhost:18083/
+  {"version":"4.2.0","commit":"a18251bae0b825c6","kafka_cluster_id":"redpanda.e057128e-1f74-4bb6-be9a-14eb59da576a"}
+- curl -fsS http://localhost:14195/ready
+  OK
+- curl -fsS http://localhost:18084/actuator/camelroutes
+  [{"id":"camel-wallet-filter-transform", ... "status":"Started"}]
+- curl -fsS http://localhost:19081/
+  {"version":"2.4.0","os":"linux","arch":"arm64", ...}
+- curl -fsS http://localhost:18085/admin/v2/clusters
+  ["standalone"]
+- docker exec etl-research-pulsar bin/pulsar-admin brokers healthcheck
+  ok
+- docker exec etl-research-rocketmq-broker sh -lc './mqadmin clusterList -n rocketmq-namesrv:9876'
+  DefaultCluster / broker-a / rocketmq-broker:10911 / V5_5_0 / ACTIVATED true
+- docker exec etl-research-rocketmq-broker sh -lc './mqadmin topicList -n rocketmq-namesrv:9876 | grep wallet'
+  wallet-events-rmq
+  wallet-filtered-rmq
+- mvn -q -f local-setup/rocketmq-streams-wallet-poc/pom.xml -DskipTests package
+  Completed successfully
+- docker run -d --name etl-research-rocketmq-streams --network local-setup_default -v /Users/oka/Documents/etl-research:/workspace -v /Users/oka/.m2:/root/.m2 -w /workspace/local-setup/rocketmq-streams-wallet-poc -e ROCKETMQ_NAMESRV=rocketmq-namesrv:9876 -e ROCKETMQ_SOURCE_TOPIC=wallet-streams-events-rmq -e ROCKETMQ_SINK_TOPIC=wallet-streams-filtered-rmq maven:3.9.9-eclipse-temurin-21 mvn -q exec:java -Dexec.mainClass=com.example.etl.rocketmq.streams.WalletStreamsPoc
+  Worker thread started successfully with jobId=walletStreamsPoc
+- docker exec etl-research-rocketmq-broker sh -lc './mqadmin consumeMessage -n rocketmq-namesrv:9876 -t wallet-streams-filtered-rmq -g wallet-streams-proof-consumer -c 10'
+  Returned BODY records for evt-rs-001 and evt-rs-003 only, each enriched with risk_tier and pipeline=rocketmq-streams-wallet-poc
+- mvn -q -f local-setup/rocketmq-connect-src/pom.xml -Prelease-connect -DskipTests -pl distribution -am package
+  Completed successfully
+- curl -sS http://localhost:18082/getClusterInfo
+  {"status":200,"body":["standalone-worker-local"]}
+- curl -sS http://localhost:18082/connectors/list
+  Returned fileSourceConnector and fileSinkConnector with connector and task state RUNNING
+- docker exec etl-research-rocketmq-broker sh -lc './mqadmin consumeMessage -n rocketmq-namesrv:9876 -t wallet-connect-file-rmq -g wallet-connect-proof-consumer -c 10'
+  Returned BODY records wallet-connect-001 and wallet-connect-002
+- docker run -d --name etl-research-rocketmq-eventbridge --network local-setup_default -p 17001:7001 -p 17002:7002 -v /Users/oka/Documents/etl-research:/workspace -w /workspace/local-setup/rocketmq-eventbridge-1.1.0 eclipse-temurin:8-jre sh -lc 'java -Xms256m -Xmx512m -XX:MaxDirectMemorySize=256m -Dspring.config.location=config/application.properties -jar rocketmq-eventbridge.jar'
+  Started Main v1.1.0, created demo-bus/demo-rule, loaded plugins, and started Netty on 7001
+- curl -sS -X POST http://localhost:17001/putEvents ...
+  Returned failedEntryCount=0 and Success event ids
+- docker exec etl-research-rocketmq-broker sh -lc './mqadmin consumeMessage -n rocketmq-namesrv:9876 -t eventbridge%default%demo-bus_1780857022972 -g eventbridge-proof-consumer -c 10'
+  Returned BODY records for evt-eb-001 and evt-eb-002
+- docker run --rm --entrypoint python -v /Users/oka/Documents/etl-research:/workspace -w /workspace apache/beam_python3.11_sdk:latest local-setup/beam-wallet-pipeline/beam_wallet_pipeline.py
+  Completed successfully
+- docker run --rm apache/seatunnel:latest ./bin/seatunnel.sh -m local -c config/v2.batch.config.template
+  Completed successfully with JobStateEvent jobStatus=FINISHED, Total Read Count=32, Total Write Count=32
+- docker run --rm --network local-setup_default -v /Users/oka/Documents/etl-research/local-setup/seatunnel:/config apache/seatunnel:latest ./bin/seatunnel.sh -m local -c /config/seatunnel-kafka-wallet.conf
+  Streaming job read 2 fresh wallet events and committed 1 transformed output
+- docker exec etl-research-redpanda rpk topic consume wallet-filtered --brokers localhost:9092 --offset=-1 --num 1 --format '%o %v\n'
+  6 {"event_id":"evt-seatunnel-001","event_type":"wallet.payment.authorized","wallet_id":"wallet-seatunnel","amount":250.75,"currency":"MYR","risk_tier":"STANDARD","pipeline":"seatunnel-wallet-poc"}
+- curl -fsS http://localhost:10000/actuator/health
+  {"status":"UP"}
+- curl -fsS http://localhost:18888/actuator/health
+  {"status":"UP","components":{"db":{"status":"UP","details":{"database":"H2","validationQuery":"isValid()"}},"diskSpace":...,"ping":{"status":"UP"}}}
+- curl -fsS http://localhost:18087/api/v1/cluster/summary
+  {"stormVersion":"2.8.8", ... "supervisors":1, "slotsTotal":4, "slotsFree":4}
+- curl -fsS http://localhost:18087/api/v1/nimbus/summary
+  {"nimbuses":[{"status":"Leader","port":6627, ...}]}
+- curl -fsS http://localhost:9393/about
+  Returned spring-cloud-dataflow-server 2.10.2, Spring Cloud Data Flow Core 2.10.2, dashboard UI 3.3.2, streams/tasks/analytics enabled, authentication disabled, and Skipper-managed local app deployer
+- curl -fsS http://localhost:7577/api/about
+  Returned Spring Cloud Skipper Server 2.9.2
+- curl -i http://localhost:9393/dashboard/index.html
+  HTTP/1.1 200 with title Spring Cloud Data Flow
+- curl -i http://localhost/
+  HTTP/1.1 200 with title Apache StreamPipes - Self-Service IIoT Toolbox
+- docker logs --tail 80 etl-streampipes-backend-1 | rg 'Auto-Setup finished|Apache Kafka|Apache RocketMQ|Apache TubeMQ'
+  Auto-Setup finished; Installing extension Apache Kafka; Installing extension Apache RocketMQ; Installing extension Apache TubeMQ (InLong)
+- docker compose --env-file local-setup/inlong/.env -f local-setup/inlong/docker-compose.yml up -d mysql manager dashboard
+  Started dashboard, manager, and mysql
+- curl -i http://localhost/
+  HTTP/1.1 200 with title InLong
+- docker compose --env-file local-setup/inlong/.env -f local-setup/inlong/docker-compose.yml ps
+  dashboard Up, manager Up on 8083, mysql Up and healthy
+- curl -i --max-time 20 http://localhost:8083/
+  curl: (52) Empty reply from server
+- docker logs --tail 120 manager
+  Starting InlongManagerMain v2.4.0-SNAPSHOT; Tomcat initialized with port(s): 8083 (http); Root WebApplicationContext initialized in 24863 ms; early startup script also showed sed and initial MySQL connection errors
+
+Screenshot evidence:
+- screenshots/redpanda-console-topics-retry.png
+- screenshots/flink-dashboard.png
+- screenshots/node-red-editor.png
+- screenshots/kafka-connect-runtime-proof.png
+- screenshots/bento-runtime-proof.png
+- screenshots/camel-runtime-proof.png
+- screenshots/ekuiper-runtime-proof.png
+- screenshots/spark-master-ui.png
+- screenshots/pulsar-runtime-proof.png
+- screenshots/rocketmq-dashboard.png
+- screenshots/rocketmq-streams-runtime-proof.png
+- screenshots/rocketmq-connect-runtime-proof.png
+- screenshots/rocketmq-eventbridge-runtime-proof.png
+- screenshots/beam-directrunner-proof.png
+- screenshots/seatunnel-runtime-proof.png
+- screenshots/scdf-runtime-proof.png
+- screenshots/streampipes-runtime-proof.png
+- screenshots/streampipes-ui-browser.png
+- screenshots/inlong-dashboard.png
+- screenshots/inlong-runtime-proof.png
+- screenshots/streampark-runtime-proof.png
+- screenshots/dinky-runtime-proof.png
+- screenshots/storm-runtime-proof.png
+- screenshots/candidates/*.png
+
+Known local screenshot limitation:
+- NiFi is running and reachable with curl -k, but the in-app browser refused the local self-signed certificate.
+- API-only ports 18083, 18084, 14195, 18085, and 19081 are reachable by curl, but blocked by the in-app browser, so their proof screenshots were rendered from live local command output instead of browser page captures.
+- StreamPark and Storm browser screenshot capture timed out after the UI was verified; their proof screenshots were rendered from live DOM/API output.
+- Spring Cloud Data Flow rendered successfully through REST/dashboard HTML first, but repeated browser/curl requests became slow under linux/amd64 emulation on this Apple Silicon laptop. Its proof screenshot was rendered from captured live API output.
+- Apache StreamPipes official minimal compose referenced apachestreampipes/backend-nats:0.98.0, which was not available from the Docker registry during this run. The full official compose stack started successfully and was used for screenshot proof.
+- Apache InLong dashboard rendered locally, but the manager API returned curl (52) Empty reply from server and dashboard http error toasts under linux/amd64 emulation on this Apple Silicon laptop. InLong proof is therefore local setup/UI/control-plane evidence only.
+- Dinky first-run admin password setup was visible, but full dashboard login was not completed in this pass.

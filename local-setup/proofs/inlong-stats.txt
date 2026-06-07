@@ -1,0 +1,3 @@
+dashboard                                                                                                                  43.24MiB / 7.737GiB   0.02%
+manager                                                                                                                    809.4MiB / 7.737GiB   281.79%
+mysql                                                                                                                      495.6MiB / 7.737GiB   9.94%
