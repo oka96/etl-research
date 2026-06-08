@@ -1,0 +1,4 @@
+Sink topic: phase2-inlong-wallet-filtered-1780953455
+Broker: phase2-redpanda:9092
+{"event_id":"evt-inlong-k8s-001","user_id":"user-001","account_id":"wallet-inlong-001","amount":250.5,"currency":"MYR","event_time":"2026-06-09T08:00:00+08:00","risk_tier":"STANDARD","pipeline":"inlong-transform-sdk-kafka","route":"authorized-large-payment"}
+{"event_id":"evt-inlong-k8s-004","user_id":"user-004","account_id":"wallet-inlong-004","amount":1500.0,"currency":"MYR","event_time":"2026-06-09T08:03:00+08:00","risk_tier":"HIGH","pipeline":"inlong-transform-sdk-kafka","route":"authorized-large-payment"}

@@ -1,0 +1,10 @@
+Apache InLong Transform SDK phase-2 K8s proof: Complete
+Queue: Kafka-compatible Redpanda
+Source topic: phase2-inlong-wallet-events-1780953455
+Sink topic: phase2-inlong-wallet-filtered-1780953455
+Transform engine: org.apache.inlong:transform-sdk:2.3.0
+Transform SQL: select $root.event_id,$root.user_id,$root.account_id,$root.amount,$root.currency,$root.event_time,if($root.amount >= 500,'HIGH','STANDARD'),'inlong-transform-sdk-kafka','authorized-large-payment' from source where $root.event_type='wallet.payment.authorized' and $root.amount >= 100
+Consumed source records: 4
+Published sink records: 2
+Validation: rejected and low-value wallet events were filtered out; sink JSON includes risk_tier, pipeline, and route enrichment fields.
+Limitation: this validates the InLong Transform SDK in a Kubernetes job; the full InLong Manager API remained unvalidated locally because the earlier manager container returned empty API responses.

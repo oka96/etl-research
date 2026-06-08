@@ -171,6 +171,10 @@ Key verification commands:
   curl: (52) Empty reply from server
 - docker logs --tail 120 manager
   Starting InlongManagerMain v2.4.0-SNAPSHOT; Tomcat initialized with port(s): 8083 (http); Root WebApplicationContext initialized in 24863 ms; early startup script also showed sed and initial MySQL connection errors
+- kubectl apply -f local-setup/phase2-k8s/inlong.yaml
+  Started a Kubernetes Maven/Java job using org.apache.inlong:transform-sdk:2.3.0 against the phase-2 Redpanda broker
+- kubectl logs -n etl-research-phase2 job/phase2-inlong-transform-sdk -c inlong-transform-sdk
+  Apache InLong Transform SDK phase-2 proof complete; consumed 4 source records from phase2-inlong-wallet-events-1780953455 and published 2 filtered/enriched JSON records to phase2-inlong-wallet-filtered-1780953455
 
 Screenshot evidence:
 - screenshots/redpanda-console-topics-retry.png
@@ -193,6 +197,7 @@ Screenshot evidence:
 - screenshots/streampipes-ui-browser.png
 - screenshots/inlong-dashboard.png
 - screenshots/inlong-runtime-proof.png
+- screenshots/phase2-k8s/04-inlong-k8s-proof.png
 - screenshots/streampark-runtime-proof.png
 - screenshots/dinky-runtime-proof.png
 - screenshots/storm-runtime-proof.png
@@ -204,5 +209,5 @@ Known local screenshot limitation:
 - StreamPark and Storm browser screenshot capture timed out after the UI was verified; their proof screenshots were rendered from live DOM/API output.
 - Spring Cloud Data Flow rendered successfully through REST/dashboard HTML first, but repeated browser/curl requests became slow under linux/amd64 emulation on this Apple Silicon laptop. Its proof screenshot was rendered from captured live API output.
 - Apache StreamPipes official minimal compose referenced apachestreampipes/backend-nats:0.98.0, which was not available from the Docker registry during this run. The full official compose stack started successfully and was used for screenshot proof.
-- Apache InLong dashboard rendered locally, but the manager API returned curl (52) Empty reply from server and dashboard http error toasts under linux/amd64 emulation on this Apple Silicon laptop. InLong proof is therefore local setup/UI/control-plane evidence only.
+- Apache InLong dashboard rendered locally, but the manager API returned curl (52) Empty reply from server and dashboard http error toasts under linux/amd64 emulation on this Apple Silicon laptop. The later phase-2 proof validates the InLong Transform SDK source-transform-sink path in Kubernetes, but the full Manager API remains unvalidated locally.
 - Dinky first-run admin password setup was visible, but full dashboard login was not completed in this pass.

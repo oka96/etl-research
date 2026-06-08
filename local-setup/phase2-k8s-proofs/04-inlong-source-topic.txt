@@ -1,0 +1,6 @@
+Source topic: phase2-inlong-wallet-events-1780953455
+Broker: phase2-redpanda:9092
+{"event_id":"evt-inlong-k8s-001","event_type":"wallet.payment.authorized","user_id":"user-001","account_id":"wallet-inlong-001","amount":250.50,"currency":"MYR","event_time":"2026-06-09T08:00:00+08:00"}
+{"event_id":"evt-inlong-k8s-002","event_type":"wallet.payment.rejected","user_id":"user-002","account_id":"wallet-inlong-002","amount":880.00,"currency":"MYR","event_time":"2026-06-09T08:01:00+08:00"}
+{"event_id":"evt-inlong-k8s-003","event_type":"wallet.payment.authorized","user_id":"user-003","account_id":"wallet-inlong-003","amount":80.00,"currency":"MYR","event_time":"2026-06-09T08:02:00+08:00"}
+{"event_id":"evt-inlong-k8s-004","event_type":"wallet.payment.authorized","user_id":"user-004","account_id":"wallet-inlong-004","amount":1500.00,"currency":"MYR","event_time":"2026-06-09T08:03:00+08:00"}

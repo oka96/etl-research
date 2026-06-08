@@ -54,6 +54,20 @@ kubectl logs -n etl-research-phase2 job/phase2-nifi-setup -c run-proof
 
 This proof runs NiFi over local in-cluster HTTP only, creates the NiFi flow through the REST API, consumes Kafka-compatible Redpanda source events with `ConsumeKafka`, applies a Groovy `ExecuteScript` JSON filter/enrichment, and publishes the filtered events with `PublishKafka`. Source and sink topic names include a generated run id so reruns do not depend on stale broker state. No NiFi login/password is tracked for this local proof.
 
+For the Apache InLong phase-2 proof:
+
+```bash
+kubectl create namespace etl-research-phase2 --dry-run=client -o yaml | kubectl apply -f -
+kubectl apply -f local-setup/phase2-k8s/redpanda.yaml
+kubectl wait -n etl-research-phase2 --for=condition=available deployment/phase2-redpanda --timeout=3m
+kubectl delete -f local-setup/phase2-k8s/inlong.yaml --ignore-not-found
+kubectl apply -f local-setup/phase2-k8s/inlong.yaml
+kubectl wait -n etl-research-phase2 --for=condition=complete job/phase2-inlong-transform-sdk --timeout=8m
+kubectl logs -n etl-research-phase2 job/phase2-inlong-transform-sdk -c inlong-transform-sdk
+```
+
+This proof runs a Kubernetes Maven/Java job that creates fresh Kafka-compatible Redpanda topics, writes source wallet events, consumes them, applies Apache InLong Transform SDK SQL over JSON (`where event_type = wallet.payment.authorized and amount >= 100` plus risk/pipeline enrichment), and publishes JSON sink records. It validates the Transform SDK source-transform-sink path; the full InLong Manager API is still called out in the report as unvalidated locally because the earlier Manager container returned empty API responses.
+
 For the Apache StreamPark phase-2 proof:
 
 ```bash

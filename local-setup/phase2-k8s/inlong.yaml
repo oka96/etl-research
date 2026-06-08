@@ -1,0 +1,366 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-inlong-transform-sdk
+  namespace: etl-research-phase2
+data:
+  pom.xml: |
+    <project xmlns="http://maven.apache.org/POM/4.0.0"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+      <modelVersion>4.0.0</modelVersion>
+      <groupId>com.example.etl</groupId>
+      <artifactId>inlong-transform-wallet-proof</artifactId>
+      <version>1.0.0</version>
+      <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.apache.inlong</groupId>
+          <artifactId>transform-sdk</artifactId>
+          <version>2.3.0</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.kafka</groupId>
+          <artifactId>kafka-clients</artifactId>
+          <version>3.7.1</version>
+        </dependency>
+        <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+          <version>2.17.2</version>
+        </dependency>
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-simple</artifactId>
+          <version>1.7.36</version>
+          <scope>runtime</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.3.0</version>
+          </plugin>
+        </plugins>
+      </build>
+    </project>
+  InLongTransformWalletProof.java: |
+    package com.example.etl.inlong;
+
+    import com.fasterxml.jackson.databind.JsonNode;
+    import com.fasterxml.jackson.databind.ObjectMapper;
+    import org.apache.inlong.sdk.transform.decode.SourceDecoderFactory;
+    import org.apache.inlong.sdk.transform.encode.SinkEncoderFactory;
+    import org.apache.inlong.sdk.transform.pojo.FieldInfo;
+    import org.apache.inlong.sdk.transform.pojo.JsonSourceInfo;
+    import org.apache.inlong.sdk.transform.pojo.MapSinkInfo;
+    import org.apache.inlong.sdk.transform.pojo.TransformConfig;
+    import org.apache.inlong.sdk.transform.process.TransformProcessor;
+    import org.apache.inlong.sdk.transform.process.converter.DoubleConverter;
+    import org.apache.kafka.clients.admin.AdminClient;
+    import org.apache.kafka.clients.admin.AdminClientConfig;
+    import org.apache.kafka.clients.admin.NewTopic;
+    import org.apache.kafka.clients.consumer.ConsumerConfig;
+    import org.apache.kafka.clients.consumer.ConsumerRecord;
+    import org.apache.kafka.clients.consumer.ConsumerRecords;
+    import org.apache.kafka.clients.consumer.KafkaConsumer;
+    import org.apache.kafka.clients.producer.KafkaProducer;
+    import org.apache.kafka.clients.producer.ProducerConfig;
+    import org.apache.kafka.clients.producer.ProducerRecord;
+    import org.apache.kafka.common.errors.TopicExistsException;
+    import org.apache.kafka.common.serialization.StringDeserializer;
+    import org.apache.kafka.common.serialization.StringSerializer;
+
+    import java.nio.charset.StandardCharsets;
+    import java.nio.file.Files;
+    import java.nio.file.Path;
+    import java.time.Duration;
+    import java.time.Instant;
+    import java.util.ArrayList;
+    import java.util.Collection;
+    import java.util.LinkedHashMap;
+    import java.util.List;
+    import java.util.Map;
+    import java.util.Properties;
+    import java.util.Set;
+    import java.util.concurrent.ExecutionException;
+    import java.util.concurrent.TimeUnit;
+
+    public final class InLongTransformWalletProof {
+
+        private static final ObjectMapper MAPPER = new ObjectMapper();
+        private static final String TRANSFORM_SQL =
+                "select $root.event_id,$root.user_id,$root.account_id,$root.amount,$root.currency,$root.event_time,"
+                        + "if($root.amount >= 500,'HIGH','STANDARD'),'inlong-transform-sdk-kafka','authorized-large-payment' "
+                        + "from source "
+                        + "where $root.event_type='wallet.payment.authorized' and $root.amount >= 100";
+        private static final List<String> FIELD_ORDER = List.of(
+                "event_id",
+                "user_id",
+                "account_id",
+                "amount",
+                "currency",
+                "event_time",
+                "risk_tier",
+                "pipeline",
+                "route");
+
+        private InLongTransformWalletProof() {
+        }
+
+        public static void main(String[] args) throws Exception {
+            String brokers = env("BROKERS", "phase2-redpanda:9092");
+            String runId = env("RUN_ID", String.valueOf(Instant.now().getEpochSecond()));
+            String sourceTopic = "phase2-inlong-wallet-events-" + runId;
+            String sinkTopic = "phase2-inlong-wallet-filtered-" + runId;
+            Path proofDir = Path.of(env("PROOF_DIR", "/proof"));
+            Files.createDirectories(proofDir);
+
+            List<String> sourceEvents = sourceEvents();
+            createTopics(brokers, List.of(sourceTopic, sinkTopic));
+            produce(brokers, sourceTopic, sourceEvents);
+
+            List<String> consumedSource = consume(brokers, sourceTopic, "phase2-inlong-source-" + runId, sourceEvents.size());
+            TransformProcessor<String, Map<String, Object>> processor = transformProcessor();
+            List<String> transformedJson = new ArrayList<>();
+            for (String raw : consumedSource) {
+                List<Map<String, Object>> outputs = processor.transform(raw);
+                if (outputs == null) {
+                    continue;
+                }
+                for (Map<String, Object> output : outputs) {
+                    transformedJson.add(toOrderedJson(output));
+                }
+            }
+            produce(brokers, sinkTopic, transformedJson);
+            List<String> consumedSink = consume(brokers, sinkTopic, "phase2-inlong-sink-" + runId, transformedJson.size());
+
+            validate(consumedSource, consumedSink);
+            writeProofFiles(proofDir, brokers, sourceTopic, sinkTopic, consumedSource, consumedSink);
+
+            System.out.println("Apache InLong Transform SDK phase-2 proof complete");
+            System.out.println("Source topic: " + sourceTopic);
+            System.out.println("Sink topic: " + sinkTopic);
+            System.out.println("Transform SQL: " + TRANSFORM_SQL);
+            System.out.println("Consumed source records: " + consumedSource.size());
+            System.out.println("Published sink records: " + consumedSink.size());
+            System.out.println("Sleeping 120s so the pod can be recorded while still running");
+            Thread.sleep(Duration.ofSeconds(120).toMillis());
+        }
+
+        private static String env(String name, String fallback) {
+            String value = System.getenv(name);
+            return value == null || value.isBlank() ? fallback : value;
+        }
+
+        private static void createTopics(String brokers, Collection<String> topics) throws Exception {
+            Properties props = new Properties();
+            props.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, brokers);
+            props.put(AdminClientConfig.REQUEST_TIMEOUT_MS_CONFIG, "30000");
+            try (AdminClient admin = AdminClient.create(props)) {
+                List<NewTopic> newTopics = topics.stream()
+                        .map(topic -> new NewTopic(topic, 1, (short) 1))
+                        .toList();
+                try {
+                    admin.createTopics(newTopics).all().get(30, TimeUnit.SECONDS);
+                } catch (ExecutionException exc) {
+                    if (!(exc.getCause() instanceof TopicExistsException)) {
+                        throw exc;
+                    }
+                }
+            }
+        }
+
+        private static void produce(String brokers, String topic, List<String> records) throws Exception {
+            Properties props = new Properties();
+            props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, brokers);
+            props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+            props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+            props.put(ProducerConfig.ACKS_CONFIG, "all");
+            props.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, "30000");
+            try (KafkaProducer<String, String> producer = new KafkaProducer<>(props)) {
+                for (String record : records) {
+                    JsonNode json = MAPPER.readTree(record);
+                    producer.send(new ProducerRecord<>(topic, json.path("event_id").asText(), record)).get(30, TimeUnit.SECONDS);
+                }
+                producer.flush();
+            }
+        }
+
+        private static List<String> consume(String brokers, String topic, String groupId, int expectedCount) {
+            Properties props = new Properties();
+            props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, brokers);
+            props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+            props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+            props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+            props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+            props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
+            props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "10");
+
+            List<String> values = new ArrayList<>();
+            try (KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props)) {
+                consumer.subscribe(List.of(topic));
+                long deadline = System.nanoTime() + Duration.ofSeconds(45).toNanos();
+                while (values.size() < expectedCount && System.nanoTime() < deadline) {
+                    ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(500));
+                    for (ConsumerRecord<String, String> record : records) {
+                        values.add(record.value());
+                    }
+                }
+            }
+            if (values.size() != expectedCount) {
+                throw new IllegalStateException("Expected " + expectedCount + " records from " + topic + " but read " + values.size());
+            }
+            return values;
+        }
+
+        private static TransformProcessor<String, Map<String, Object>> transformProcessor() throws Exception {
+            List<FieldInfo> sinkFields = new ArrayList<>();
+            for (String field : FIELD_ORDER) {
+                if ("amount".equals(field)) {
+                    sinkFields.add(new FieldInfo(field, new DoubleConverter()));
+                } else {
+                    sinkFields.add(new FieldInfo(field));
+                }
+            }
+            TransformConfig config = new TransformConfig(TRANSFORM_SQL);
+            JsonSourceInfo jsonSource = new JsonSourceInfo(StandardCharsets.UTF_8.name(), "");
+            MapSinkInfo mapSink = new MapSinkInfo(StandardCharsets.UTF_8.name(), sinkFields);
+            return TransformProcessor.create(
+                    config,
+                    SourceDecoderFactory.createJsonDecoder(jsonSource),
+                    SinkEncoderFactory.createMapEncoder(mapSink));
+        }
+
+        private static String toOrderedJson(Map<String, Object> output) throws Exception {
+            Map<String, Object> ordered = new LinkedHashMap<>();
+            for (String field : FIELD_ORDER) {
+                ordered.put(field, output.get(field));
+            }
+            return MAPPER.writeValueAsString(ordered);
+        }
+
+        private static void validate(List<String> source, List<String> sink) throws Exception {
+            if (source.size() != 4) {
+                throw new IllegalStateException("Expected 4 source records");
+            }
+            if (sink.size() != 2) {
+                throw new IllegalStateException("Expected 2 sink records after filter");
+            }
+            Set<String> expectedEventIds = Set.of("evt-inlong-k8s-001", "evt-inlong-k8s-004");
+            for (String record : sink) {
+                JsonNode json = MAPPER.readTree(record);
+                String eventId = json.path("event_id").asText();
+                if (!expectedEventIds.contains(eventId)) {
+                    throw new IllegalStateException("Unexpected sink event_id " + eventId);
+                }
+                if (!json.hasNonNull("risk_tier") || !json.hasNonNull("pipeline") || !json.hasNonNull("route")) {
+                    throw new IllegalStateException("Sink record missing enrichment fields: " + record);
+                }
+            }
+        }
+
+        private static void writeProofFiles(
+                Path proofDir,
+                String brokers,
+                String sourceTopic,
+                String sinkTopic,
+                List<String> source,
+                List<String> sink) throws Exception {
+            Files.writeString(proofDir.resolve("04-inlong-source-topic.txt"),
+                    "Source topic: " + sourceTopic + "\n"
+                            + "Broker: " + brokers + "\n"
+                            + String.join("\n", source) + "\n");
+            Files.writeString(proofDir.resolve("04-inlong-sink-topic.txt"),
+                    "Sink topic: " + sinkTopic + "\n"
+                            + "Broker: " + brokers + "\n"
+                            + String.join("\n", sink) + "\n");
+            Files.writeString(proofDir.resolve("04-inlong-summary.txt"),
+                    "Apache InLong Transform SDK phase-2 K8s proof: Complete\n"
+                            + "Queue: Kafka-compatible Redpanda\n"
+                            + "Source topic: " + sourceTopic + "\n"
+                            + "Sink topic: " + sinkTopic + "\n"
+                            + "Transform engine: org.apache.inlong:transform-sdk:2.3.0\n"
+                            + "Transform SQL: " + TRANSFORM_SQL + "\n"
+                            + "Consumed source records: " + source.size() + "\n"
+                            + "Published sink records: " + sink.size() + "\n"
+                            + "Validation: rejected and low-value wallet events were filtered out; sink JSON includes risk_tier, pipeline, and route enrichment fields.\n"
+                            + "Limitation: this validates the InLong Transform SDK in a Kubernetes job; the full InLong Manager API remained unvalidated locally because the earlier manager container returned empty API responses.\n");
+        }
+
+        private static List<String> sourceEvents() {
+            return List.of(
+                    "{\"event_id\":\"evt-inlong-k8s-001\",\"event_type\":\"wallet.payment.authorized\",\"user_id\":\"user-001\",\"account_id\":\"wallet-inlong-001\",\"amount\":250.50,\"currency\":\"MYR\",\"event_time\":\"2026-06-09T08:00:00+08:00\"}",
+                    "{\"event_id\":\"evt-inlong-k8s-002\",\"event_type\":\"wallet.payment.rejected\",\"user_id\":\"user-002\",\"account_id\":\"wallet-inlong-002\",\"amount\":880.00,\"currency\":\"MYR\",\"event_time\":\"2026-06-09T08:01:00+08:00\"}",
+                    "{\"event_id\":\"evt-inlong-k8s-003\",\"event_type\":\"wallet.payment.authorized\",\"user_id\":\"user-003\",\"account_id\":\"wallet-inlong-003\",\"amount\":80.00,\"currency\":\"MYR\",\"event_time\":\"2026-06-09T08:02:00+08:00\"}",
+                    "{\"event_id\":\"evt-inlong-k8s-004\",\"event_type\":\"wallet.payment.authorized\",\"user_id\":\"user-004\",\"account_id\":\"wallet-inlong-004\",\"amount\":1500.00,\"currency\":\"MYR\",\"event_time\":\"2026-06-09T08:03:00+08:00\"}");
+        }
+    }
+  run-proof.sh: |
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    mkdir -p /workspace/src/main/java/com/example/etl/inlong /proof
+    cp /config/pom.xml /workspace/pom.xml
+    cp /config/InLongTransformWalletProof.java /workspace/src/main/java/com/example/etl/inlong/InLongTransformWalletProof.java
+    cd /workspace
+    mvn -q -DskipTests package exec:java \
+      -Dexec.mainClass=com.example.etl.inlong.InLongTransformWalletProof \
+      2>&1 | tee /proof/04-inlong-logs.txt
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: phase2-inlong-transform-sdk
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-inlong-transform-sdk
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: phase2-inlong-transform-sdk
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: inlong-transform-sdk
+          image: maven:3.9.9-eclipse-temurin-17
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/bash
+            - /config/run-proof.sh
+          env:
+            - name: BROKERS
+              value: phase2-redpanda:9092
+            - name: PROOF_DIR
+              value: /proof
+          resources:
+            requests:
+              cpu: 250m
+              memory: 768Mi
+            limits:
+              cpu: "2"
+              memory: 2Gi
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: proof
+              mountPath: /proof
+            - name: maven-cache
+              mountPath: /root/.m2
+      volumes:
+        - name: config
+          configMap:
+            name: phase2-inlong-transform-sdk
+            defaultMode: 0755
+        - name: proof
+          emptyDir: {}
+        - name: maven-cache
+          emptyDir: {}

@@ -1,0 +1,2 @@
+NAME                                READY   STATUS    RESTARTS   AGE   IP           NODE     NOMINATED NODE   READINESS GATES
+phase2-inlong-transform-sdk-xwtbj   1/1     Running   0          53s   10.42.0.63   colima   <none>           <none>
