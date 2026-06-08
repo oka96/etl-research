@@ -2,14 +2,22 @@ Local setup proof
 Verified: 2026-06-08 01:49 MYT
 Workspace: /Users/oka/Documents/etl-research
 
+Before rerunning after public-repo cleanup:
+cp local-setup/.env.example local-setup/.env
+cp local-setup/scdf/.env.example local-setup/scdf/.env
+cp local-setup/streampipes/.env.example local-setup/streampipes/.env
+cp local-setup/inlong/.env.example local-setup/inlong/.env
+
+Then replace the placeholder values in the ignored .env files with local-only credentials.
+
 Base command:
-docker compose --env-file local-setup/.env.example -f local-setup/docker-compose.kafka-poc.yml up -d --build
+docker compose --env-file local-setup/.env -f local-setup/docker-compose.kafka-poc.yml up -d --build
 
 Extended candidate command:
-docker compose -f local-setup/docker-compose.kafka-poc.yml --profile extended up -d spark-master spark-worker pulsar
+docker compose --env-file local-setup/.env -f local-setup/docker-compose.kafka-poc.yml --profile extended up -d spark-master spark-worker pulsar
 
 RocketMQ target-broker command:
-docker compose -f local-setup/docker-compose.kafka-poc.yml --profile rocketmq up -d rocketmq-namesrv rocketmq-broker rocketmq-dashboard
+docker compose --env-file local-setup/.env -f local-setup/docker-compose.kafka-poc.yml --profile rocketmq up -d rocketmq-namesrv rocketmq-broker rocketmq-dashboard
 
 StreamPark local proof command:
 cd local-setup/apache-streampark_2.12-2.1.5-incubating-bin
@@ -22,10 +30,10 @@ Storm local proof command:
 docker compose -f local-setup/docker-compose.storm.yml up -d
 
 Spring Cloud Data Flow local proof command:
-DATAFLOW_VERSION=2.10.2 SKIPPER_VERSION=2.9.2 docker compose --env-file local-setup/scdf/.env.example -p etl-scdf -f local-setup/scdf/docker-compose.yml -f local-setup/scdf/docker-compose-kafka.yml -f local-setup/scdf/docker-compose-mariadb.yml up -d dataflow-server skipper-server
+DATAFLOW_VERSION=2.10.2 SKIPPER_VERSION=2.9.2 docker compose --env-file local-setup/scdf/.env -p etl-scdf -f local-setup/scdf/docker-compose.yml -f local-setup/scdf/docker-compose-kafka.yml -f local-setup/scdf/docker-compose-mariadb.yml up -d dataflow-server skipper-server
 
 StreamPipes local proof command:
-docker compose --env-file local-setup/streampipes/.env.example -p etl-streampipes -f local-setup/streampipes/docker-compose.yml up -d
+docker compose --env-file local-setup/streampipes/.env -p etl-streampipes -f local-setup/streampipes/docker-compose.yml up -d
 
 Local services verified during this run:
 - Redpanda broker: etl-research-redpanda, localhost:19092
@@ -153,11 +161,11 @@ Key verification commands:
   HTTP/1.1 200 with title Apache StreamPipes - Self-Service IIoT Toolbox
 - docker logs --tail 80 etl-streampipes-backend-1 | rg 'Auto-Setup finished|Apache Kafka|Apache RocketMQ|Apache TubeMQ'
   Auto-Setup finished; Installing extension Apache Kafka; Installing extension Apache RocketMQ; Installing extension Apache TubeMQ (InLong)
-- docker compose --env-file local-setup/inlong/.env.example -f local-setup/inlong/docker-compose.yml up -d mysql manager dashboard
+- docker compose --env-file local-setup/inlong/.env -f local-setup/inlong/docker-compose.yml up -d mysql manager dashboard
   Started dashboard, manager, and mysql
 - curl -i http://localhost/
   HTTP/1.1 200 with title InLong
-- docker compose --env-file local-setup/inlong/.env.example -f local-setup/inlong/docker-compose.yml ps
+- docker compose --env-file local-setup/inlong/.env -f local-setup/inlong/docker-compose.yml ps
   dashboard Up, manager Up on 8083, mysql Up and healthy
 - curl -i --max-time 20 http://localhost:8083/
   curl: (52) Empty reply from server

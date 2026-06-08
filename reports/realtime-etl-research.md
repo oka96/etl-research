@@ -37,7 +37,7 @@ For this company context, the recommended decision is **Flink as the strategic e
 Local PoC stack:
 
 - Compose file: [docker-compose.kafka-poc.yml](/Users/oka/Documents/etl-research/local-setup/docker-compose.kafka-poc.yml)
-- Public repo credential handling: `.env` files are ignored; tracked `.env.example` files list required local variables without real secrets.
+- Public repo credential handling: `.env` files are ignored; tracked `.env.example` files list required local variables without real secrets. For local runs, copy each needed `.env.example` to `.env` and fill local-only values.
 - Setup proof: [setup-proof.txt](/Users/oka/Documents/etl-research/local-setup/setup-proof.txt)
 - Redpanda Console: `http://localhost:18080`
 - Flink Dashboard: `http://localhost:18081`
