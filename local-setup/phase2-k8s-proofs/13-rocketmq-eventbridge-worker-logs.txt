@@ -1,0 +1,285 @@
+Picked up JAVA_TOOL_OPTIONS: -Drocketmq.namesrv.addr=phase2-rocketmq-namesrv:9876
+18:27:24,648 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+18:27:24,649 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.groovy]
+18:27:24,649 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [jar:file:/opt/rocketmq-eventbridge/rocketmq-eventbridge.jar!/BOOT-INF/classes!/logback.xml]
+18:27:24,675 |-INFO in ch.qos.logback.core.joran.spi.ConfigurationWatchList@68fb2c38 - URL [jar:file:/opt/rocketmq-eventbridge/rocketmq-eventbridge.jar!/BOOT-INF/classes!/logback.xml] is not of type file
+18:27:24,717 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - debug attribute not set
+18:27:24,718 |-INFO in ch.qos.logback.classic.joran.action.JMXConfiguratorAction - begin
+18:27:24,757 |-ERROR in ch.qos.logback.core.joran.spi.Interpreter@15:72 - no applicable action for [springProperty], current ElementPath  is [[configuration][springProperty]]
+18:27:24,757 |-ERROR in ch.qos.logback.core.joran.spi.Interpreter@16:72 - no applicable action for [springProperty], current ElementPath  is [[configuration][springProperty]]
+18:27:24,757 |-ERROR in ch.qos.logback.core.joran.spi.Interpreter@17:74 - no applicable action for [springProperty], current ElementPath  is [[configuration][springProperty]]
+18:27:24,757 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+18:27:24,763 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [STDOUT]
+18:27:24,765 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+18:27:24,795 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+18:27:24,797 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [PROJECT]
+18:27:24,800 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@1451043227 - setting totalSizeCap to 10 GB
+18:27:24,803 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@1451043227 - No compression will be used
+18:27:24,804 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@1451043227 - Will use the pattern log.path_IS_UNDEFINED/app.name_IS_UNDEFINED/app.name_IS_UNDEFINED.%d{yyyy-MM-dd}.log for the active file
+18:27:24,807 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - The date pattern is 'yyyy-MM-dd' from file name pattern 'log.path_IS_UNDEFINED/app.name_IS_UNDEFINED/app.name_IS_UNDEFINED.%d{yyyy-MM-dd}.log'.
+18:27:24,807 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Roll-over at midnight.
+18:27:24,809 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Setting initial period to Mon Jun 08 18:27:24 UTC 2026
+18:27:24,810 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+18:27:24,811 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[PROJECT] - Active log file name: log.path_IS_UNDEFINED/app.name_IS_UNDEFINED/app.name_IS_UNDEFINED.log
+18:27:24,811 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[PROJECT] - File property is set to [log.path_IS_UNDEFINED/app.name_IS_UNDEFINED/app.name_IS_UNDEFINED.log]
+18:27:24,815 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+18:27:24,815 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [ACCESS]
+18:27:24,816 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@783286238 - setting totalSizeCap to 3 GB
+18:27:24,816 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@783286238 - No compression will be used
+18:27:24,816 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@783286238 - Will use the pattern log.path_IS_UNDEFINED/app.name_IS_UNDEFINED/access.%d{yyyy-MM-dd}.log for the active file
+18:27:24,816 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - The date pattern is 'yyyy-MM-dd' from file name pattern 'log.path_IS_UNDEFINED/app.name_IS_UNDEFINED/access.%d{yyyy-MM-dd}.log'.
+18:27:24,816 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Roll-over at midnight.
+18:27:24,816 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Setting initial period to Mon Jun 08 18:27:24 UTC 2026
+18:27:24,816 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+18:27:24,816 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[ACCESS] - Active log file name: log.path_IS_UNDEFINED/app.name_IS_UNDEFINED/access.log
+18:27:24,816 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[ACCESS] - File property is set to [log.path_IS_UNDEFINED/app.name_IS_UNDEFINED/access.log]
+18:27:24,817 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [accessLog] to DEBUG
+18:27:24,817 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [accessLog] to false
+18:27:24,817 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [ACCESS] to Logger[accessLog]
+18:27:24,817 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [STDOUT] to Logger[accessLog]
+18:27:24,817 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to DEBUG
+18:27:24,817 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [STDOUT] to Logger[ROOT]
+18:27:24,817 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [PROJECT] to Logger[ROOT]
+18:27:24,817 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
+18:27:24,817 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@59690aa4 - Registering current configuration as safe fallback point
+
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.0.2.RELEASE)
+
+2026-06-08
+                18:27:24.979@@@@@@@@[background-preinit]@@INFO@@o.h.validator.internal.util.Version[21]@@HV000001: Hibernate Validator 6.0.9.Final
+2026-06-08
+                18:27:25.079@@@@@@@@[main]@@INFO@@org.apache.rocketmq.eventbridge.Main[87]@@Starting Main v1.1.0 on phase2-rocketmq-eventbridge-5f5bdfd8b6-g7zcg with PID 1 (/opt/rocketmq-eventbridge/rocketmq-eventbridge.jar started by root in /opt/rocketmq-eventbridge)
+2026-06-08
+                18:27:25.080@@@@@@@@[main]@@INFO@@org.apache.rocketmq.eventbridge.Main[87]@@The following profiles are active: local
+2026-06-08
+                18:27:25.137@@@@@@@@[main]@@INFO@@o.s.b.w.r.c.AnnotationConfigReactiveWebServerApplicationContext[87]@@Refreshing org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@6fadae5d: startup date [Mon Jun 08 18:27:25 UTC 2026]; root of context hierarchy
+2026-06-08
+                18:27:25.558@@@@@@@@[background-preinit]@@WARN@@o.s.h.c.j.Jackson2ObjectMapperBuilder[87]@@For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+2026-06-08
+                18:27:26.096@@@@@@@@[main]@@INFO@@o.s.b.f.a.AutowiredAnnotationBeanPostProcessor[87]@@JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2026-06-08
+                18:27:26.133@@@@@@@@[main]@@INFO@@o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker[87]@@Bean 'validatorConfiguration' of type [org.apache.rocketmq.eventbridge.config.ValidatorConfiguration$$EnhancerBySpringCGLIB$$47242f0d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2026-06-08
+                18:27:26.160@@@@@@@@[main]@@INFO@@o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker[87]@@Bean 'validator' of type [org.hibernate.validator.internal.engine.ValidatorImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2026-06-08
+                18:27:26.674@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/bus/createEventBus],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.bus.CreateEventBusResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventBusController.createEventBus(org.apache.rocketmq.eventbridge.adapter.api.dto.bus.CreateEventBusRequest)
+2026-06-08
+                18:27:26.675@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/bus/getEventBus],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.bus.GetEventBusResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventBusController.getEventBus(org.apache.rocketmq.eventbridge.adapter.api.dto.bus.GetEventBusRequest)
+2026-06-08
+                18:27:26.675@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/bus/listEventBuses],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.bus.ListEventBusesResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventBusController.listEventBuses(org.apache.rocketmq.eventbridge.adapter.api.dto.bus.ListEventBusesRequest)
+2026-06-08
+                18:27:26.676@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/bus/deleteEventBus],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.bus.DeleteEventBusResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventBusController.deleteEventBus(org.apache.rocketmq.eventbridge.adapter.api.dto.bus.DeleteEventBusRequest)
+2026-06-08
+                18:27:26.681@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/rule/enableEventRule],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.rule.EnableRuleResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventRuleController.enableRule(org.apache.rocketmq.eventbridge.adapter.api.dto.rule.EnableRuleRequest)
+2026-06-08
+                18:27:26.685@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/rule/disableEventRule],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.rule.DisableRuleResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventRuleController.disableRule(org.apache.rocketmq.eventbridge.adapter.api.dto.rule.DisableRuleRequest)
+2026-06-08
+                18:27:26.685@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/rule/getEventRule],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.rule.GetRuleResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventRuleController.getRule(org.apache.rocketmq.eventbridge.adapter.api.dto.rule.GetRuleRequest)
+2026-06-08
+                18:27:26.685@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/rule/deleteEventRule],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.rule.DeleteRuleResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventRuleController.deleteRule(org.apache.rocketmq.eventbridge.adapter.api.dto.rule.DeleteRuleRequest)
+2026-06-08
+                18:27:26.686@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/rule/createEventRule],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.rule.CreateRuleResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventRuleController.createRule(org.apache.rocketmq.eventbridge.adapter.api.dto.rule.CreateRuleRequest)
+2026-06-08
+                18:27:26.687@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/rule/updateEventRule],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.rule.UpdateRuleResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventRuleController.updateRule(org.apache.rocketmq.eventbridge.adapter.api.dto.rule.UpdateRuleRequest)
+2026-06-08
+                18:27:26.687@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/rule/listEventRules],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.rule.ListRulesResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventRuleController.listRules(org.apache.rocketmq.eventbridge.adapter.api.dto.rule.ListRulesRequest)
+2026-06-08
+                18:27:26.689@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/webhook/putEvents]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.data.PutEventsResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventDataController.putHttpEvents(org.springframework.web.server.ServerWebExchange,java.util.Map<java.lang.String, java.lang.String>,byte[],java.lang.String)
+2026-06-08
+                18:27:26.690@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/putEvents],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.data.PutEventsResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventDataController.putEvents(java.util.Map<java.lang.String, java.lang.String>,byte[])
+2026-06-08
+                18:27:26.691@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/type/listEventTypes],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.type.ListEventTypesResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventTypeController.listEventTypes(org.apache.rocketmq.eventbridge.adapter.api.dto.type.ListEventTypesRequest)
+2026-06-08
+                18:27:26.694@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/source/getEventSource],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.source.GetEventSourceResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventSourceController.getEventSource(org.apache.rocketmq.eventbridge.adapter.api.dto.source.GetEventSourceRequest)
+2026-06-08
+                18:27:26.695@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/source/listEventSources],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.source.ListEventSourcesResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventSourceController.listEventSources(org.apache.rocketmq.eventbridge.adapter.api.dto.source.ListEventSourcesRequest)
+2026-06-08
+                18:27:26.695@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/source/createEventSource],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.source.CreateEventSourceResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventSourceController.createEventSource(org.apache.rocketmq.eventbridge.adapter.api.dto.source.CreateEventSourceRequest)
+2026-06-08
+                18:27:26.695@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/source/deleteEventSource],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.source.DeleteEventSourceResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventSourceController.deleteEventSource(org.apache.rocketmq.eventbridge.adapter.api.dto.source.DeleteEventSourceRequest)
+2026-06-08
+                18:27:26.696@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/source/updateEventSource],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.source.UpdateEventSourceResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventSourceController.updateEventSource(org.apache.rocketmq.eventbridge.adapter.api.dto.source.UpdateEventSourceRequest)
+2026-06-08
+                18:27:26.698@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/target/listEventTargets],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.target.ListTargetsResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventTargetController.listEventTargets(org.apache.rocketmq.eventbridge.adapter.api.dto.target.ListTargetsRequest)
+2026-06-08
+                18:27:26.698@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/target/createEventTargets],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.target.CreateTargetsResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventTargetController.createTargets(org.apache.rocketmq.eventbridge.adapter.api.dto.target.CreateTargetsRequest)
+2026-06-08
+                18:27:26.698@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/target/updateEventTargets],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.target.UpdateTargetsResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventTargetController.updateTargets(org.apache.rocketmq.eventbridge.adapter.api.dto.target.UpdateTargetsRequest)
+2026-06-08
+                18:27:26.699@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/target/deleteEventTargets],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.target.DeleteTargetsResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.EventTargetController.deleteTargets(org.apache.rocketmq.eventbridge.adapter.api.dto.target.DeleteTargetsRequest)
+2026-06-08
+                18:27:26.703@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/api-destination/deleteApiDestination],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.DeleteApiDestinationResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ApiDestinationController.deleteApiDestination(org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.DeleteApiDestinationRequest)
+2026-06-08
+                18:27:26.703@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/api-destination/listApiDestinations],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.ListApiDestinationsResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ApiDestinationController.listApiDestinations(org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.ListApiDestinationsRequest)
+2026-06-08
+                18:27:26.703@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/api-destination/createApiDestination],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.CreateApiDestinationResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ApiDestinationController.createApiDestination(org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.CreateApiDestinationRequest)
+2026-06-08
+                18:27:26.703@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/api-destination/updateApiDestination],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.UpdateApiDestinationResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ApiDestinationController.updateApiDestination(org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.UpdateApiDestinationRequest)
+2026-06-08
+                18:27:26.704@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/api-destination/getApiDestination],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.GetApiDestinationResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ApiDestinationController.getApiDestination(org.apache.rocketmq.eventbridge.adapter.api.dto.apidestination.GetApiDestinationRequest)
+2026-06-08
+                18:27:26.708@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/connection/getConnection],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.connection.GetConnectionResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ConnectionController.getConnection(org.apache.rocketmq.eventbridge.adapter.api.dto.connection.GetConnectionRequest)
+2026-06-08
+                18:27:26.709@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/connection/deleteConnection],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.connection.DeleteConnectionResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ConnectionController.deleteConnection(org.apache.rocketmq.eventbridge.adapter.api.dto.connection.DeleteConnectionRequest)
+2026-06-08
+                18:27:26.709@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/connection/createConnection],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.connection.CreateConnectionResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ConnectionController.createConnection(org.apache.rocketmq.eventbridge.adapter.api.dto.connection.CreateConnectionRequest)
+2026-06-08
+                18:27:26.709@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/connection/updateConnection],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.connection.UpdateConnectionResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ConnectionController.updateConnection(org.apache.rocketmq.eventbridge.adapter.api.dto.connection.UpdateConnectionRequest)
+2026-06-08
+                18:27:26.709@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/connection/listConnections],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.connection.ListConnectionResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ConnectionController.listConnections(org.apache.rocketmq.eventbridge.adapter.api.dto.connection.ListConnectionRequest)
+2026-06-08
+                18:27:26.709@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/connection/selectOneConnection],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.connection.GetConnectionResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ConnectionController.selectOneConnection(org.apache.rocketmq.eventbridge.adapter.api.dto.connection.GetConnectionRequest)
+2026-06-08
+                18:27:26.710@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.RequestMappingHandlerMapping[87]@@Mapped "{[/connection/listEnumsResponse],methods=[POST]}" onto public reactor.core.publisher.Mono<org.apache.rocketmq.eventbridge.adapter.api.dto.connection.ListEnumsResponse> org.apache.rocketmq.eventbridge.adapter.api.controller.ConnectionController.listEnumsResponse()
+2026-06-08
+                18:27:26.771@@@@@@@@[main]@@INFO@@o.s.w.r.h.SimpleUrlHandlerMapping[87]@@Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.reactive.resource.ResourceWebHandler]
+2026-06-08
+                18:27:26.771@@@@@@@@[main]@@INFO@@o.s.w.r.h.SimpleUrlHandlerMapping[87]@@Mapped URL path [/**] onto handler of type [class org.springframework.web.reactive.resource.ResourceWebHandler]
+2026-06-08
+                18:27:26.874@@@@@@@@[main]@@INFO@@o.s.w.r.r.m.a.ControllerMethodResolver[87]@@Looking for @ControllerAdvice: org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@6fadae5d: startup date [Mon Jun 08 18:27:25 UTC 2026]; root of context hierarchy
+2026-06-08
+                18:27:27.051@@@@@@@@[main]@@WARN@@com.zaxxer.hikari.HikariConfig[1081]@@ hikaricp - idleTimeout is close to or more than maxLifetime, disabling it.
+2026-06-08
+                18:27:27.051@@@@@@@@[main]@@INFO@@com.zaxxer.hikari.HikariDataSource[80]@@ hikaricp - Starting...
+2026-06-08
+                18:27:27.146@@@@@@@@[main]@@INFO@@com.zaxxer.hikari.HikariDataSource[82]@@ hikaricp - Start completed.
+2026-06-08
+                18:27:28.134@@@@@@@@[main]@@INFO@@o.a.r.e.a.r.common.plugin.Plugin[161]@@Loading plugin from: /opt/rocketmq-eventbridge/plugin/connect-eventbridge-transform-1.1.0-jar-with-dependencies.jar
+2026-06-08
+                18:27:28.387@@@@@@@@[main]@@INFO@@org.reflections.Reflections[229]@@Reflections took 227 ms to scan 1 urls, producing 886 keys and 3590 values [using 1 cores]
+2026-06-08
+                18:27:28.405@@@@@@@@[main]@@INFO@@o.a.r.e.a.r.common.plugin.Plugin[161]@@Loading plugin from: /opt/rocketmq-eventbridge/plugin/eventbridge-connect-file-1.1.0-jar-with-dependencies.jar
+2026-06-08
+                18:27:28.419@@@@@@@@[main]@@INFO@@org.reflections.Reflections[229]@@Reflections took 12 ms to scan 1 urls, producing 59 keys and 199 values [using 1 cores]
+2026-06-08
+                18:27:28.421@@@@@@@@[main]@@INFO@@o.a.r.e.a.r.common.plugin.Plugin[161]@@Loading plugin from: /opt/rocketmq-eventbridge/plugin/connect-filter-transform-1.1.0-jar-with-dependencies.jar
+2026-06-08
+                18:27:28.551@@@@@@@@[main]@@INFO@@org.reflections.Reflections[229]@@Reflections took 129 ms to scan 1 urls, producing 884 keys and 3588 values [using 1 cores]
+2026-06-08
+                18:27:28.588@@@@@@@@[main]@@INFO@@o.f.c.i.license.VersionPrinter[37]@@Flyway Community Edition 8.5.7 by Redgate
+2026-06-08
+                18:27:28.588@@@@@@@@[main]@@INFO@@o.f.c.i.license.VersionPrinter[37]@@See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.7
+2026-06-08
+                18:27:28.588@@@@@@@@[main]@@INFO@@o.f.c.i.license.VersionPrinter[37]@@
+2026-06-08
+                18:27:28.601@@@@@@@@[main]@@INFO@@o.f.c.i.d.base.BaseDatabaseType[37]@@Database: jdbc:h2:./rocketmq_eventbridge (H2 1.4)
+2026-06-08
+                18:27:28.642@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbValidate[37]@@Successfully validated 9 migrations (execution time 00:00.015s)
+2026-06-08
+                18:27:28.649@@@@@@@@[main]@@INFO@@o.f.c.i.s.JdbcTableSchemaHistory[37]@@Creating Schema History table "PUBLIC"."flyway_schema_history" ...
+2026-06-08
+                18:27:28.672@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Current version of schema "PUBLIC": << Empty Schema >>
+2026-06-08
+                18:27:28.681@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "1 - baseline"
+2026-06-08
+                18:27:28.714@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "2 - baseline"
+2026-06-08
+                18:27:28.737@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "3 - change target transform type"
+2026-06-08
+                18:27:28.754@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "4 - register source acs mns"
+2026-06-08
+                18:27:28.771@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "5 - register target acs dingtalk"
+2026-06-08
+                18:27:28.781@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "6 - register target acs eventbridge"
+2026-06-08
+                18:27:28.815@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "7 - update event connection table structure"
+2026-06-08
+                18:27:28.823@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "8 - update unique key"
+2026-06-08
+                18:27:28.835@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Migrating schema "PUBLIC" to version "9 - init file target class"
+2026-06-08
+                18:27:28.841@@@@@@@@[main]@@INFO@@o.f.core.internal.command.DbMigrate[37]@@Successfully applied 9 migrations to schema "PUBLIC", now at version v9 (execution time 00:00.171s)
+2026-06-08
+                18:27:28.934@@@@@@@@[main]@@INFO@@o.a.r.e.adapter.runtime.Runtime[65]@@Start init runtime.
+2026-06-08
+                18:27:28.945@@@@@@@@[main]@@INFO@@EventBridgeRuntimer[48]@@Try to start service thread:EventBusListener started:false lastThread:Thread[EventBusListener,5,main]
+2026-06-08
+                18:27:28.946@@@@@@@@[main]@@INFO@@EventBridgeRuntimer[55]@@Start service thread:EventBusListener started:true lastThread:Thread[EventBusListener,5,main]
+2026-06-08
+                18:27:28.973@@@@@@@@[main]@@INFO@@o.a.r.eventbridge.demo.DefaultDemo[62]@@init demo
+2026-06-08
+                18:27:29.050@@@@@@@@[main]@@INFO@@o.a.r.eventbridge.demo.DefaultDemo[75]@@Create demo eventbus:demo-bus
+2026-06-08
+                18:27:29.150@@@@@@@@[main]@@INFO@@o.a.r.eventbridge.demo.DefaultDemo[87]@@Create demo event rule:demo-rule
+Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
+2026-06-08
+                18:27:29.464@@@@@@@@[main]@@INFO@@o.s.j.e.a.AnnotationMBeanExporter[87]@@Registering beans for JMX exposure on startup
+2026-06-08
+                18:27:29.465@@@@@@@@[main]@@INFO@@o.s.j.e.a.AnnotationMBeanExporter[87]@@Bean with name 'dataSource' has been autodetected for JMX exposure
+2026-06-08
+                18:27:29.468@@@@@@@@[main]@@INFO@@o.s.j.e.a.AnnotationMBeanExporter[87]@@Located MBean 'dataSource': registering with JMX server as MBean [com.zaxxer.hikari:name=dataSource,type=HikariDataSource]
+2026-06-08
+                18:27:29.506@@@@@@@@[reactor-http-nio-1]@@INFO@@r.ipc.netty.tcp.BlockingNettyContext[238]@@Started HttpServer on /0:0:0:0:0:0:0:0:7001
+2026-06-08
+                18:27:29.508@@@@@@@@[main]@@INFO@@o.s.b.w.e.netty.NettyWebServer[87]@@Netty started on port(s): 7001
+2026-06-08
+                18:27:29.513@@@@@@@@[main]@@INFO@@org.apache.rocketmq.eventbridge.Main[87]@@Started Main in 4.919 seconds (JVM running for 5.184)
+2026-06-08
+                18:27:31.869@@@@@@@@[Remoting-TargetRunnerConfigOnDBObserver_1]@@INFO@@o.a.r.e.a.s.r.r.c.LitePullConsumerImpl[82]@@RocketmqPullConsumer start.
+2026-06-08
+                18:27:31.872@@@@@@@@[Remoting-TargetRunnerConfigOnDBObserver_1]@@INFO@@EventBridgeRuntimer[48]@@Try to start service thread:ConsumeWorker started:false lastThread:Thread[ConsumeWorker,5,main]
+2026-06-08
+                18:27:31.872@@@@@@@@[Remoting-TargetRunnerConfigOnDBObserver_1]@@INFO@@EventBridgeRuntimer[55]@@Start service thread:ConsumeWorker started:true lastThread:Thread[ConsumeWorker,5,main]
+2026-06-08
+                18:27:31.946@@@@@@@@[Remoting-TargetRunnerConfigOnDBObserver_1]@@INFO@@EventBusListener[251]@@runnerName -default-demo-bus-demo-rule-demo-target- refresh context by refresh type -ADD- succeed
+2026-06-08
+                18:27:32.893@@@@@@@@[RebalanceService]@@INFO@@o.a.r.e.a.s.r.r.c.LitePullConsumerImpl[166]@@Submit pullTask:MessageQueue [topic=eventbridge%default%demo-bus_1780943249021, brokerName=broker-a, queueId=0]
+2026-06-08
+                18:27:32.894@@@@@@@@[RebalanceService]@@INFO@@o.a.r.e.a.s.r.r.c.LitePullConsumerImpl[113]@@Load balance result of topic eventbridge%default%demo-bus_1780943249021 changed, mqAll [MessageQueue [topic=eventbridge%default%demo-bus_1780943249021, brokerName=broker-a, queueId=0]], mqDivided [MessageQueue [topic=eventbridge%default%demo-bus_1780943249021, brokerName=broker-a, queueId=0]].
+2026-06-08
+                18:27:43.897@@@@@@@@[reactor-http-nio-3]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://phase2-rocketmq-eventbridge:7001/bus/listEventBuses | requestParam : {} | requestMethod : POST | requestBody : "{}"
+2026-06-08
+                18:27:43.947@@@@@@@@[reactor-http-nio-4]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://phase2-rocketmq-eventbridge:7001/bus/createEventBus | requestParam : {} | requestMethod : POST | requestBody : "{\n  \"eventBusName\": \"phase2-eb-wallet-bus\",\n  \"description\": \"Phase-2 wallet EventBridge bus\"\n}\n"
+2026-06-08
+                18:27:43.968@@@@@@@@[reactor-http-nio-1]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://phase2-rocketmq-eventbridge:7001/rule/createEventRule | requestParam : {} | requestMethod : POST | requestBody : "{\n  \"eventBusName\": \"phase2-eb-wallet-bus\",\n  \"eventRuleName\": \"phase2-eb-wallet-authorized\",\n  \"description\": \"Authorize wallet payment events by CloudEvent type\",\n  \"filterPattern\": \"{\\\"type\\\":[\\\"wallet.payment.authorized\\\"]}\"\n}\n"
+2026-06-08
+                18:27:43.989@@@@@@@@[reactor-http-nio-2]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://phase2-rocketmq-eventbridge:7001/target/createEventTargets | requestParam : {} | requestMethod : POST | requestBody : "{\n  \"eventBusName\": \"phase2-eb-wallet-bus\",\n  \"eventRuleName\": \"phase2-eb-wallet-authorized\",\n  \"eventTargets\": [\n    {\n      \"eventTargetName\": \"phase2-eb-wallet-file-target\",\n      \"className\": \"file\",\n      \"config\": {\n        \"fileName\": \"/data/sink/wallet-eventbridge-filtered.jsonl\",\n        \"line\": \"{\\\"form\\\":\\\"JSONPATH\\\",\\\"value\\\":\\\"$.data\\\"}\"\n      },\n      \"runOptions\": {\n        \"errorsTolerance\": \"NONE\",\n        \"retryStrategy\": {\n          \"pushRetryStrategy\": \"BACKOFF_RETRY\",\n          \"maximumEventAgeInSeconds\": 3600,\n          \"maximumRetryAttempts\": 3\n        }\n      }\n    }\n  ]\n}\n"
+2026-06-08
+                18:27:44.010@@@@@@@@[reactor-http-nio-3]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://phase2-rocketmq-eventbridge:7001/rule/listEventRules | requestParam : {} | requestMethod : POST | requestBody : "{\"eventBusName\":\"phase2-eb-wallet-bus\",\"maxResults\":10,\"nextToken\":\"0\"}"
+2026-06-08
+                18:27:44.028@@@@@@@@[reactor-http-nio-4]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://phase2-rocketmq-eventbridge:7001/target/listEventTargets | requestParam : {} | requestMethod : POST | requestBody : "{\"eventBusName\":\"phase2-eb-wallet-bus\",\"eventRuleName\":\"phase2-eb-wallet-authorized\",\"maxResults\":10,\"nextToken\":\"0\"}"
+2026-06-08
+                18:27:46.863@@@@@@@@[Remoting-TargetRunnerConfigOnDBObserver_1]@@INFO@@o.a.r.e.a.s.r.r.c.LitePullConsumerImpl[82]@@RocketmqPullConsumer start.
+2026-06-08
+                18:27:46.864@@@@@@@@[Remoting-TargetRunnerConfigOnDBObserver_1]@@INFO@@EventBridgeRuntimer[48]@@Try to start service thread:ConsumeWorker started:false lastThread:Thread[ConsumeWorker,5,main]
+2026-06-08
+                18:27:46.864@@@@@@@@[Remoting-TargetRunnerConfigOnDBObserver_1]@@INFO@@EventBridgeRuntimer[55]@@Start service thread:ConsumeWorker started:true lastThread:Thread[ConsumeWorker,5,main]
+2026-06-08
+                18:27:46.869@@@@@@@@[Remoting-TargetRunnerConfigOnDBObserver_1]@@INFO@@EventBusListener[251]@@runnerName -default-phase2-eb-wallet-bus-phase2-eb-wallet-authorized-phase2-eb-wallet-file-target- refresh context by refresh type -ADD- succeed
+2026-06-08
+                18:27:52.904@@@@@@@@[RebalanceService]@@WARN@@o.a.r.e.a.s.r.r.c.LitePullConsumerImpl[155]@@Not found any messageQueue, topic:eventbridge%default%phase2-eb-wallet-bus_1780943263952
+2026-06-08
+                18:27:52.904@@@@@@@@[RebalanceService]@@INFO@@o.a.r.e.a.s.r.r.c.LitePullConsumerImpl[113]@@Load balance result of topic eventbridge%default%phase2-eb-wallet-bus_1780943263952 changed, mqAll [], mqDivided [].
+2026-06-08
+                18:27:57.562@@@@@@@@[NettyClientPublicExecutor_1]@@INFO@@o.a.r.e.a.s.r.r.c.LitePullConsumerImpl[259]@@No NEW_MSG or MATCHED_MSG for mq:MessageQueue [topic=eventbridge%default%demo-bus_1780943249021, brokerName=broker-a, queueId=0], pull again.
+2026-06-08
+                18:28:02.878@@@@@@@@[RebalanceService]@@INFO@@o.a.r.e.a.s.r.r.c.LitePullConsumerImpl[166]@@Submit pullTask:MessageQueue [topic=eventbridge%default%phase2-eb-wallet-bus_1780943263952, brokerName=broker-a, queueId=0]
+2026-06-08
+                18:28:02.879@@@@@@@@[RebalanceService]@@INFO@@o.a.r.e.a.s.r.r.c.LitePullConsumerImpl[113]@@Load balance result of topic eventbridge%default%phase2-eb-wallet-bus_1780943263952 changed, mqAll [MessageQueue [topic=eventbridge%default%phase2-eb-wallet-bus_1780943263952, brokerName=broker-a, queueId=0]], mqDivided [MessageQueue [topic=eventbridge%default%phase2-eb-wallet-bus_1780943263952, brokerName=broker-a, queueId=0]].
+2026-06-08
+                18:28:19.053@@@@@@@@[reactor-http-nio-4]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://phase2-rocketmq-eventbridge:7001/putEvents | requestParam : {} | requestMethod : POST | requestBody : "{\"event_id\":\"evt-eb-k8s-001\",\"event_type\":\"wallet.payment.authorized\",\"wallet_id\":\"wallet-eb-001\",\"amount\":250.50,\"currency\":\"MYR\",\"status\":\"authorized\"}"
+2026-06-08
+                18:28:19.095@@@@@@@@[reactor-http-nio-1]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://phase2-rocketmq-eventbridge:7001/putEvents | requestParam : {} | requestMethod : POST | requestBody : "{\"event_id\":\"evt-eb-k8s-002\",\"event_type\":\"wallet.payment.rejected\",\"wallet_id\":\"wallet-eb-002\",\"amount\":880.00,\"currency\":\"MYR\",\"status\":\"authorized\"}"
+2026-06-08
+                18:28:19.103@@@@@@@@[reactor-http-nio-2]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://phase2-rocketmq-eventbridge:7001/putEvents | requestParam : {} | requestMethod : POST | requestBody : "{\"event_id\":\"evt-eb-k8s-003\",\"event_type\":\"wallet.payment.authorized\",\"wallet_id\":\"wallet-eb-003\",\"amount\":80.00,\"currency\":\"MYR\",\"status\":\"authorized\"}"
+2026-06-08
+                18:28:19.112@@@@@@@@[reactor-http-nio-3]@@INFO@@accessLog[62]@@requestTraceId :  | url : http://phase2-rocketmq-eventbridge:7001/putEvents | requestParam : {} | requestMethod : POST | requestBody : "{\"event_id\":\"evt-eb-k8s-004\",\"event_type\":\"wallet.payment.authorized\",\"wallet_id\":\"wallet-eb-004\",\"amount\":1500.00,\"currency\":\"MYR\",\"status\":\"authorized\"}"
+2026-06-08
+                18:28:19.995@@@@@@@@[EventRuleTransfer]@@INFO@@o.a.r.e.a.r.boot.EventRuleTransfer[111]@@offer target task queues succeed, transforms.size=3
+2026-06-08
+                18:28:22.557@@@@@@@@[NettyClientPublicExecutor_1]@@INFO@@o.a.r.e.a.s.r.r.c.LitePullConsumerImpl[259]@@No NEW_MSG or MATCHED_MSG for mq:MessageQueue [topic=eventbridge%default%demo-bus_1780943249021, brokerName=broker-a, queueId=0], pull again.
+2026-06-08
+                18:28:42.559@@@@@@@@[NettyClientPublicExecutor_1]@@INFO@@o.a.r.e.a.s.r.r.c.LitePullConsumerImpl[259]@@No NEW_MSG or MATCHED_MSG for mq:MessageQueue [topic=eventbridge%default%phase2-eb-wallet-bus_1780943263952, brokerName=broker-a, queueId=0], pull again.
+2026-06-08
+                18:28:47.560@@@@@@@@[NettyClientPublicExecutor_1]@@INFO@@o.a.r.e.a.s.r.r.c.LitePullConsumerImpl[259]@@No NEW_MSG or MATCHED_MSG for mq:MessageQueue [topic=eventbridge%default%demo-bus_1780943249021, brokerName=broker-a, queueId=0], pull again.
+2026-06-08
+                18:29:07.560@@@@@@@@[NettyClientPublicExecutor_1]@@INFO@@o.a.r.e.a.s.r.r.c.LitePullConsumerImpl[259]@@No NEW_MSG or MATCHED_MSG for mq:MessageQueue [topic=eventbridge%default%phase2-eb-wallet-bus_1780943263952, brokerName=broker-a, queueId=0], pull again.
+2026-06-08
+                18:29:12.561@@@@@@@@[NettyClientPublicExecutor_1]@@INFO@@o.a.r.e.a.s.r.r.c.LitePullConsumerImpl[259]@@No NEW_MSG or MATCHED_MSG for mq:MessageQueue [topic=eventbridge%default%demo-bus_1780943249021, brokerName=broker-a, queueId=0], pull again.

@@ -1,0 +1,259 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-rocketmq-eventbridge-config
+  namespace: etl-research-phase2
+data:
+  application.properties: |
+    server.port=7001
+    management.server.port=7002
+    management.endpoints.web.base-path=/
+    spring.profiles.active=local
+    mybatis.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl
+    rocketmq.namesrvAddr=phase2-rocketmq-namesrv:9876
+    rocketmq.cluster.name=DefaultCluster
+    runtime.config.mode=DB
+    runtime.storage.mode=ROCKETMQ
+    rumtime.name=eventbridge-runtimer
+    runtime.pluginpath=/opt/rocketmq-eventbridge/plugin
+    app.name=rocketmqeventbridge
+    log.level=INFO
+    log.path=/tmp/rocketmq-eventbridge/logs
+  runtime.properties: |
+    rocketmq.namesrvAddr=phase2-rocketmq-namesrv:9876
+    rocketmq.consumer.pullTimeOut=3000
+    rocketmq.consumer.pullBatchSize=32
+    rocketmq.accessChannel=LOCAL
+    rocketmq.namespace=
+    rocketmq.consumer.accessKey=
+    rocketmq.consumer.secretKey=
+    rocketmq.consumer.socks5UserName=
+    rocketmq.consumer.socks5Password=
+    rocketmq.consumer.socks5Endpoint=
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phase2-rocketmq-eventbridge
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-rocketmq-eventbridge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phase2-rocketmq-eventbridge
+  template:
+    metadata:
+      labels:
+        app: phase2-rocketmq-eventbridge
+    spec:
+      containers:
+        - name: namesrv-local-proxy
+          image: alpine/socat:1.8.0.0
+          args:
+            - -d
+            - -d
+            - TCP-LISTEN:9876,fork,reuseaddr
+            - TCP:phase2-rocketmq-namesrv:9876
+        - name: eventbridge
+          image: etl-research/rocketmq-eventbridge:phase2
+          imagePullPolicy: Never
+          env:
+            - name: NAMESRV_ADDR
+              value: phase2-rocketmq-namesrv:9876
+            - name: JAVA_TOOL_OPTIONS
+              value: -Drocketmq.namesrv.addr=phase2-rocketmq-namesrv:9876
+          ports:
+            - name: api
+              containerPort: 7001
+            - name: management
+              containerPort: 7002
+          volumeMounts:
+            - name: config
+              mountPath: /etc/rocketmq-eventbridge/application.properties
+              subPath: application.properties
+            - name: config
+              mountPath: /etc/rocketmq-eventbridge/runtime.properties
+              subPath: runtime.properties
+            - name: sink
+              mountPath: /data/sink
+          readinessProbe:
+            tcpSocket:
+              port: api
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            failureThreshold: 24
+      volumes:
+        - name: config
+          configMap:
+            name: phase2-rocketmq-eventbridge-config
+        - name: sink
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phase2-rocketmq-eventbridge
+  namespace: etl-research-phase2
+spec:
+  selector:
+    app: phase2-rocketmq-eventbridge
+  ports:
+    - name: api
+      port: 7001
+      targetPort: api
+    - name: management
+      port: 7002
+      targetPort: management
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-rocketmq-eventbridge-setup
+  namespace: etl-research-phase2
+data:
+  setup.sh: |
+    #!/bin/sh
+    set -eu
+
+    EVENTBRIDGE_URL="http://phase2-rocketmq-eventbridge:7001"
+    BUS="phase2-eb-wallet-bus"
+    RULE="phase2-eb-wallet-authorized"
+    TARGET="phase2-eb-wallet-file-target"
+    SINK="/data/sink/wallet-eventbridge-filtered.jsonl"
+
+    echo "Waiting for RocketMQ EventBridge API"
+    for i in $(seq 1 120); do
+      if curl -fsS --connect-timeout 2 --max-time 5 -H 'Content-Type: application/json' -X POST --data '{}' "$EVENTBRIDGE_URL/bus/listEventBuses" >/tmp/buses.json; then
+        cat /tmp/buses.json
+        break
+      fi
+      sleep 2
+      if [ "$i" = "120" ]; then
+        echo "RocketMQ EventBridge did not become ready" >&2
+        exit 1
+      fi
+    done
+
+    cat >/tmp/bus.json <<EOF
+    {
+      "eventBusName": "$BUS",
+      "description": "Phase-2 wallet EventBridge bus"
+    }
+    EOF
+
+    cat >/tmp/rule.json <<EOF
+    {
+      "eventBusName": "$BUS",
+      "eventRuleName": "$RULE",
+      "description": "Authorize wallet payment events by CloudEvent type",
+      "filterPattern": "{\"type\":[\"wallet.payment.authorized\"]}"
+    }
+    EOF
+
+    cat >/tmp/target.json <<EOF
+    {
+      "eventBusName": "$BUS",
+      "eventRuleName": "$RULE",
+      "eventTargets": [
+        {
+          "eventTargetName": "$TARGET",
+          "className": "file",
+          "config": {
+            "fileName": "$SINK",
+            "line": "{\"form\":\"JSONPATH\",\"value\":\"$.data\"}"
+          },
+          "runOptions": {
+            "errorsTolerance": "NONE",
+            "retryStrategy": {
+              "pushRetryStrategy": "BACKOFF_RETRY",
+              "maximumEventAgeInSeconds": 3600,
+              "maximumRetryAttempts": 3
+            }
+          }
+        }
+      ]
+    }
+    EOF
+
+    echo "Creating EventBridge bus"
+    curl -fsS --connect-timeout 2 --max-time 20 -H 'Content-Type: application/json' -X POST --data-binary @/tmp/bus.json "$EVENTBRIDGE_URL/bus/createEventBus" -o /tmp/create-bus-response.json
+    cat /tmp/create-bus-response.json
+
+    echo "Creating EventBridge rule"
+    curl -fsS --connect-timeout 2 --max-time 20 -H 'Content-Type: application/json' -X POST --data-binary @/tmp/rule.json "$EVENTBRIDGE_URL/rule/createEventRule" -o /tmp/create-rule-response.json
+    cat /tmp/create-rule-response.json
+
+    echo "Creating EventBridge file target"
+    curl -fsS --connect-timeout 2 --max-time 20 -H 'Content-Type: application/json' -X POST --data-binary @/tmp/target.json "$EVENTBRIDGE_URL/target/createEventTargets" -o /tmp/create-target-response.json
+    cat /tmp/create-target-response.json
+
+    echo "Listing rule and target configuration"
+    curl -fsS --connect-timeout 2 --max-time 20 -H 'Content-Type: application/json' -X POST --data "{\"eventBusName\":\"$BUS\",\"maxResults\":10,\"nextToken\":\"0\"}" "$EVENTBRIDGE_URL/rule/listEventRules" -o /tmp/list-rules-response.json
+    cat /tmp/list-rules-response.json
+    if curl -fsS --connect-timeout 2 --max-time 20 -H 'Content-Type: application/json' -X POST --data "{\"eventBusName\":\"$BUS\",\"eventRuleName\":\"$RULE\",\"maxResults\":10,\"nextToken\":\"0\"}" "$EVENTBRIDGE_URL/target/listEventTargets" -o /tmp/list-targets-response.json; then
+      cat /tmp/list-targets-response.json
+    else
+      echo "listEventTargets returned a non-fatal error after createEventTargets succeeded"
+    fi
+
+    echo "Waiting for EventBridge runtime to refresh the new target and attach its RocketMQ pull task"
+    sleep 35
+
+    echo "Putting source CloudEvents"
+    put_event() {
+      event_id="$1"
+      event_type="$2"
+      amount="$3"
+      wallet_id="$4"
+      curl -fsS --connect-timeout 2 --max-time 20 -H 'Content-Type: application/json' \
+        -H 'ce-specversion: 1.0' \
+        -H 'ce-source: https://wallet.local/phase2' \
+        -H "ce-type: $event_type" \
+        -H "ce-id: $event_id" \
+        -H "ce-eventbusname: $BUS" \
+        -H 'ce-subject: wallet-eventbridge-phase2' \
+        -X POST \
+        --data "{\"event_id\":\"$event_id\",\"event_type\":\"$event_type\",\"wallet_id\":\"$wallet_id\",\"amount\":$amount,\"currency\":\"MYR\",\"status\":\"authorized\"}" \
+        "$EVENTBRIDGE_URL/putEvents"
+      echo
+    }
+
+    put_event "evt-eb-k8s-001" "wallet.payment.authorized" "250.50" "wallet-eb-001" > /tmp/put-001.json
+    cat /tmp/put-001.json
+    put_event "evt-eb-k8s-002" "wallet.payment.rejected" "880.00" "wallet-eb-002" > /tmp/put-002.json
+    cat /tmp/put-002.json
+    put_event "evt-eb-k8s-003" "wallet.payment.authorized" "80.00" "wallet-eb-003" > /tmp/put-003.json
+    cat /tmp/put-003.json
+    put_event "evt-eb-k8s-004" "wallet.payment.authorized" "1500.00" "wallet-eb-004" > /tmp/put-004.json
+    cat /tmp/put-004.json
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: phase2-rocketmq-eventbridge-setup
+  namespace: etl-research-phase2
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 86400
+  template:
+    metadata:
+      labels:
+        app: phase2-rocketmq-eventbridge-setup
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: setup
+          image: curlimages/curl:8.8.0
+          command:
+            - /bin/sh
+            - /etc/rocketmq-eventbridge-phase2/setup.sh
+          volumeMounts:
+            - name: setup
+              mountPath: /etc/rocketmq-eventbridge-phase2
+      volumes:
+        - name: setup
+          configMap:
+            name: phase2-rocketmq-eventbridge-setup
+            defaultMode: 0755

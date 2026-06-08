@@ -1,0 +1,21 @@
+Waiting for RocketMQ EventBridge API
+curl: (7) Failed to connect to phase2-rocketmq-eventbridge port 7001 after 0 ms: Couldn't connect to server
+curl: (7) Failed to connect to phase2-rocketmq-eventbridge port 7001 after 1 ms: Couldn't connect to server
+curl: (7) Failed to connect to phase2-rocketmq-eventbridge port 7001 after 1 ms: Couldn't connect to server
+curl: (7) Failed to connect to phase2-rocketmq-eventbridge port 7001 after 0 ms: Couldn't connect to server
+curl: (7) Failed to connect to phase2-rocketmq-eventbridge port 7001 after 0 ms: Couldn't connect to server
+curl: (7) Failed to connect to phase2-rocketmq-eventbridge port 7001 after 0 ms: Couldn't connect to server
+curl: (7) Failed to connect to phase2-rocketmq-eventbridge port 7001 after 0 ms: Couldn't connect to server
+curl: (7) Failed to connect to phase2-rocketmq-eventbridge port 7001 after 0 ms: Couldn't connect to server
+curl: (7) Failed to connect to phase2-rocketmq-eventbridge port 7001 after 0 ms: Couldn't connect to server
+curl: (7) Failed to connect to phase2-rocketmq-eventbridge port 7001 after 0 ms: Couldn't connect to server
+{"requestId":"dbf8f452-3087-48ed-8d62-6790fd525299","code":null,"message":null,"eventBuses":[{"eventBusName":"demo-bus","description":"A demo bus."}],"nextToken":"0","total":1,"maxResults":0}Creating EventBridge bus
+{"requestId":"0d00eb80-04c0-4733-8170-25116f795b15","code":null,"message":null,"eventBusName":"phase2-eb-wallet-bus"}Creating EventBridge rule
+{"requestId":"82fb432e-bbbe-4172-8824-54d8df8428bd","code":null,"message":null,"eventRuleName":"phase2-eb-wallet-authorized"}Creating EventBridge file target
+{"requestId":"4ee102e3-cdd4-4341-ae0b-2f5c07227865","code":null,"message":null}Listing rule and target configuration
+{"requestId":"28e80245-c302-4ea7-ac0a-9d9c1f8efaf5","code":null,"message":null,"eventRules":[{"eventBusName":"phase2-eb-wallet-bus","eventRuleName":"phase2-eb-wallet-authorized","description":"Authorize wallet payment events by CloudEvent type","filterPattern":"{\"type\":[\"wallet.payment.authorized\"]}","status":"1","gmtCreate":"2026-06-08T18:27:43.973+0000","gmtModify":"2026-06-08T18:27:43.973+0000"}],"nextToken":null,"total":1,"maxResults":10}{"requestId":"23c62bcd-e17e-4ba2-935e-e08afa72e014","code":null,"message":null,"eventBusName":"phase2-eb-wallet-bus","eventRuleName":"phase2-eb-wallet-authorized","eventTargets":[{"eventTargetName":"phase2-eb-wallet-file-target","className":"file","config":{"fileName":"/data/sink/wallet-eventbridge-filtered.jsonl","line":"{\"form\":\"JSONPATH\",\"value\":\"$.data\"}"},"runOptions":{"errorsTolerance":"NONE","retryStrategy":{"pushRetryStrategy":"BACKOFF_RETRY","maximumEventAgeInSeconds":3600,"maximumRetryAttempts":3},"deadLetterQueue":null}}]}Waiting for EventBridge runtime to refresh the new target and attach its RocketMQ pull task
+Putting source CloudEvents
+{"requestId":"0d1ec5ec-a53c-4976-ab98-db0e49207587","code":null,"message":null,"failedEntryCount":0,"entryList":[{"eventId":"0A2A006200011D56CE6A2803360A0000","errorCode":"Success","errorMessage":null}]}
+{"requestId":"d7b13949-584e-4a34-91e3-a481529d137e","code":null,"message":null,"failedEntryCount":0,"entryList":[{"eventId":"0A2A006200011D56CE6A280336180001","errorCode":"Success","errorMessage":null}]}
+{"requestId":"ca2608d7-db56-46d8-86df-bae261709c4f","code":null,"message":null,"failedEntryCount":0,"entryList":[{"eventId":"0A2A006200011D56CE6A280336210002","errorCode":"Success","errorMessage":null}]}
+{"requestId":"22b46be4-ed87-442b-a0bc-a313358eecb0","code":null,"message":null,"failedEntryCount":0,"entryList":[{"eventId":"0A2A006200011D56CE6A280336290003","errorCode":"Success","errorMessage":null}]}

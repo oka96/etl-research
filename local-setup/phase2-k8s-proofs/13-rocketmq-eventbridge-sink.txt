@@ -1,0 +1,3 @@
+{"event_id":"evt-eb-k8s-001","event_type":"wallet.payment.authorized","wallet_id":"wallet-eb-001","amount":250.50,"currency":"MYR","status":"authorized"}
+{"event_id":"evt-eb-k8s-003","event_type":"wallet.payment.authorized","wallet_id":"wallet-eb-003","amount":80.00,"currency":"MYR","status":"authorized"}
+{"event_id":"evt-eb-k8s-004","event_type":"wallet.payment.authorized","wallet_id":"wallet-eb-004","amount":1500.00,"currency":"MYR","status":"authorized"}

@@ -54,3 +54,20 @@ kubectl wait -n etl-research-phase2 --for=condition=complete job/phase2-rocketmq
 ```
 
 This proof runs RocketMQ Connect file source and file sink connectors. The build script recreates the ignored upstream RocketMQ Connect source checkout when it is missing, then applies the tracked wallet transform in `local-setup/rocketmq-connect-phase2/FilterTransform.java`.
+
+For the Apache RocketMQ EventBridge phase-2 proof:
+
+```bash
+bash local-setup/rocketmq-eventbridge-phase2/build.sh
+kubectl create namespace etl-research-phase2 --dry-run=client -o yaml | kubectl apply -f -
+kubectl apply -f local-setup/phase2-k8s/rocketmq-streams.yaml
+kubectl wait -n etl-research-phase2 --for=condition=available deployment/phase2-rocketmq-namesrv --timeout=4m
+kubectl wait -n etl-research-phase2 --for=condition=available deployment/phase2-rocketmq-broker --timeout=4m
+kubectl delete -f local-setup/phase2-k8s/rocketmq-eventbridge.yaml --ignore-not-found
+kubectl apply -f local-setup/phase2-k8s/rocketmq-eventbridge.yaml
+kubectl wait -n etl-research-phase2 --for=condition=available deployment/phase2-rocketmq-eventbridge --timeout=5m
+kubectl wait -n etl-research-phase2 --for=condition=complete job/phase2-rocketmq-eventbridge-setup --timeout=6m
+kubectl exec -n etl-research-phase2 deploy/phase2-rocketmq-eventbridge -c eventbridge -- sed -n '1,20p' /data/sink/wallet-eventbridge-filtered.jsonl
+```
+
+This proof creates an EventBridge bus, rule, and file target at runtime, publishes CloudEvents, filters on CloudEvent type, applies a JSONPATH `$.data` transform, and writes the authorized events to the sink file. The build script downloads the ignored upstream binary distribution into `local-setup/rocketmq-eventbridge-phase2/dist/`; the manifest includes a local NameServer proxy sidecar because RocketMQ EventBridge 1.1.0 target delivery expects a localhost RocketMQ NameServer path.

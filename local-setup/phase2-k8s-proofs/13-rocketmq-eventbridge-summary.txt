@@ -1,0 +1,5 @@
+Apache RocketMQ EventBridge phase-2 K8s proof
+Pipeline: EventBridge /putEvents source -> RocketMQ-backed EventBridge bus topic -> EventBridge rule filter on CloudEvent type -> JSONPATH $.data transform -> file target sink.
+Filter result: evt-eb-k8s-002 has type wallet.payment.rejected and is present in the source bus topic but absent from the sink.
+Runtime note: EventBridge 1.1.0 target runner expects RocketMQ nameserver on localhost; the pod includes a socat sidecar that proxies 127.0.0.1:9876 to phase2-rocketmq-namesrv:9876.
+Sink result: three authorized wallet JSON payloads written to /data/sink/wallet-eventbridge-filtered.jsonl.

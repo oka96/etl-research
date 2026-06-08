@@ -1,0 +1,31 @@
+2026/06/08 18:27:23 socat[1] N listening on AF=10 [0000:0000:0000:0000:0000:0000:0000:0000]:9876
+2026/06/08 18:27:31 socat[1] N accepting connection from AF=10 [0000:0000:0000:0000:0000:ffff:7f00:0001]:55338 on AF=10 [0000:0000:0000:0000:0000:ffff:7f00:0001]:9876
+2026/06/08 18:27:31 socat[1] N forked off child process 6
+2026/06/08 18:27:31 socat[1] N listening on AF=10 [0000:0000:0000:0000:0000:0000:0000:0000]:9876
+2026/06/08 18:27:31 socat[6] N opening connection to AF=2 10.43.173.234:9876
+2026/06/08 18:27:31 socat[6] N successfully connected from local address AF=2 10.42.0.98:39906
+2026/06/08 18:27:31 socat[6] N starting data transfer loop with FDs [6,6] and [5,5]
+2026/06/08 18:27:31 socat[6] N write(5, 0xe763d51a2000, 184) completed
+2026/06/08 18:27:31 socat[6] N write(6, 0xe763d51a2000, 379) completed
+2026/06/08 18:27:31 socat[6] N write(5, 0xe763d51a2000, 148) completed
+2026/06/08 18:27:31 socat[6] N write(6, 0xe763d51a2000, 379) completed
+2026/06/08 18:27:52 socat[6] N write(5, 0xe763d51a2000, 196) completed
+2026/06/08 18:27:52 socat[6] N write(6, 0xe763d51a2000, 379) completed
+2026/06/08 18:28:01 socat[6] N write(5, 0xe763d51a2000, 184) completed
+2026/06/08 18:28:01 socat[6] N write(6, 0xe763d51a2000, 379) completed
+2026/06/08 18:28:01 socat[6] N write(5, 0xe763d51a2000, 196) completed
+2026/06/08 18:28:01 socat[6] N write(6, 0xe763d51a2000, 379) completed
+2026/06/08 18:28:01 socat[6] N write(5, 0xe763d51a2000, 148) completed
+2026/06/08 18:28:01 socat[6] N write(6, 0xe763d51a2000, 379) completed
+2026/06/08 18:28:31 socat[6] N write(5, 0xe763d51a2000, 185) completed
+2026/06/08 18:28:31 socat[6] N write(6, 0xe763d51a2000, 380) completed
+2026/06/08 18:28:31 socat[6] N write(5, 0xe763d51a2000, 197) completed
+2026/06/08 18:28:31 socat[6] N write(6, 0xe763d51a2000, 380) completed
+2026/06/08 18:28:31 socat[6] N write(5, 0xe763d51a2000, 149) completed
+2026/06/08 18:28:31 socat[6] N write(6, 0xe763d51a2000, 380) completed
+2026/06/08 18:29:01 socat[6] N write(5, 0xe763d51a2000, 185) completed
+2026/06/08 18:29:01 socat[6] N write(6, 0xe763d51a2000, 380) completed
+2026/06/08 18:29:01 socat[6] N write(5, 0xe763d51a2000, 197) completed
+2026/06/08 18:29:01 socat[6] N write(6, 0xe763d51a2000, 380) completed
+2026/06/08 18:29:01 socat[6] N write(5, 0xe763d51a2000, 149) completed
+2026/06/08 18:29:01 socat[6] N write(6, 0xe763d51a2000, 380) completed
