@@ -1,0 +1,8 @@
+Waiting for Kafka Connect REST at http://phase2-kafka-connect:8083
+[]Deleting old connectors if present
+{"error_code":404,"message":"Connector phase2-kafka-connect-wallet-source-v2 not found"}{"error_code":404,"message":"Connector phase2-kafka-connect-wallet-sink-v2 not found"}Creating source connector
+{"name":"phase2-kafka-connect-wallet-source-v2","config":{"connector.class":"org.apache.kafka.connect.file.FileStreamSourceConnector","tasks.max":"1","file":"/data/input/wallet-events.jsonl","topic":"phase2-kafka-connect-wallet-raw-v2","name":"phase2-kafka-connect-wallet-source-v2"},"tasks":[],"type":"source"}
+Creating sink connector with wallet JSON filter/enrich SMT
+{"name":"phase2-kafka-connect-wallet-sink-v2","config":{"connector.class":"org.apache.kafka.connect.file.FileStreamSinkConnector","tasks.max":"1","topics":"phase2-kafka-connect-wallet-raw-v2","file":"/data/output/wallet-filtered-v2.jsonl","transforms":"walletFilter","transforms.walletFilter.type":"com.example.etl.kafkaconnect.WalletJsonFilterTransform","errors.tolerance":"all","errors.log.enable":"true","errors.log.include.messages":"true","name":"phase2-kafka-connect-wallet-sink-v2"},"tasks":[],"type":"sink"}
+Connector status
+{"name":"phase2-kafka-connect-wallet-source-v2","connector":{"state":"RUNNING","worker_id":"phase2-kafka-connect:8083","version":"4.2.0"},"tasks":[{"id":0,"state":"RUNNING","worker_id":"phase2-kafka-connect:8083","version":"4.2.0"}],"type":"source"}{"name":"phase2-kafka-connect-wallet-sink-v2","connector":{"state":"RUNNING","worker_id":"phase2-kafka-connect:8083","version":"4.2.0"},"tasks":[],"type":"sink"}

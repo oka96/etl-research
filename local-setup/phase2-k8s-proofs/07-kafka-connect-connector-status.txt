@@ -1,0 +1,2 @@
+{"name":"phase2-kafka-connect-wallet-source-v2","connector":{"state":"RUNNING","worker_id":"phase2-kafka-connect:8083","version":"4.2.0"},"tasks":[{"id":0,"state":"RUNNING","worker_id":"phase2-kafka-connect:8083","version":"4.2.0"}],"type":"source"}
+{"name":"phase2-kafka-connect-wallet-sink-v2","connector":{"state":"RUNNING","worker_id":"phase2-kafka-connect:8083","version":"4.2.0"},"tasks":[{"id":0,"state":"RUNNING","worker_id":"phase2-kafka-connect:8083","version":"4.2.0"}],"type":"sink"}

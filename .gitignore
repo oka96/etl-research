@@ -3,6 +3,7 @@
 !**/.env.example
 local-setup/camel-wallet-pipeline/target/
 local-setup/flink-wallet-pipeline/target/
+local-setup/kafka-connect-wallet-transform/target/
 local-setup/rocketmq-streams-wallet-poc/target/
 local-setup/rocketmq-connect-src/**/target/
 local-setup/rocketmq-eventbridge-1.1.0/log.path_IS_UNDEFINED/

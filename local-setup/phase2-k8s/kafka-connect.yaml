@@ -1,0 +1,214 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-kafka-connect-config
+  namespace: etl-research-phase2
+data:
+  connect-distributed.properties: |
+    bootstrap.servers=phase2-redpanda:9092
+    group.id=phase2-kafka-connect-wallet
+
+    key.converter=org.apache.kafka.connect.storage.StringConverter
+    value.converter=org.apache.kafka.connect.storage.StringConverter
+
+    offset.storage.topic=phase2-kafka-connect-offsets
+    config.storage.topic=phase2-kafka-connect-configs
+    status.storage.topic=phase2-kafka-connect-status
+    offset.storage.replication.factor=1
+    config.storage.replication.factor=1
+    status.storage.replication.factor=1
+
+    rest.host.name=0.0.0.0
+    rest.port=8083
+    rest.advertised.host.name=phase2-kafka-connect
+    plugin.path=/opt/kafka/plugins,/opt/kafka/libs
+    offset.flush.interval.ms=1000
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-kafka-connect-data
+  namespace: etl-research-phase2
+data:
+  wallet-events.jsonl: |
+    {"event_id":"evt-001","event_type":"wallet.payment.authorized","amount":128.45,"currency":"MYR","user_id":"u-1001"}
+    {"event_id":"evt-002","event_type":"wallet.payment.rejected","amount":510.00,"currency":"MYR","user_id":"u-1002"}
+    {"event_id":"evt-003","event_type":"wallet.payment.authorized","amount":1288.00,"currency":"MYR","user_id":"u-1003"}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-kafka-connect-setup
+  namespace: etl-research-phase2
+data:
+  source-connector.json: |
+    {
+      "connector.class": "org.apache.kafka.connect.file.FileStreamSourceConnector",
+      "tasks.max": "1",
+      "file": "/data/input/wallet-events.jsonl",
+      "topic": "phase2-kafka-connect-wallet-raw-v2"
+    }
+  sink-connector.json: |
+    {
+      "connector.class": "org.apache.kafka.connect.file.FileStreamSinkConnector",
+      "tasks.max": "1",
+      "topics": "phase2-kafka-connect-wallet-raw-v2",
+      "file": "/data/output/wallet-filtered-v2.jsonl",
+      "transforms": "walletFilter",
+      "transforms.walletFilter.type": "com.example.etl.kafkaconnect.WalletJsonFilterTransform",
+      "errors.tolerance": "all",
+      "errors.log.enable": "true",
+      "errors.log.include.messages": "true"
+    }
+  setup.sh: |
+    #!/bin/sh
+    set -eu
+
+    CONNECT_URL="http://phase2-kafka-connect:8083"
+    SOURCE_CONNECTOR="phase2-kafka-connect-wallet-source-v2"
+    SINK_CONNECTOR="phase2-kafka-connect-wallet-sink-v2"
+
+    echo "Waiting for Kafka Connect REST at ${CONNECT_URL}"
+    for i in $(seq 1 120); do
+      if curl -fsS "${CONNECT_URL}/connectors" >/tmp/connectors.txt 2>/tmp/connect-error.txt; then
+        cat /tmp/connectors.txt
+        break
+      fi
+      cat /tmp/connect-error.txt || true
+      sleep 2
+      if [ "${i}" = "120" ]; then
+        echo "Kafka Connect REST did not become ready" >&2
+        exit 1
+      fi
+    done
+
+    echo "Deleting old connectors if present"
+    curl -sS -X DELETE "${CONNECT_URL}/connectors/${SOURCE_CONNECTOR}" || true
+    curl -sS -X DELETE "${CONNECT_URL}/connectors/${SINK_CONNECTOR}" || true
+    sleep 3
+
+    echo "Creating source connector"
+    curl -fsS -X PUT \
+      -H "Content-Type: application/json" \
+      --data @/etc/kafka-connect-phase2/source-connector.json \
+      "${CONNECT_URL}/connectors/${SOURCE_CONNECTOR}/config"
+
+    echo
+    echo "Creating sink connector with wallet JSON filter/enrich SMT"
+    curl -fsS -X PUT \
+      -H "Content-Type: application/json" \
+      --data @/etc/kafka-connect-phase2/sink-connector.json \
+      "${CONNECT_URL}/connectors/${SINK_CONNECTOR}/config"
+
+    echo
+    echo "Connector status"
+    for connector in "${SOURCE_CONNECTOR}" "${SINK_CONNECTOR}"; do
+      for i in $(seq 1 60); do
+        curl -fsS "${CONNECT_URL}/connectors/${connector}/status" >/tmp/status.json
+        cat /tmp/status.json
+        if grep -q '"state":"RUNNING"' /tmp/status.json || grep -q '"state" : "RUNNING"' /tmp/status.json; then
+          break
+        fi
+        sleep 2
+        if [ "${i}" = "60" ]; then
+          echo "${connector} did not become RUNNING" >&2
+          exit 1
+        fi
+      done
+    done
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phase2-kafka-connect
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-kafka-connect
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phase2-kafka-connect
+  template:
+    metadata:
+      labels:
+        app: phase2-kafka-connect
+    spec:
+      containers:
+        - name: connect
+          image: etl-research/kafka-connect-wallet-transform:phase2
+          imagePullPolicy: IfNotPresent
+          command:
+            - /opt/kafka/bin/connect-distributed.sh
+            - /etc/kafka-connect/connect-distributed.properties
+          securityContext:
+            runAsUser: 0
+          ports:
+            - name: rest
+              containerPort: 8083
+          volumeMounts:
+            - name: config
+              mountPath: /etc/kafka-connect
+            - name: input
+              mountPath: /data/input
+            - name: output
+              mountPath: /data/output
+          readinessProbe:
+            httpGet:
+              path: /connectors
+              port: rest
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            failureThreshold: 24
+      volumes:
+        - name: config
+          configMap:
+            name: phase2-kafka-connect-config
+        - name: input
+          configMap:
+            name: phase2-kafka-connect-data
+        - name: output
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phase2-kafka-connect
+  namespace: etl-research-phase2
+spec:
+  selector:
+    app: phase2-kafka-connect
+  ports:
+    - name: rest
+      port: 8083
+      targetPort: rest
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: phase2-kafka-connect-setup
+  namespace: etl-research-phase2
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 86400
+  template:
+    metadata:
+      labels:
+        app: phase2-kafka-connect-setup
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: setup
+          image: curlimages/curl:8.16.0
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - /etc/kafka-connect-phase2/setup.sh
+          volumeMounts:
+            - name: setup
+              mountPath: /etc/kafka-connect-phase2
+      volumes:
+        - name: setup
+          configMap:
+            name: phase2-kafka-connect-setup
+            defaultMode: 0755

@@ -1,0 +1,2 @@
+{"event_id":"evt-001","event_type":"wallet.payment.authorized","amount":128.45,"currency":"MYR","user_id":"u-1001","pipeline":"kafka-connect-k8s-phase2","risk_tier":"STANDARD","processed_at_epoch_ms":1780937642326}
+{"event_id":"evt-003","event_type":"wallet.payment.authorized","amount":1288.0,"currency":"MYR","user_id":"u-1003","pipeline":"kafka-connect-k8s-phase2","risk_tier":"HIGH","processed_at_epoch_ms":1780937642327}

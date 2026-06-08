@@ -1,0 +1,3 @@
+{"event_id":"evt-001","event_type":"wallet.payment.authorized","amount":128.45,"currency":"MYR","user_id":"u-1001"}
+{"event_id":"evt-002","event_type":"wallet.payment.rejected","amount":510.00,"currency":"MYR","user_id":"u-1002"}
+{"event_id":"evt-003","event_type":"wallet.payment.authorized","amount":1288.00,"currency":"MYR","user_id":"u-1003"}
