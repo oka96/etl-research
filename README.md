@@ -38,3 +38,19 @@ kubectl wait -n etl-research-phase2 --for=condition=complete job/phase2-storm --
 ```
 
 This proof runs a Storm `KafkaSpout -> JSON filter/enrich bolt -> KafkaBolt` topology against the phase-2 Redpanda broker.
+
+For the Apache RocketMQ Connect phase-2 proof:
+
+```bash
+bash local-setup/rocketmq-connect-phase2/build.sh
+kubectl create namespace etl-research-phase2 --dry-run=client -o yaml | kubectl apply -f -
+kubectl apply -f local-setup/phase2-k8s/rocketmq-streams.yaml
+kubectl wait -n etl-research-phase2 --for=condition=available deployment/phase2-rocketmq-namesrv --timeout=4m
+kubectl wait -n etl-research-phase2 --for=condition=available deployment/phase2-rocketmq-broker --timeout=4m
+kubectl delete -f local-setup/phase2-k8s/rocketmq-connect.yaml --ignore-not-found
+kubectl apply -f local-setup/phase2-k8s/rocketmq-connect.yaml
+kubectl wait -n etl-research-phase2 --for=condition=available deployment/phase2-rocketmq-connect --timeout=4m
+kubectl wait -n etl-research-phase2 --for=condition=complete job/phase2-rocketmq-connect-setup --timeout=4m
+```
+
+This proof runs RocketMQ Connect file source and file sink connectors. The build script recreates the ignored upstream RocketMQ Connect source checkout when it is missing, then applies the tracked wallet transform in `local-setup/rocketmq-connect-phase2/FilterTransform.java`.

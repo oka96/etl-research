@@ -1,0 +1,2 @@
+{"pipeline":"rocketmq-connect-k8s-phase2","wallet_id":"wallet-rmq-connect-003","amount":1500.0,"event_id":"evt-rmq-connect-k8s-003","event_type":"wallet.payment.authorized","currency":"MYR","risk_tier":"HIGH","status":"authorized"}
+{"pipeline":"rocketmq-connect-k8s-phase2","wallet_id":"wallet-rmq-connect-001","amount":250.5,"event_id":"evt-rmq-connect-k8s-001","event_type":"wallet.payment.authorized","currency":"MYR","risk_tier":"STANDARD","status":"authorized"}

@@ -1,0 +1,181 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-rocketmq-connect-config
+  namespace: etl-research-phase2
+data:
+  connect-standalone.conf: |
+    workerId=phase2-rocketmq-connect-worker
+    storePathRootDir=/tmp/rocketmq-connect-store
+    httpPort=8082
+    namesrvAddr=phase2-rocketmq-namesrv:9876
+    aclEnable=false
+    autoCreateGroupEnable=true
+    autoCreateTopicEnable=true
+    clusterName=DefaultCluster
+    pluginPaths=/opt/rocketmq-connect/lib/rocketmq-connect-sample-0.0.1-SNAPSHOT.jar
+  wallet-events.jsonl: |
+    {"event_id":"evt-rmq-connect-k8s-001","event_type":"wallet.payment.authorized","wallet_id":"wallet-rmq-connect-001","amount":250.50,"currency":"MYR","status":"authorized"}
+    {"event_id":"evt-rmq-connect-k8s-002","event_type":"wallet.payment.rejected","wallet_id":"wallet-rmq-connect-002","amount":80.00,"currency":"MYR","status":"rejected"}
+    {"event_id":"evt-rmq-connect-k8s-003","event_type":"wallet.payment.authorized","wallet_id":"wallet-rmq-connect-003","amount":1500.00,"currency":"MYR","status":"authorized"}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phase2-rocketmq-connect
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-rocketmq-connect
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phase2-rocketmq-connect
+  template:
+    metadata:
+      labels:
+        app: phase2-rocketmq-connect
+    spec:
+      containers:
+        - name: connect
+          image: etl-research/rocketmq-connect:phase2
+          imagePullPolicy: Never
+          ports:
+            - name: http
+              containerPort: 8082
+          volumeMounts:
+            - name: config
+              mountPath: /etc/rocketmq-connect/connect-standalone.conf
+              subPath: connect-standalone.conf
+            - name: config
+              mountPath: /data/source/wallet-events.jsonl
+              subPath: wallet-events.jsonl
+            - name: sink
+              mountPath: /data/sink
+          readinessProbe:
+            httpGet:
+              path: /getClusterInfo
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            failureThreshold: 24
+      volumes:
+        - name: config
+          configMap:
+            name: phase2-rocketmq-connect-config
+        - name: sink
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phase2-rocketmq-connect
+  namespace: etl-research-phase2
+spec:
+  selector:
+    app: phase2-rocketmq-connect
+  ports:
+    - name: http
+      port: 8082
+      targetPort: http
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-rocketmq-connect-setup
+  namespace: etl-research-phase2
+data:
+  setup.sh: |
+    #!/bin/sh
+    set -eu
+
+    CONNECT_URL="http://phase2-rocketmq-connect:8082"
+    TOPIC="phase2-rocketmq-connect-wallet-raw-v1"
+
+    echo "Waiting for RocketMQ Connect REST API"
+    for i in $(seq 1 120); do
+      if curl -fsS "$CONNECT_URL/getClusterInfo" >/tmp/cluster.json; then
+        cat /tmp/cluster.json
+        break
+      fi
+      sleep 2
+      if [ "$i" = "120" ]; then
+        echo "RocketMQ Connect REST API did not become ready" >&2
+        exit 1
+      fi
+    done
+
+    curl -fsS "$CONNECT_URL/connectors/stop/all" || true
+    sleep 3
+
+    cat >/tmp/source.json <<EOF
+    {
+      "connector.class": "org.apache.rocketmq.connect.file.FileSourceConnector",
+      "filename": "/data/source/wallet-events.jsonl",
+      "connect.topicname": "$TOPIC",
+      "max.tasks": "1"
+    }
+    EOF
+
+    cat >/tmp/sink.json <<EOF
+    {
+      "connector.class": "org.apache.rocketmq.connect.file.FileSinkConnector",
+      "filename": "/data/sink/wallet-filtered.jsonl",
+      "connect.topicnames": "$TOPIC",
+      "consume.from.where": "CONSUME_FROM_FIRST_OFFSET",
+      "transforms": "wallet",
+      "transforms.wallet.class": "org.apache.rocketmq.connect.file.FilterTransform",
+      "transforms.wallet.pipeline": "rocketmq-connect-k8s-phase2",
+      "max.tasks": "1"
+    }
+    EOF
+
+    echo "Creating source connector"
+    curl -fsS -X POST -H 'Content-Type: application/json' --data-binary @/tmp/source.json "$CONNECT_URL/connectors/phase2-rocketmq-connect-source"
+    echo
+    echo "Creating transformed sink connector"
+    curl -fsS -X POST -H 'Content-Type: application/json' --data-binary @/tmp/sink.json "$CONNECT_URL/connectors/phase2-rocketmq-connect-sink"
+    echo
+
+    echo "Waiting for connectors to report RUNNING"
+    for i in $(seq 1 90); do
+      curl -fsS "$CONNECT_URL/connectors/list" >/tmp/connectors.json
+      cat /tmp/connectors.json
+      running_count="$(grep -o '"state":"RUNNING"' /tmp/connectors.json | wc -l | tr -d ' ')"
+      if [ "$running_count" -ge 4 ]; then
+        exit 0
+      fi
+      sleep 2
+    done
+
+    echo "Connectors did not reach RUNNING state" >&2
+    exit 1
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: phase2-rocketmq-connect-setup
+  namespace: etl-research-phase2
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 86400
+  template:
+    metadata:
+      labels:
+        app: phase2-rocketmq-connect-setup
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: setup
+          image: curlimages/curl:8.8.0
+          command:
+            - /bin/sh
+            - /etc/rocketmq-connect-phase2/setup.sh
+          volumeMounts:
+            - name: setup
+              mountPath: /etc/rocketmq-connect-phase2
+      volumes:
+        - name: setup
+          configMap:
+            name: phase2-rocketmq-connect-setup
+            defaultMode: 0755
