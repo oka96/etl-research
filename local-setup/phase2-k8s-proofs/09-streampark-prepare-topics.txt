@@ -1,0 +1,12 @@
+TOPIC                                       STATUS
+phase2-streampark-wallet-events-1780949401  OK
+TOPIC                                         STATUS
+phase2-streampark-wallet-filtered-1780949401  OK
+Produced to partition 0 at offset 0 with timestamp 1780949401672.
+Produced to partition 0 at offset 1 with timestamp 1780949401672.
+Produced to partition 0 at offset 2 with timestamp 1780949401672.
+Produced to partition 0 at offset 3 with timestamp 1780949401672.
+BROKERS=phase2-redpanda:9092
+SOURCE_TOPIC=phase2-streampark-wallet-events-1780949401
+SINK_TOPIC=phase2-streampark-wallet-filtered-1780949401
+GROUP_ID=phase2-streampark-wallet-poc-1780949401

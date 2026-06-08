@@ -1,0 +1,63 @@
+Starting cluster.
+Starting standalonesession daemon on host phase2-streampark-proof-lsvzk.
+Starting taskexecutor daemon on host phase2-streampark-proof-lsvzk.
+WARNING: Unknown module: jdk.compiler specified to --add-exports
+WARNING: Unknown module: jdk.compiler specified to --add-exports
+WARNING: Unknown module: jdk.compiler specified to --add-exports
+WARNING: Unknown module: jdk.compiler specified to --add-exports
+WARNING: Unknown module: jdk.compiler specified to --add-exports
+Jun 08, 2026 8:10:08 PM org.jline.utils.Log logr
+WARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+{"taskmanagers":1,"slots-total":1,"slots-available":1,"jobs-running":0,"jobs-finished":0,"jobs-cancelled":0,"jobs-failed":0,"flink-version":"1.20.1","flink-commit":"cb1e7b5"}[34;1m[INFO] Executing SQL from file.[0m
+
+Command history file path: /root/.flink-sql-history
+Flink SQL> [34;1m[INFO] Execute statement succeeded.[0m
+
+Flink SQL> [34;1m[INFO] Execute statement succeeded.[0m
+
+Flink SQL> [34;1m[INFO] Execute statement succeeded.[0m
+
+Flink SQL> [34;1m[INFO] Execute statement succeeded.[0m
+
+Flink SQL> 
+> CREATE TABLE wallet_source (
+>   event_id STRING,
+>   event_type STRING,
+>   wallet_id STRING,
+>   amount DECIMAL(12,2),
+>   currency STRING,
+>   status STRING
+> ) WITH (
+>   'connector' = 'kafka',
+>   'topic' = 'phase2-streampark-wallet-events-1780949401',
+>   'properties.bootstrap.servers' = 'phase2-redpanda:9092',
+>   'properties.group.id' = 'phase2-streampark-wallet-poc-1780949401-source',
+>   'scan.startup.mode' = 'earliest-offset',
+>   'scan.bounded.mode' = 'latest-offset',
+>   'format' = 'json',
+>   'json.ignore-parse-errors' = 'true'
+> )[34;1m[INFO] Execute statement succeeded.[0m
+
+Flink SQL> 
+> CREATE TABLE wallet_filtered (
+>   event_id STRING,
+>   event_type STRING,
+>   wallet_id STRING,
+>   amount DECIMAL(12,2),
+>   currency STRING,
+>   risk_tier STRING,
+>   pipeline STRING
+> ) WITH (
+>   'connector' = 'kafka',
+>   'topic' = 'phase2-streampark-wallet-filtered-1780949401',
+>   'properties.bootstrap.servers' = 'phase2-redpanda:9092',
+>   'format' = 'json'
+> )[34;1m[INFO] Execute statement succeeded.[0m
+
+Flink SQL> [34;1m[INFO] Complete execution of the SQL update statement.[0m
+
+Flink SQL> 
+Shutting down the session...
+done.
+Stopping taskexecutor daemon (pid: 1319) on host phase2-streampark-proof-lsvzk.
+Stopping standalonesession daemon (pid: 768) on host phase2-streampark-proof-lsvzk.

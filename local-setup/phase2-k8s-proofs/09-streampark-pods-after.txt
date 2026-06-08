@@ -1,0 +1,4 @@
+NAME                                           READY   STATUS      RESTARTS        AGE
+phase2-redpanda-69bfdc558b-8ctxf               1/1     Running     0               34m
+phase2-streampark-55b74f898f-fxbjf             1/1     Running     0               104s
+phase2-streampark-proof-lsvzk                  0/1     Completed   0               104s

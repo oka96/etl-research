@@ -54,6 +54,21 @@ kubectl logs -n etl-research-phase2 job/phase2-nifi-setup -c run-proof
 
 This proof runs NiFi over local in-cluster HTTP only, creates the NiFi flow through the REST API, consumes Kafka-compatible Redpanda source events with `ConsumeKafka`, applies a Groovy `ExecuteScript` JSON filter/enrichment, and publishes the filtered events with `PublishKafka`. Source and sink topic names include a generated run id so reruns do not depend on stale broker state. No NiFi login/password is tracked for this local proof.
 
+For the Apache StreamPark phase-2 proof:
+
+```bash
+kubectl create namespace etl-research-phase2 --dry-run=client -o yaml | kubectl apply -f -
+kubectl apply -f local-setup/phase2-k8s/redpanda.yaml
+kubectl wait -n etl-research-phase2 --for=condition=available deployment/phase2-redpanda --timeout=3m
+kubectl delete -f local-setup/phase2-k8s/streampark.yaml --ignore-not-found
+kubectl apply -f local-setup/phase2-k8s/streampark.yaml
+kubectl wait -n etl-research-phase2 --for=condition=available deployment/phase2-streampark --timeout=6m
+kubectl wait -n etl-research-phase2 --for=condition=complete job/phase2-streampark-proof --timeout=8m
+kubectl logs -n etl-research-phase2 job/phase2-streampark-proof -c verify-topics
+```
+
+This proof starts the StreamPark console from the Apache 2.1.5 binary distribution inside a Kubernetes pod and runs a companion Flink SQL job. The job creates fresh Kafka-compatible Redpanda topics, writes source wallet events, consumes them through a Flink SQL Kafka source table, applies JSON filtering/enrichment for authorized payments with amount >= 100, and writes the filtered records to a Kafka sink table. The StreamPark distribution and Flink Kafka SQL connector are downloaded at pod runtime into `emptyDir` volumes; no connector jar, distribution archive, or credential is tracked.
+
 For the Dinky phase-2 proof:
 
 ```bash

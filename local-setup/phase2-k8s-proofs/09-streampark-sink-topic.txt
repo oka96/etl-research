@@ -1,0 +1,15 @@
+{
+  "topic": "phase2-streampark-wallet-filtered-1780949401",
+  "value": "{\"event_id\":\"evt-streampark-k8s-001\",\"event_type\":\"wallet.payment.authorized\",\"wallet_id\":\"wallet-streampark-001\",\"amount\":250.5,\"currency\":\"MYR\",\"risk_tier\":\"STANDARD\",\"pipeline\":\"streampark-flink-sql-k8s-phase2\"}",
+  "timestamp": 1780949412149,
+  "partition": 0,
+  "offset": 0
+}
+{
+  "topic": "phase2-streampark-wallet-filtered-1780949401",
+  "value": "{\"event_id\":\"evt-streampark-k8s-004\",\"event_type\":\"wallet.payment.authorized\",\"wallet_id\":\"wallet-streampark-004\",\"amount\":1.5E+3,\"currency\":\"MYR\",\"risk_tier\":\"HIGH\",\"pipeline\":\"streampark-flink-sql-k8s-phase2\"}",
+  "timestamp": 1780949412153,
+  "partition": 0,
+  "offset": 1
+}
+Verified StreamPark console plus Flink SQL Kafka source -> JSON filter/enrich -> Kafka sink
