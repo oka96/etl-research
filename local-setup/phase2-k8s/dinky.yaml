@@ -1,0 +1,230 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-dinky-proof
+  namespace: etl-research-phase2
+data:
+  run-flink-sql.sh: |
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    source /work/topics.env
+
+    mkdir -p /work/lib
+    mv /opt/flink/lib/flink-table-planner_2.12-1.20.3.jar /tmp/flink-table-planner_2.12-1.20.3.jar
+    curl -fsSL \
+      -o /work/lib/flink-sql-connector-kafka-3.4.0-1.20.jar \
+      https://repo1.maven.org/maven2/org/apache/flink/flink-sql-connector-kafka/3.4.0-1.20/flink-sql-connector-kafka-3.4.0-1.20.jar
+
+    /opt/flink/bin/start-cluster.sh
+    for _ in $(seq 1 60); do
+      if curl -fsS http://127.0.0.1:8081/overview >/work/flink-overview.json 2>/dev/null \
+        && grep -Eq '"slots-total":[1-9]' /work/flink-overview.json; then
+        break
+      fi
+      sleep 2
+    done
+    test -s /work/flink-overview.json
+    cat /work/flink-overview.json
+
+    cat >/work/job.sql <<EOF
+    SET 'execution.runtime-mode' = 'batch';
+    SET 'parallelism.default' = '1';
+    SET 'table.dml-sync' = 'true';
+    SET 'pipeline.name' = 'phase2-dinky-wallet-flink-sql';
+
+    CREATE TABLE wallet_source (
+      event_id STRING,
+      event_type STRING,
+      wallet_id STRING,
+      amount DECIMAL(12,2),
+      currency STRING,
+      status STRING
+    ) WITH (
+      'connector' = 'kafka',
+      'topic' = '$SOURCE_TOPIC',
+      'properties.bootstrap.servers' = '$BROKERS',
+      'properties.group.id' = '$GROUP_ID-source',
+      'scan.startup.mode' = 'earliest-offset',
+      'scan.bounded.mode' = 'latest-offset',
+      'format' = 'json',
+      'json.ignore-parse-errors' = 'true'
+    );
+
+    CREATE TABLE wallet_filtered (
+      event_id STRING,
+      event_type STRING,
+      wallet_id STRING,
+      amount DECIMAL(12,2),
+      currency STRING,
+      risk_tier STRING,
+      pipeline STRING
+    ) WITH (
+      'connector' = 'kafka',
+      'topic' = '$SINK_TOPIC',
+      'properties.bootstrap.servers' = '$BROKERS',
+      'format' = 'json'
+    );
+
+    INSERT INTO wallet_filtered
+    SELECT
+      event_id,
+      event_type,
+      wallet_id,
+      amount,
+      currency,
+      CASE WHEN amount >= 1000 THEN 'HIGH' ELSE 'STANDARD' END AS risk_tier,
+      'dinky-flink-sql-k8s-phase2' AS pipeline
+    FROM wallet_source
+    WHERE event_type = 'wallet.payment.authorized' AND amount >= 100;
+    EOF
+
+    /opt/flink/bin/sql-client.sh embedded \
+      -j /work/lib/flink-sql-connector-kafka-3.4.0-1.20.jar \
+      -f /work/job.sql
+    /opt/flink/bin/stop-cluster.sh || true
+  verify-topics.sh: |
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    source /work/topics.env
+
+    echo "Flink overview:"
+    cat /work/flink-overview.json
+    echo
+
+    echo "Source topic: $SOURCE_TOPIC"
+    timeout 15 rpk topic consume "$SOURCE_TOPIC" --brokers "$BROKERS" --offset start -n 4 >/tmp/source.jsonl
+    cat /tmp/source.jsonl
+
+    echo "Sink topic: $SINK_TOPIC"
+    timeout 15 rpk topic consume "$SINK_TOPIC" --brokers "$BROKERS" --offset start -n 2 >/tmp/sink.jsonl
+    cat /tmp/sink.jsonl
+
+    echo "Verified Dinky bundled Flink SQL Kafka source -> JSON filter/enrich -> Kafka sink"
+    sleep 20
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phase2-dinky
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-dinky
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phase2-dinky
+  template:
+    metadata:
+      labels:
+        app: phase2-dinky
+    spec:
+      containers:
+        - name: dinky
+          image: dinkydocker/dinky-standalone-server:1.2.5-flink1.20
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/bash
+            - -lc
+          args:
+            - |
+              set -euo pipefail
+              sed -i 's/-Xms512M -Xmx2048M/-Xms256M -Xmx768M/' /opt/dinky/bin/auto.sh
+              exec /opt/dinky/bin/auto.sh startOnPending 1.20
+          ports:
+            - name: http
+              containerPort: 8888
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phase2-dinky
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-dinky
+spec:
+  selector:
+    app: phase2-dinky
+  ports:
+    - name: http
+      port: 8888
+      targetPort: 8888
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: phase2-dinky-proof
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-dinky-proof
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: phase2-dinky-proof
+    spec:
+      restartPolicy: Never
+      initContainers:
+        - name: prepare-topics
+          image: redpandadata/redpanda:v25.2.9
+          command:
+            - /bin/bash
+            - -lc
+          args:
+            - |
+              set -euo pipefail
+              RUN_ID="$(date +%s)"
+              BROKERS="phase2-redpanda:9092"
+              SOURCE_TOPIC="phase2-dinky-wallet-events-${RUN_ID}"
+              SINK_TOPIC="phase2-dinky-wallet-filtered-${RUN_ID}"
+              GROUP_ID="phase2-dinky-wallet-poc-${RUN_ID}"
+              cat >/work/topics.env <<EOF
+              BROKERS=$BROKERS
+              SOURCE_TOPIC=$SOURCE_TOPIC
+              SINK_TOPIC=$SINK_TOPIC
+              GROUP_ID=$GROUP_ID
+              EOF
+              rpk topic create "$SOURCE_TOPIC" --brokers "$BROKERS" || true
+              rpk topic create "$SINK_TOPIC" --brokers "$BROKERS" || true
+              cat >/tmp/wallet-events.jsonl <<'EOF'
+              {"event_id":"evt-dinky-k8s-001","event_type":"wallet.payment.authorized","wallet_id":"wallet-dinky-001","amount":250.50,"currency":"MYR","status":"authorized"}
+              {"event_id":"evt-dinky-k8s-002","event_type":"wallet.payment.rejected","wallet_id":"wallet-dinky-002","amount":880.00,"currency":"MYR","status":"rejected"}
+              {"event_id":"evt-dinky-k8s-003","event_type":"wallet.payment.authorized","wallet_id":"wallet-dinky-003","amount":80.00,"currency":"MYR","status":"authorized"}
+              {"event_id":"evt-dinky-k8s-004","event_type":"wallet.payment.authorized","wallet_id":"wallet-dinky-004","amount":1500.00,"currency":"MYR","status":"authorized"}
+              EOF
+              rpk topic produce "$SOURCE_TOPIC" --brokers "$BROKERS" </tmp/wallet-events.jsonl
+              cat /work/topics.env
+          volumeMounts:
+            - name: work
+              mountPath: /work
+        - name: run-flink-sql
+          image: dinkydocker/dinky-standalone-server:1.2.5-flink1.20
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/bash
+            - /config/run-flink-sql.sh
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: work
+              mountPath: /work
+      containers:
+        - name: verify-topics
+          image: redpandadata/redpanda:v25.2.9
+          command:
+            - /bin/bash
+            - /config/verify-topics.sh
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: work
+              mountPath: /work
+      volumes:
+        - name: config
+          configMap:
+            name: phase2-dinky-proof
+        - name: work
+          emptyDir: {}

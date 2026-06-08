@@ -1,0 +1,9 @@
+Dinky phase-2 K8s proof: Complete
+Source topic: phase2-dinky-wallet-events-1780948258
+Sink topic: phase2-dinky-wallet-filtered-1780948258
+Source records verified: 4
+Filtered sink records verified: 2
+Transform: Dinky image bundled Flink SQL Kafka source -> JSON parse/filter/enrich -> Kafka sink
+Filter: event_type = wallet.payment.authorized and amount >= 100
+Connector: flink-sql-connector-kafka 3.4.0-1.20 downloaded at pod runtime into emptyDir
+Credentials: none tracked or required for this local proof

@@ -1,0 +1,12 @@
+TOPIC                                  STATUS
+phase2-dinky-wallet-events-1780948258  OK
+TOPIC                                    STATUS
+phase2-dinky-wallet-filtered-1780948258  OK
+Produced to partition 0 at offset 0 with timestamp 1780948259515.
+Produced to partition 0 at offset 1 with timestamp 1780948259515.
+Produced to partition 0 at offset 2 with timestamp 1780948259515.
+Produced to partition 0 at offset 3 with timestamp 1780948259515.
+BROKERS=phase2-redpanda:9092
+SOURCE_TOPIC=phase2-dinky-wallet-events-1780948258
+SINK_TOPIC=phase2-dinky-wallet-filtered-1780948258
+GROUP_ID=phase2-dinky-wallet-poc-1780948258

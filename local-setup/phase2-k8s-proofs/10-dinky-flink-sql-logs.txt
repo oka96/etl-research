@@ -1,0 +1,58 @@
+Starting cluster.
+Starting standalonesession daemon on host phase2-dinky-proof-k5zvj.
+Starting taskexecutor daemon on host phase2-dinky-proof-k5zvj.
+Jun 08, 2026 7:51:06 PM org.jline.utils.Log logr
+WARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+{"taskmanagers":1,"slots-total":1,"slots-available":1,"jobs-running":0,"jobs-finished":0,"jobs-cancelled":0,"jobs-failed":0,"flink-version":"1.20.3","flink-commit":"01e3a6d"}[34;1m[INFO] Executing SQL from file.[0m
+
+Command history file path: /root/.flink-sql-history
+Flink SQL> [34;1m[INFO] Execute statement succeeded.[0m
+
+Flink SQL> [34;1m[INFO] Execute statement succeeded.[0m
+
+Flink SQL> [34;1m[INFO] Execute statement succeeded.[0m
+
+Flink SQL> [34;1m[INFO] Execute statement succeeded.[0m
+
+Flink SQL> 
+> CREATE TABLE wallet_source (
+>   event_id STRING,
+>   event_type STRING,
+>   wallet_id STRING,
+>   amount DECIMAL(12,2),
+>   currency STRING,
+>   status STRING
+> ) WITH (
+>   'connector' = 'kafka',
+>   'topic' = 'phase2-dinky-wallet-events-1780948258',
+>   'properties.bootstrap.servers' = 'phase2-redpanda:9092',
+>   'properties.group.id' = 'phase2-dinky-wallet-poc-1780948258-source',
+>   'scan.startup.mode' = 'earliest-offset',
+>   'scan.bounded.mode' = 'latest-offset',
+>   'format' = 'json',
+>   'json.ignore-parse-errors' = 'true'
+> )[34;1m[INFO] Execute statement succeeded.[0m
+
+Flink SQL> 
+> CREATE TABLE wallet_filtered (
+>   event_id STRING,
+>   event_type STRING,
+>   wallet_id STRING,
+>   amount DECIMAL(12,2),
+>   currency STRING,
+>   risk_tier STRING,
+>   pipeline STRING
+> ) WITH (
+>   'connector' = 'kafka',
+>   'topic' = 'phase2-dinky-wallet-filtered-1780948258',
+>   'properties.bootstrap.servers' = 'phase2-redpanda:9092',
+>   'format' = 'json'
+> )[34;1m[INFO] Execute statement succeeded.[0m
+
+Flink SQL> [34;1m[INFO] Complete execution of the SQL update statement.[0m
+
+Flink SQL> 
+Shutting down the session...
+done.
+Stopping taskexecutor daemon (pid: 1179) on host phase2-dinky-proof-k5zvj.
+Stopping standalonesession daemon (pid: 695) on host phase2-dinky-proof-k5zvj.

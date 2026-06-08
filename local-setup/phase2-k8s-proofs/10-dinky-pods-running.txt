@@ -1,0 +1,4 @@
+NAME                                           READY   STATUS      RESTARTS        AGE
+phase2-dinky-646bccfdbd-vvmqn                  1/1     Running     1 (3m19s ago)   9m28s
+phase2-dinky-proof-k5zvj                       0/1     Init:1/2    0               9s
+phase2-redpanda-69bfdc558b-8ctxf               1/1     Running     0               13m
