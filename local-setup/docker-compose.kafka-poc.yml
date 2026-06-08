@@ -110,8 +110,8 @@ services:
     image: apache/nifi:latest
     container_name: etl-research-nifi
     environment:
-      SINGLE_USER_CREDENTIALS_USERNAME: admin
-      SINGLE_USER_CREDENTIALS_PASSWORD: adminadminadmin
+      SINGLE_USER_CREDENTIALS_USERNAME: ${NIFI_SINGLE_USER_USERNAME:?set NIFI_SINGLE_USER_USERNAME locally}
+      SINGLE_USER_CREDENTIALS_PASSWORD: ${NIFI_SINGLE_USER_PASSWORD:?set NIFI_SINGLE_USER_PASSWORD locally}
       NIFI_WEB_PROXY_HOST: localhost:18443
     ports:
       - "18443:8443"

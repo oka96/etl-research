@@ -57,7 +57,7 @@ services:
     image: couchdb:3.3.1
     environment:
       - COUCHDB_USER=admin
-      - COUCHDB_PASSWORD=admin
+      - COUCHDB_PASSWORD=${STREAMPIPES_COUCHDB_PASSWORD:?set STREAMPIPES_COUCHDB_PASSWORD locally}
     volumes:
       - couchdb:/opt/couchdb/data
     logging: *default-logging
@@ -72,8 +72,8 @@ services:
       - INFLUXDB_REPORTING_DISABLED=false
       - INFLUXDB_ADMIN_ENABLED=true
       - DOCKER_INFLUXDB_INIT_USERNAME=admin
-      - DOCKER_INFLUXDB_INIT_PASSWORD=sp-admin
-      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=sp-admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${STREAMPIPES_INFLUXDB_PASSWORD:?set STREAMPIPES_INFLUXDB_PASSWORD locally}
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${STREAMPIPES_INFLUXDB_ADMIN_TOKEN:?set STREAMPIPES_INFLUXDB_ADMIN_TOKEN locally}
       - DOCKER_INFLUXDB_INIT_ORG=sp
       - DOCKER_INFLUXDB_INIT_BUCKET=sp
       - DOCKER_INFLUXDB_INIT_MODE=${SP_INFLUX_INIT_MODE}
@@ -110,4 +110,3 @@ volumes:
 networks:
   spnet:
     driver: bridge
-

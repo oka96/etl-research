@@ -24,12 +24,7 @@ docker-compose up -d
 
 ### Use InLong
 
-After all containers run successfully, you can access `http://localhost` with default account:
-
-```shell
-User: admin
-Password: inlong
-```
+After all containers run successfully, you can access `http://localhost` with the local account configured in your initialization data. Keep local credentials in an ignored `.env` file, not in the public repo.
 
 ### Destroy
 

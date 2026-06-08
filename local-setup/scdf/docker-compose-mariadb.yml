@@ -27,7 +27,7 @@ services:
       LANG: en.US-utf8
       LC_ALL: en_US.utf8
       MARIADB_DATABASE: dataflow
-      MARIADB_ROOT_PASSWORD: rootpw
+      MARIADB_ROOT_PASSWORD: ${SCDF_MARIADB_ROOT_PASSWORD:?set SCDF_MARIADB_ROOT_PASSWORD locally}
     expose:
       - 3306
     ports:
@@ -37,7 +37,7 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/dataflow
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=rootpw
+      - SPRING_DATASOURCE_PASSWORD=${SCDF_MARIADB_ROOT_PASSWORD:?set SCDF_MARIADB_ROOT_PASSWORD locally}
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.mariadb.jdbc.Driver
     depends_on:
       - mariadb
@@ -46,7 +46,7 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/dataflow
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=rootpw
+      - SPRING_DATASOURCE_PASSWORD=${SCDF_MARIADB_ROOT_PASSWORD:?set SCDF_MARIADB_ROOT_PASSWORD locally}
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.mariadb.jdbc.Driver
     depends_on:
       - mariadb

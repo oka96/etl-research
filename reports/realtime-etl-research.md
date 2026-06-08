@@ -20,16 +20,29 @@ My default recommendation for an e-wallet core event ETL replacement is:
 
 Use NiFi only if low-code operations are more important than deep stream semantics. Use SeaTunnel if the needed transformations are mostly SQL/config based and direct RocketMQ source/sink matters more than custom stateful stream logic.
 
+## Decision Summary
+
+| Decision Need | Most Suitable Candidate | Why | Main Caveat |
+|---|---|---|---|
+| Default production replacement for e-wallet real-time ETL | **Apache Flink** with StreamPark or Dinky | Strongest fit for correctness, replay, state, joins/windows, backpressure, and Java team ownership | RocketMQ connector validation should be a dedicated second PoC |
+| Fastest config-first RocketMQ ETL PoC | **Apache SeaTunnel** | Direct RocketMQ source/sink support and simpler config-driven jobs | Less flexible than Flink for complex stateful business logic |
+| Spring Boot owned application routes | **Apache Camel** | Best match for Java/Spring Boot teams and service-owned transformation code | Runtime low-code pipeline management is weaker than NiFi/SCDF |
+| Operations-managed visual flows | **Apache NiFi** | Best UI/API/provenance model for non-developer flow editing | RocketMQ processor support must be validated or built |
+| RocketMQ-native lightweight processing/routing | **RocketMQ Streams, Connect, EventBridge** | Native broker fit and local RocketMQ proof exists | Smaller communities and narrower ETL capability than Flink/SeaTunnel |
+
+For this company context, the recommended decision is **Flink as the strategic engine**, **SeaTunnel as the quickest direct-RocketMQ config-first challenger**, and **Camel as the Spring Boot fallback when the pipeline should live with application teams**.
+
 ## Local Setup Artifacts
 
 Local PoC stack:
 
 - Compose file: [docker-compose.kafka-poc.yml](/Users/oka/Documents/etl-research/local-setup/docker-compose.kafka-poc.yml)
+- Public repo credential handling: `.env` files are ignored; tracked `.env.example` files list required local variables without real secrets.
 - Setup proof: [setup-proof.txt](/Users/oka/Documents/etl-research/local-setup/setup-proof.txt)
 - Redpanda Console: `http://localhost:18080`
 - Flink Dashboard: `http://localhost:18081`
 - Node-RED Editor: `http://localhost:1880`
-- NiFi: `https://localhost:18443/nifi` with `admin / adminadminadmin`
+- NiFi: `https://localhost:18443/nifi`; single-user credentials are supplied through local env vars
 - Kafka Connect REST: `http://localhost:18083`
 - Bento health/stats: `http://localhost:14195/ready`, `http://localhost:14195/stats`
 - eKuiper REST: `http://localhost:19081`
@@ -111,7 +124,7 @@ Verified working pipelines:
 | Apache InLong | Official compose files in [local-setup/inlong](/Users/oka/Documents/etl-research/local-setup/inlong) | Started the local dashboard, manager, and MySQL control-plane slice from official compose files; dashboard returned HTTP 200 and rendered the data ingestion UI. The manager container started Tomcat on 8083 but `curl` returned `Empty reply from server` and the dashboard displayed `http error` toasts under `linux/amd64` emulation, so this is setup/UI proof only, not wallet-event E2E proof |
 | Spring Cloud Data Flow | Official compose files in [local-setup/scdf](/Users/oka/Documents/etl-research/local-setup/scdf) | Data Flow 2.10.2, dashboard UI 3.3.2, Skipper 2.9.2, Kafka, ZooKeeper, and MariaDB started locally; `/about`, `/runtime/apps`, Skipper `/about`, and dashboard HTML returned successfully on first boot. Repeated browser/curl requests later became slow under `linux/amd64` emulation on Apple Silicon, so the stack was stopped after proof |
 | Apache StreamPipes | Official compose files in [local-setup/streampipes](/Users/oka/Documents/etl-research/local-setup/streampipes) | Full StreamPipes 0.98.0 compose stack started locally; UI returned HTTP 200 and rendered the login page, backend auto-setup completed, and extensions installed included Apache Kafka, Apache RocketMQ, Apache TubeMQ (InLong), REST, MQTT, and Pulsar. The official minimal compose path referenced a missing `backend-nats:0.98.0` image, so full compose was used for proof |
-| Apache StreamPark | Local binary distribution [apache-streampark_2.12-2.1.5-incubating-bin](/Users/oka/Documents/etl-research/local-setup/apache-streampark_2.12-2.1.5-incubating-bin) | Started locally with Java 17; actuator health returned `UP`; login `admin / streampark` showed the Flink Application workspace, seeded Flink SQL demo, metrics, and `Add New` workflow |
+| Apache StreamPark | Local binary distribution [apache-streampark_2.12-2.1.5-incubating-bin](/Users/oka/Documents/etl-research/local-setup/apache-streampark_2.12-2.1.5-incubating-bin) | Started locally with Java 17; actuator health returned `UP`; local console login showed the Flink Application workspace, seeded Flink SQL demo, metrics, and `Add New` workflow |
 | Dinky | Docker container `etl-research-dinky` | Standalone server is up on `http://localhost:18888`; actuator health returned `UP`; welcome page showed Flink SQL/Flink Jar development, deployment, and monitoring setup flow |
 | Apache Storm | [docker-compose.storm.yml](/Users/oka/Documents/etl-research/local-setup/docker-compose.storm.yml) | Storm 2.8.8 cluster is up; Nimbus is `Leader`, one supervisor is registered, and UI/API are reachable on `http://localhost:18087` |
 | SeaTunnel | [seatunnel-kafka-wallet.conf](/Users/oka/Documents/etl-research/local-setup/seatunnel/seatunnel-kafka-wallet.conf) | Ran with official `apache/seatunnel:latest`; read 2 fresh `wallet-events` records and wrote 1 transformed authorized-payment record to `wallet-filtered` with `pipeline=seatunnel-wallet-poc` |

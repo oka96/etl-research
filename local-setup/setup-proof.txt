@@ -3,7 +3,7 @@ Verified: 2026-06-08 01:49 MYT
 Workspace: /Users/oka/Documents/etl-research
 
 Base command:
-docker compose -f local-setup/docker-compose.kafka-poc.yml up -d --build
+docker compose --env-file local-setup/.env.example -f local-setup/docker-compose.kafka-poc.yml up -d --build
 
 Extended candidate command:
 docker compose -f local-setup/docker-compose.kafka-poc.yml --profile extended up -d spark-master spark-worker pulsar
@@ -22,10 +22,10 @@ Storm local proof command:
 docker compose -f local-setup/docker-compose.storm.yml up -d
 
 Spring Cloud Data Flow local proof command:
-DATAFLOW_VERSION=2.10.2 SKIPPER_VERSION=2.9.2 docker compose -p etl-scdf -f local-setup/scdf/docker-compose.yml -f local-setup/scdf/docker-compose-kafka.yml -f local-setup/scdf/docker-compose-mariadb.yml up -d dataflow-server skipper-server
+DATAFLOW_VERSION=2.10.2 SKIPPER_VERSION=2.9.2 docker compose --env-file local-setup/scdf/.env.example -p etl-scdf -f local-setup/scdf/docker-compose.yml -f local-setup/scdf/docker-compose-kafka.yml -f local-setup/scdf/docker-compose-mariadb.yml up -d dataflow-server skipper-server
 
 StreamPipes local proof command:
-docker compose --env-file local-setup/streampipes/.env -p etl-streampipes -f local-setup/streampipes/docker-compose.yml up -d
+docker compose --env-file local-setup/streampipes/.env.example -p etl-streampipes -f local-setup/streampipes/docker-compose.yml up -d
 
 Local services verified during this run:
 - Redpanda broker: etl-research-redpanda, localhost:19092
@@ -85,7 +85,7 @@ Verified wallet-event flow:
 - Spring Cloud Data Flow official compose stack started Data Flow 2.10.2, dashboard UI 3.3.2, Skipper 2.9.2, Kafka, ZooKeeper, and MariaDB; repeated browser/curl requests later became slow under linux/amd64 emulation on Apple Silicon
 - Apache StreamPipes full official compose stack started, UI returned HTTP 200 with title "Apache StreamPipes - Self-Service IIoT Toolbox", browser rendered the login page, and backend auto-setup installed Apache Kafka, Apache RocketMQ, Apache TubeMQ (InLong), REST, MQTT, and Pulsar extensions
 - Apache InLong official compose control-plane slice started dashboard, manager, and MySQL; dashboard returned HTTP 200 with title "InLong" and rendered the data ingestion UI. Manager started Tomcat on 8083 but returned curl (52) Empty reply from server, so this is local setup/UI proof only rather than wallet-event E2E proof
-- Apache StreamPark console started, actuator health returned UP, and admin / streampark login showed the Flink Application workspace with Add New, metrics, and a seeded Flink SQL demo
+- Apache StreamPark console started, actuator health returned UP, and local console login showed the Flink Application workspace with Add New, metrics, and a seeded Flink SQL demo
 - Dinky standalone started and showed the first-run admin setup / Flink SQL development welcome workflow
 - Apache Storm 2.8.8 started with one supervisor, four free slots, and Nimbus leader status
 
@@ -153,11 +153,11 @@ Key verification commands:
   HTTP/1.1 200 with title Apache StreamPipes - Self-Service IIoT Toolbox
 - docker logs --tail 80 etl-streampipes-backend-1 | rg 'Auto-Setup finished|Apache Kafka|Apache RocketMQ|Apache TubeMQ'
   Auto-Setup finished; Installing extension Apache Kafka; Installing extension Apache RocketMQ; Installing extension Apache TubeMQ (InLong)
-- docker compose --env-file local-setup/inlong/.env -f local-setup/inlong/docker-compose.yml up -d mysql manager dashboard
+- docker compose --env-file local-setup/inlong/.env.example -f local-setup/inlong/docker-compose.yml up -d mysql manager dashboard
   Started dashboard, manager, and mysql
 - curl -i http://localhost/
   HTTP/1.1 200 with title InLong
-- docker compose --env-file local-setup/inlong/.env -f local-setup/inlong/docker-compose.yml ps
+- docker compose --env-file local-setup/inlong/.env.example -f local-setup/inlong/docker-compose.yml ps
   dashboard Up, manager Up on 8083, mysql Up and healthy
 - curl -i --max-time 20 http://localhost:8083/
   curl: (52) Empty reply from server

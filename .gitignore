@@ -1,4 +1,6 @@
 .DS_Store
+**/.env
+!**/.env.example
 local-setup/camel-wallet-pipeline/target/
 local-setup/rocketmq-streams-wallet-poc/target/
 local-setup/rocketmq-connect-src/**/target/

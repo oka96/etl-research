@@ -25,7 +25,7 @@ services:
     container_name: dataflow-mariadb
     environment:
       MARIADB_DATABASE: dataflow
-      MARIADB_ROOT_PASSWORD: rootpw
+      MARIADB_ROOT_PASSWORD: ${SCDF_MARIADB_ROOT_PASSWORD:?set SCDF_MARIADB_ROOT_PASSWORD locally}
     expose:
       - 3306
 
@@ -72,7 +72,7 @@ services:
 
       - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/dataflow
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=rootpw
+      - SPRING_DATASOURCE_PASSWORD=${SCDF_MARIADB_ROOT_PASSWORD:?set SCDF_MARIADB_ROOT_PASSWORD locally}
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.mariadb.jdbc.Driver
       # (Optionally) authenticate the default Docker Hub access for the App Metadata access.
       - SPRING_CLOUD_DATAFLOW_CONTAINER_REGISTRY_CONFIGURATIONS_DEFAULT_USER=${METADATA_DEFAULT_DOCKERHUB_USER}
@@ -130,7 +130,7 @@ services:
       - SPRING_CLOUD_SKIPPER_SERVER_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_PORTRANGE_HIGH=20190
       - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/dataflow
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=rootpw
+      - SPRING_DATASOURCE_PASSWORD=${SCDF_MARIADB_ROOT_PASSWORD:?set SCDF_MARIADB_ROOT_PASSWORD locally}
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.mariadb.jdbc.Driver
       - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_SKIPPER_SERVER_DEPLOYER=ERROR
     entrypoint: >

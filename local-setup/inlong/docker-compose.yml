@@ -24,9 +24,9 @@ services:
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=inlong
+      - MYSQL_ROOT_PASSWORD=${INLONG_MYSQL_ROOT_PASSWORD:?set INLONG_MYSQL_ROOT_PASSWORD locally}
     healthcheck:
-      test: "/usr/bin/mysql --user=root --password=inlong --execute \"SHOW DATABASES;\""
+      test: "/usr/bin/mysql --user=root --password=$${MYSQL_ROOT_PASSWORD} --execute \"SHOW DATABASES;\""
       timeout: 20s
       interval: 2s
       retries: 10
@@ -56,7 +56,7 @@ services:
     environment:
       - JDBC_URL=mysql:3306
       - USERNAME=root
-      - PASSWORD=inlong
+      - PASSWORD=${INLONG_MYSQL_ROOT_PASSWORD:?set INLONG_MYSQL_ROOT_PASSWORD locally}
       - ZK_URL=tubemq-server:2181
       - FLINK_HOST=jobmanager
       - FLINK_PORT=8081
@@ -111,7 +111,7 @@ services:
     environment:
       - AUDIT_JDBC_URL=mysql:3306
       - AUDIT_JDBC_USERNAME=root
-      - AUDIT_JDBC_PASSWORD=inlong
+      - AUDIT_JDBC_PASSWORD=${INLONG_MYSQL_ROOT_PASSWORD:?set INLONG_MYSQL_ROOT_PASSWORD locally}
       - MANAGER_OPENAPI_IP=manager
       - MANAGER_OPENAPI_PORT=8083
       - AUDIT_PROXY_ADDRESS=audit:10081
