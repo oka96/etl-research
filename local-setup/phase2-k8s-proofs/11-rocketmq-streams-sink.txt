@@ -1,0 +1,1 @@
+{"event_id":"evt-rs-k8s-402","event_type":"wallet.payment.authorized","wallet_id":"wallet-rs-k8s-402","amount":1250.0,"currency":"MYR","status":"authorized","risk_tier":"HIGH","pipeline":"rocketmq-streams-k8s-phase2"}

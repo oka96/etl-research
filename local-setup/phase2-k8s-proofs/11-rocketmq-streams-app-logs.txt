@@ -1,0 +1,2 @@
+Starting RocketMQ Streams wallet PoC source=phase2-rocketmq-streams-wallet-events-v5 sink=phase2-rocketmq-streams-wallet-filtered-v5 namesrv=phase2-rocketmq-namesrv:9876 pipeline=rocketmq-streams-k8s-phase2
+2026-06-08 17:12:11.878 [ROCKETMQ_STREAMS_walletStreamsPocPhase2_0] INFO  o.a.rocketmq.streams.core.running.WorkerThread - worker thread=[ROCKETMQ_STREAMS_walletStreamsPocPhase2_0], start task success, jobId:walletStreamsPocPhase2

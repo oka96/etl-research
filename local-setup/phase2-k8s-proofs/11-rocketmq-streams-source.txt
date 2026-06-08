@@ -1,0 +1,2 @@
+{"event_id":"evt-rs-k8s-401","event_type":"wallet.payment.rejected","wallet_id":"wallet-rs-k8s-401","amount":80.00,"currency":"MYR","status":"rejected"}
+{"event_id":"evt-rs-k8s-402","event_type":"wallet.payment.authorized","wallet_id":"wallet-rs-k8s-402","amount":1250.00,"currency":"MYR","status":"authorized"}

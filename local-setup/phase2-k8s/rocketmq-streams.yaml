@@ -1,0 +1,286 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-rocketmq-broker-config
+  namespace: etl-research-phase2
+data:
+  broker.conf: |
+    brokerClusterName=DefaultCluster
+    brokerName=broker-a
+    brokerId=0
+    brokerRole=ASYNC_MASTER
+    flushDiskType=ASYNC_FLUSH
+    listenPort=10911
+    namesrvAddr=phase2-rocketmq-namesrv:9876
+    brokerIP1=phase2-rocketmq-broker
+    autoCreateTopicEnable=true
+    autoCreateSubscriptionGroup=true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phase2-rocketmq-namesrv
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-rocketmq-namesrv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phase2-rocketmq-namesrv
+  template:
+    metadata:
+      labels:
+        app: phase2-rocketmq-namesrv
+    spec:
+      containers:
+        - name: namesrv
+          image: apache/rocketmq:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - nameserver
+          env:
+            - name: JAVA_OPT_EXT
+              value: "-Xms256m -Xmx256m -Xmn128m"
+          ports:
+            - name: namesrv
+              containerPort: 9876
+          readinessProbe:
+            tcpSocket:
+              port: namesrv
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 24
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phase2-rocketmq-namesrv
+  namespace: etl-research-phase2
+spec:
+  selector:
+    app: phase2-rocketmq-namesrv
+  ports:
+    - name: namesrv
+      port: 9876
+      targetPort: namesrv
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phase2-rocketmq-broker
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-rocketmq-broker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phase2-rocketmq-broker
+  template:
+    metadata:
+      labels:
+        app: phase2-rocketmq-broker
+    spec:
+      containers:
+        - name: broker
+          image: apache/rocketmq:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - broker
+            - -n
+            - phase2-rocketmq-namesrv:9876
+            - -c
+            - /home/rocketmq/conf/broker.conf
+          env:
+            - name: JAVA_OPT_EXT
+              value: "-Xms512m -Xmx512m -Xmn256m -XX:MaxDirectMemorySize=256m"
+          ports:
+            - name: broker-fast
+              containerPort: 10909
+            - name: broker
+              containerPort: 10911
+            - name: broker-ha
+              containerPort: 10912
+          volumeMounts:
+            - name: broker-config
+              mountPath: /home/rocketmq/conf/broker.conf
+              subPath: broker.conf
+          readinessProbe:
+            tcpSocket:
+              port: broker
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            failureThreshold: 24
+      volumes:
+        - name: broker-config
+          configMap:
+            name: phase2-rocketmq-broker-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phase2-rocketmq-broker
+  namespace: etl-research-phase2
+spec:
+  selector:
+    app: phase2-rocketmq-broker
+  ports:
+    - name: broker-fast
+      port: 10909
+      targetPort: broker-fast
+    - name: broker
+      port: 10911
+      targetPort: broker
+    - name: broker-ha
+      port: 10912
+      targetPort: broker-ha
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phase2-rocketmq-streams
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-rocketmq-streams
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phase2-rocketmq-streams
+  template:
+    metadata:
+      labels:
+        app: phase2-rocketmq-streams
+    spec:
+      initContainers:
+        - name: wait-for-topics
+          image: apache/rocketmq:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -eu
+              NAMESRV="phase2-rocketmq-namesrv:9876"
+              SOURCE_TOPIC="phase2-rocketmq-streams-wallet-events-v5"
+              SINK_TOPIC="phase2-rocketmq-streams-wallet-filtered-v5"
+              ADMIN="$ROCKETMQ_HOME/bin/mqadmin"
+              for i in $(seq 1 120); do
+                "$ADMIN" topicList -n "$NAMESRV" >/tmp/topics.txt 2>&1 || true
+                cat /tmp/topics.txt
+                if grep -q "$SOURCE_TOPIC" /tmp/topics.txt && grep -q "$SINK_TOPIC" /tmp/topics.txt; then
+                  exit 0
+                fi
+                sleep 2
+              done
+              echo "RocketMQ Streams topics did not become visible" >&2
+              exit 1
+      containers:
+        - name: streams
+          image: etl-research/rocketmq-streams-wallet-poc:phase2
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ROCKETMQ_NAMESRV
+              value: phase2-rocketmq-namesrv:9876
+            - name: ROCKETMQ_SOURCE_TOPIC
+              value: phase2-rocketmq-streams-wallet-events-v5
+            - name: ROCKETMQ_SINK_TOPIC
+              value: phase2-rocketmq-streams-wallet-filtered-v5
+            - name: ROCKETMQ_PIPELINE_NAME
+              value: rocketmq-streams-k8s-phase2
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-rocketmq-streams-setup
+  namespace: etl-research-phase2
+data:
+  setup.sh: |
+    #!/bin/sh
+    set -eu
+
+    NAMESRV="phase2-rocketmq-namesrv:9876"
+    SOURCE_TOPIC="phase2-rocketmq-streams-wallet-events-v5"
+    SINK_TOPIC="phase2-rocketmq-streams-wallet-filtered-v5"
+    ADMIN="$ROCKETMQ_HOME/bin/mqadmin"
+
+    echo "Waiting for RocketMQ broker registration"
+    for i in $(seq 1 120); do
+      if "$ADMIN" clusterList -n "$NAMESRV" >/tmp/rocketmq-cluster.txt 2>&1; then
+        cat /tmp/rocketmq-cluster.txt
+        if grep -q "DefaultCluster" /tmp/rocketmq-cluster.txt; then
+          break
+        fi
+      else
+        cat /tmp/rocketmq-cluster.txt || true
+      fi
+      sleep 2
+      if [ "$i" = "120" ]; then
+        echo "RocketMQ broker did not register" >&2
+        exit 1
+      fi
+    done
+
+    echo "Creating source and sink topics"
+    "$ADMIN" updateTopic -n "$NAMESRV" -c DefaultCluster -t "$SOURCE_TOPIC" -r 4 -w 4
+    "$ADMIN" updateTopic -n "$NAMESRV" -c DefaultCluster -t "$SINK_TOPIC" -r 4 -w 4
+
+    echo "Waiting for RocketMQ Streams worker to start after topic creation"
+    sleep 25
+
+    echo "Producing wallet source events"
+    "$ADMIN" sendMessage -n "$NAMESRV" -t "$SOURCE_TOPIC" -b broker-a -i 2 -p '{"event_id":"evt-rs-k8s-401","event_type":"wallet.payment.rejected","wallet_id":"wallet-rs-k8s-401","amount":80.00,"currency":"MYR","status":"rejected"}'
+    "$ADMIN" sendMessage -n "$NAMESRV" -t "$SOURCE_TOPIC" -b broker-a -i 2 -p '{"event_id":"evt-rs-k8s-402","event_type":"wallet.payment.authorized","wallet_id":"wallet-rs-k8s-402","amount":1250.00,"currency":"MYR","status":"authorized"}'
+
+    echo "Consuming source topic proof"
+    "$ADMIN" consumeMessage -n "$NAMESRV" -t "$SOURCE_TOPIC" -g phase2-rocketmq-streams-source-proof-v5 -b broker-a -i 2 -c 2 > /tmp/source.txt || true
+    grep 'BODY:' /tmp/source.txt || cat /tmp/source.txt
+
+    echo "Consuming transformed sink topic proof"
+    for i in $(seq 1 90); do
+      "$ADMIN" consumeMessage -n "$NAMESRV" -t "$SINK_TOPIC" -g phase2-rocketmq-streams-sink-proof-v5 -c 1 > /tmp/sink.txt || true
+      cat /tmp/sink.txt
+      count="$(grep -c 'BODY:' /tmp/sink.txt || true)"
+      if [ "$count" -ge 1 ]; then
+        break
+      fi
+      sleep 2
+      if [ "$i" = "90" ]; then
+        echo "Did not observe transformed sink message" >&2
+        exit 1
+      fi
+    done
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: phase2-rocketmq-streams-setup
+  namespace: etl-research-phase2
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 86400
+  template:
+    metadata:
+      labels:
+        app: phase2-rocketmq-streams-setup
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: setup
+          image: apache/rocketmq:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - /etc/rocketmq-streams-phase2/setup.sh
+          env:
+            - name: JAVA_OPT_EXT
+              value: "-Xms256m -Xmx512m -Xmn128m"
+          volumeMounts:
+            - name: setup
+              mountPath: /etc/rocketmq-streams-phase2
+      volumes:
+        - name: setup
+          configMap:
+            name: phase2-rocketmq-streams-setup
+            defaultMode: 0755
