@@ -1,0 +1,26 @@
+Source topic: phase2-nifi-wallet-events-1780945194
+Sink topic: phase2-nifi-wallet-filtered-1780945194
+TOPIC                                 STATUS
+phase2-nifi-wallet-events-1780945194  TOPIC_ALREADY_EXISTS: The topic has already been created
+TOPIC                                   STATUS
+phase2-nifi-wallet-filtered-1780945194  OK
+Producing source wallet events
+Produced to partition 0 at offset 0 with timestamp 1780945260120.
+Produced to partition 0 at offset 1 with timestamp 1780945260120.
+Produced to partition 0 at offset 2 with timestamp 1780945260120.
+Produced to partition 0 at offset 3 with timestamp 1780945260120.
+Consuming filtered sink records
+{
+  "topic": "phase2-nifi-wallet-filtered-1780945194",
+  "value": "{\"event_id\":\"evt-nifi-k8s-001\",\"event_type\":\"wallet.payment.authorized\",\"wallet_id\":\"wallet-nifi-001\",\"amount\":250.50,\"currency\":\"MYR\",\"status\":\"authorized\",\"pipeline\":\"nifi-k8s-phase2\",\"risk_tier\":\"STANDARD\"}",
+  "timestamp": 1780945260864,
+  "partition": 0,
+  "offset": 1
+}
+{
+  "topic": "phase2-nifi-wallet-filtered-1780945194",
+  "value": "{\"event_id\":\"evt-nifi-k8s-004\",\"event_type\":\"wallet.payment.authorized\",\"wallet_id\":\"wallet-nifi-004\",\"amount\":1500.00,\"currency\":\"MYR\",\"status\":\"authorized\",\"pipeline\":\"nifi-k8s-phase2\",\"risk_tier\":\"HIGH\"}",
+  "timestamp": 1780945260868,
+  "partition": 0,
+  "offset": 2
+}

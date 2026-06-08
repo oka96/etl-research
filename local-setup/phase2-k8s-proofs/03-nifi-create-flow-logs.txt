@@ -1,0 +1,34 @@
+Source topic: phase2-nifi-wallet-events-1780945194
+Sink topic: phase2-nifi-wallet-filtered-1780945194
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Waiting for NiFi API: <urlopen error [Errno 111] Connection refused>
+Root process group: a89b2b1f-019e-1000-d720-6009d534e258
+Kafka3ConnectionService state=ENABLING validation=VALID
+Kafka3ConnectionService state=ENABLED validation=VALID
+Enabled Kafka3ConnectionService a89be146-019e-1000-835b-bec27d18e4d3
+Started NiFi Kafka source -> Groovy JSON filter/enrich -> Kafka sink flow

@@ -1,0 +1,14 @@
+{
+  "topic": "phase2-nifi-wallet-filtered-1780945194",
+  "value": "{\"event_id\":\"evt-nifi-k8s-001\",\"event_type\":\"wallet.payment.authorized\",\"wallet_id\":\"wallet-nifi-001\",\"amount\":250.50,\"currency\":\"MYR\",\"status\":\"authorized\",\"pipeline\":\"nifi-k8s-phase2\",\"risk_tier\":\"STANDARD\"}",
+  "timestamp": 1780945260864,
+  "partition": 0,
+  "offset": 1
+}
+{
+  "topic": "phase2-nifi-wallet-filtered-1780945194",
+  "value": "{\"event_id\":\"evt-nifi-k8s-004\",\"event_type\":\"wallet.payment.authorized\",\"wallet_id\":\"wallet-nifi-004\",\"amount\":1500.00,\"currency\":\"MYR\",\"status\":\"authorized\",\"pipeline\":\"nifi-k8s-phase2\",\"risk_tier\":\"HIGH\"}",
+  "timestamp": 1780945260868,
+  "partition": 0,
+  "offset": 2
+}

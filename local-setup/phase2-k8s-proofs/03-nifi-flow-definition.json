@@ -1,0 +1,1723 @@
+{
+    "revision": {
+        "version": 0
+    },
+    "permissions": {
+        "canRead": true,
+        "canWrite": true
+    },
+    "processGroupFlow": {
+        "id": "a89b2b1f-019e-1000-d720-6009d534e258",
+        "uri": "http://localhost:8080/nifi-api/flow/process-groups/a89b2b1f-019e-1000-d720-6009d534e258",
+        "breadcrumb": {
+            "id": "a89b2b1f-019e-1000-d720-6009d534e258",
+            "permissions": {
+                "canRead": true,
+                "canWrite": true
+            },
+            "breadcrumb": {
+                "id": "a89b2b1f-019e-1000-d720-6009d534e258",
+                "name": "NiFi Flow"
+            }
+        },
+        "flow": {
+            "processGroups": [],
+            "remoteProcessGroups": [],
+            "processors": [
+                {
+                    "revision": {
+                        "version": 3
+                    },
+                    "id": "a89bea8e-019e-1000-c661-30927a83b77a",
+                    "uri": "http://localhost:8080/nifi-api/processors/a89bea8e-019e-1000-c661-30927a83b77a",
+                    "position": {
+                        "x": 0.0,
+                        "y": 520.0
+                    },
+                    "permissions": {
+                        "canRead": true,
+                        "canWrite": true
+                    },
+                    "bulletins": [],
+                    "component": {
+                        "id": "a89bea8e-019e-1000-c661-30927a83b77a",
+                        "parentGroupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                        "position": {
+                            "x": 0.0,
+                            "y": 520.0
+                        },
+                        "name": "Publish filtered wallet events",
+                        "type": "org.apache.nifi.kafka.processors.PublishKafka",
+                        "bundle": {
+                            "group": "org.apache.nifi",
+                            "artifact": "nifi-kafka-nar",
+                            "version": "2.9.0"
+                        },
+                        "state": "RUNNING",
+                        "style": {},
+                        "relationships": [
+                            {
+                                "name": "failure",
+                                "description": "Any FlowFile that cannot be sent to Kafka will be routed to this Relationship",
+                                "autoTerminate": true,
+                                "retry": false
+                            },
+                            {
+                                "name": "success",
+                                "description": "FlowFiles for which all content was sent to Kafka.",
+                                "autoTerminate": true,
+                                "retry": false
+                            }
+                        ],
+                        "supportsParallelProcessing": true,
+                        "supportsBatching": false,
+                        "supportsSensitiveDynamicProperties": false,
+                        "persistsState": false,
+                        "restricted": false,
+                        "deprecated": false,
+                        "executionNodeRestricted": false,
+                        "multipleVersionsAvailable": false,
+                        "inputRequirement": "INPUT_REQUIRED",
+                        "physicalState": "RUNNING",
+                        "config": {
+                            "properties": {
+                                "Kafka Connection Service": "a89be146-019e-1000-835b-bec27d18e4d3",
+                                "Topic Name": "phase2-nifi-wallet-filtered-1780945194",
+                                "Failure Strategy": "Route to Failure",
+                                "acks": "all",
+                                "compression.type": "none",
+                                "max.request.size": "1 MB",
+                                "Transactions Enabled": "true",
+                                "Transactional ID Prefix": null,
+                                "partitioner.class": "org.apache.kafka.clients.producer.internals.DefaultPartitioner",
+                                "partition": null,
+                                "Message Demarcator": null,
+                                "Record Reader": null,
+                                "Record Writer": null,
+                                "Publish Strategy": "USE_VALUE",
+                                "Message Key Field": null,
+                                "FlowFile Attribute Header Pattern": null,
+                                "Header Encoding": "UTF-8",
+                                "Kafka Key": null,
+                                "Kafka Key Attribute Encoding": "utf-8",
+                                "Record Key Writer": null,
+                                "Record Metadata Strategy": "FROM_PROPERTIES"
+                            },
+                            "descriptors": {
+                                "Kafka Connection Service": {
+                                    "name": "Kafka Connection Service",
+                                    "displayName": "Kafka Connection Service",
+                                    "description": "Provides connections to Kafka Broker for publishing Kafka Records",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Redpanda Kafka connection",
+                                                "value": "a89be146-019e-1000-835b-bec27d18e4d3"
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "identifiesControllerService": "org.apache.nifi.kafka.service.api.KafkaConnectionService",
+                                    "identifiesControllerServiceBundle": {
+                                        "group": "org.apache.nifi",
+                                        "artifact": "nifi-kafka-service-api-nar",
+                                        "version": "2.9.0"
+                                    },
+                                    "dependencies": []
+                                },
+                                "Topic Name": {
+                                    "name": "Topic Name",
+                                    "displayName": "Topic Name",
+                                    "description": "Name of the Kafka Topic to which the Processor publishes Kafka Records",
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": true,
+                                    "expressionLanguageScope": "Environment variables and FlowFile Attributes",
+                                    "dependencies": []
+                                },
+                                "Failure Strategy": {
+                                    "name": "Failure Strategy",
+                                    "displayName": "Failure Strategy",
+                                    "description": "Specifies how the processor handles a FlowFile if it is unable to publish the data to Kafka",
+                                    "defaultValue": "Route to Failure",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Route to Failure",
+                                                "value": "Route to Failure",
+                                                "description": "When unable to publish records to Kafka, the FlowFile will be routed to the failure relationship."
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Rollback",
+                                                "value": "Rollback",
+                                                "description": "When unable to publish records to Kafka, the FlowFile will be placed back on the queue so that it will be retried. For flows where FlowFile ordering is important, this strategy can be used along with ensuring that the each processor uses only a single Concurrent Task."
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "acks": {
+                                    "name": "acks",
+                                    "displayName": "Delivery Guarantee",
+                                    "description": "Specifies the requirement for guaranteeing that a message is sent to Kafka. Corresponds to Kafka Client acks property.",
+                                    "defaultValue": "all",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Guarantee Replicated Delivery",
+                                                "value": "all",
+                                                "description": "FlowFile will be routed to failure unless the message is replicated to the appropriate number of Kafka Nodes according to the Topic configuration"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Guarantee Single Node Delivery",
+                                                "value": "1",
+                                                "description": "FlowFile will be routed to success if the message is received by a single Kafka node, whether or not it is replicated. This is faster than <Guarantee Replicated Delivery> but can result in data loss if a Kafka node crashes"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Best Effort",
+                                                "value": "0",
+                                                "description": "FlowFile will be routed to success after successfully sending the content to a Kafka node, without waiting for any acknowledgment from the node at all. This provides the best performance but may result in data loss."
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "compression.type": {
+                                    "name": "compression.type",
+                                    "displayName": "Compression Type",
+                                    "description": "Specifies the compression strategy for records sent to Kafka. Corresponds to Kafka Client compression.type property.",
+                                    "defaultValue": "none",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "none",
+                                                "value": "none"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "gzip",
+                                                "value": "gzip"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "snappy",
+                                                "value": "snappy"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "lz4",
+                                                "value": "lz4"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "zstd",
+                                                "value": "zstd"
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "max.request.size": {
+                                    "name": "max.request.size",
+                                    "displayName": "Max Request Size",
+                                    "description": "The maximum size of a request in bytes. Corresponds to Kafka Client max.request.size property.",
+                                    "defaultValue": "1 MB",
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "Transactions Enabled": {
+                                    "name": "Transactions Enabled",
+                                    "displayName": "Transactions Enabled",
+                                    "description": "Specifies whether to provide transactional guarantees when communicating with Kafka. If there is a problem sending data to Kafka, and this property is set to false, then the messages that have already been sent to Kafka will continue on and be delivered to consumers. If this is set to true, then the Kafka transaction will be rolled back so that those messages are not available to consumers. Setting this to true requires that the [Delivery Guarantee] property be set to [Guarantee Replicated Delivery.]",
+                                    "defaultValue": "true",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "true",
+                                                "value": "true"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "false",
+                                                "value": "false"
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "Transactional ID Prefix": {
+                                    "name": "Transactional ID Prefix",
+                                    "displayName": "Transactional ID Prefix",
+                                    "description": "Specifies the KafkaProducer config transactional.id will be a generated UUID and will be prefixed with the configured string.",
+                                    "required": false,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": true,
+                                    "expressionLanguageScope": "Environment variables and FlowFile Attributes",
+                                    "dependencies": [
+                                        {
+                                            "propertyName": "Transactions Enabled",
+                                            "dependentValues": [
+                                                "true"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "partitioner.class": {
+                                    "name": "partitioner.class",
+                                    "displayName": "Partitioner Class",
+                                    "description": "Specifies which class to use to compute a partition id for a message. Corresponds to Kafka Client partitioner.class property.",
+                                    "defaultValue": "org.apache.kafka.clients.producer.internals.DefaultPartitioner",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "RoundRobinPartitioner",
+                                                "value": "org.apache.kafka.clients.producer.RoundRobinPartitioner",
+                                                "description": "Messages will be assigned partitions in a round-robin fashion, sending the first message to Partition 1, the next Partition to Partition 2, and so on, wrapping as necessary."
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "DefaultPartitioner",
+                                                "value": "org.apache.kafka.clients.producer.internals.DefaultPartitioner",
+                                                "description": "The default partitioning strategy will choose the Strictly Uniform Sticky Partitioner (See KIP-794 for more details and available configuration options that can be used via dynamic properties)."
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Expression Language Partitioner",
+                                                "value": "org.apache.nifi.processors.kafka.pubsub.Partitioners.ExpressionLanguagePartitioner",
+                                                "description": "Interprets the <Partition> property as Expression Language that will be evaluated against each FlowFile. This Expression will be evaluated once against the FlowFile, so all Records in a given FlowFile will go to the same partition."
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "partition": {
+                                    "name": "partition",
+                                    "displayName": "Partition",
+                                    "description": "Specifies the Kafka Partition destination for Records.",
+                                    "required": false,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": true,
+                                    "expressionLanguageScope": "Environment variables and FlowFile Attributes",
+                                    "dependencies": []
+                                },
+                                "Message Demarcator": {
+                                    "name": "Message Demarcator",
+                                    "displayName": "Message Demarcator",
+                                    "description": "Specifies the string (interpreted as UTF-8) to use for demarcating multiple messages within a single FlowFile. If not specified, the entire content of the FlowFile will be used as a single message. If specified, the contents of the FlowFile will be split on this delimiter and each section sent as a separate Kafka message. To enter special character such as 'new line' use CTRL+Enter or Shift+Enter, depending on your OS.",
+                                    "required": false,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": true,
+                                    "expressionLanguageScope": "Environment variables and FlowFile Attributes",
+                                    "dependencies": []
+                                },
+                                "Record Reader": {
+                                    "name": "Record Reader",
+                                    "displayName": "Record Reader",
+                                    "description": "The Record Reader to use for incoming FlowFiles",
+                                    "allowableValues": [],
+                                    "required": false,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "identifiesControllerService": "org.apache.nifi.serialization.RecordReaderFactory",
+                                    "identifiesControllerServiceBundle": {
+                                        "group": "org.apache.nifi",
+                                        "artifact": "nifi-standard-services-api-nar",
+                                        "version": "2.9.0"
+                                    },
+                                    "dependencies": []
+                                },
+                                "Record Writer": {
+                                    "name": "Record Writer",
+                                    "displayName": "Record Writer",
+                                    "description": "The Record Writer to use in order to serialize the data before sending to Kafka",
+                                    "allowableValues": [],
+                                    "required": false,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "identifiesControllerService": "org.apache.nifi.serialization.RecordSetWriterFactory",
+                                    "identifiesControllerServiceBundle": {
+                                        "group": "org.apache.nifi",
+                                        "artifact": "nifi-standard-services-api-nar",
+                                        "version": "2.9.0"
+                                    },
+                                    "dependencies": []
+                                },
+                                "Publish Strategy": {
+                                    "name": "Publish Strategy",
+                                    "displayName": "Publish Strategy",
+                                    "description": "The format used to publish the incoming FlowFile record to Kafka.",
+                                    "defaultValue": "USE_VALUE",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Use Content as Record Value",
+                                                "value": "USE_VALUE",
+                                                "description": "Write only the FlowFile content to the Kafka Record value."
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Use Wrapper",
+                                                "value": "USE_WRAPPER",
+                                                "description": "Write the Kafka Record key, value, headers, and metadata into the Kafka Record value.  (See processor usage for more information.)"
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": [
+                                        {
+                                            "propertyName": "Record Reader"
+                                        }
+                                    ]
+                                },
+                                "Message Key Field": {
+                                    "name": "Message Key Field",
+                                    "displayName": "Message Key Field",
+                                    "description": "The name of a field in the Input Records that should be used as the Key for the Kafka message.",
+                                    "required": false,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": true,
+                                    "expressionLanguageScope": "Environment variables and FlowFile Attributes",
+                                    "dependencies": [
+                                        {
+                                            "propertyName": "Publish Strategy",
+                                            "dependentValues": [
+                                                "USE_VALUE"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "FlowFile Attribute Header Pattern": {
+                                    "name": "FlowFile Attribute Header Pattern",
+                                    "displayName": "FlowFile Attribute Header Pattern",
+                                    "description": "A Regular Expression that is matched against all FlowFile attribute names. Any attribute whose name matches the pattern will be added to the Kafka messages as a Header. If not specified, no FlowFile attributes will be added as headers.",
+                                    "required": false,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "Header Encoding": {
+                                    "name": "Header Encoding",
+                                    "displayName": "Header Encoding",
+                                    "description": "For any attribute that is added as a Kafka Record Header, this property indicates the Character Encoding to use for serializing the headers.",
+                                    "defaultValue": "UTF-8",
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": true,
+                                    "expressionLanguageScope": "Environment variables and FlowFile Attributes",
+                                    "dependencies": [
+                                        {
+                                            "propertyName": "FlowFile Attribute Header Pattern"
+                                        }
+                                    ]
+                                },
+                                "Kafka Key": {
+                                    "name": "Kafka Key",
+                                    "displayName": "Kafka Key",
+                                    "description": "The Key to use for the Message. If not specified, the FlowFile attribute 'kafka.key' is used as the message key, if it is present.Beware that setting Kafka key and demarcating at the same time may potentially lead to many Kafka messages with the same key.Normally this is not a problem as Kafka does not enforce or assume message and key uniqueness. Still, setting the demarcator and Kafka key at the same time poses a risk of data loss on Kafka. During a topic compaction on Kafka, messages will be deduplicated based on this key.",
+                                    "required": false,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": true,
+                                    "expressionLanguageScope": "Environment variables and FlowFile Attributes",
+                                    "dependencies": []
+                                },
+                                "Kafka Key Attribute Encoding": {
+                                    "name": "Kafka Key Attribute Encoding",
+                                    "displayName": "Kafka Key Attribute Encoding",
+                                    "description": "FlowFiles that are emitted have an attribute named 'kafka.key'. This property dictates how the value of the attribute should be encoded.",
+                                    "defaultValue": "utf-8",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "UTF-8 Encoded",
+                                                "value": "utf-8",
+                                                "description": "The key is interpreted as a UTF-8 Encoded string."
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Hex Encoded",
+                                                "value": "hex",
+                                                "description": "The key is interpreted as arbitrary binary data and is encoded using hexadecimal characters with uppercase letters"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Do Not Add Key as Attribute",
+                                                "value": "do-not-add",
+                                                "description": "The key will not be added as an Attribute"
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "Record Key Writer": {
+                                    "name": "Record Key Writer",
+                                    "displayName": "Record Key Writer",
+                                    "description": "The Record Key Writer to use for outgoing FlowFiles",
+                                    "allowableValues": [],
+                                    "required": false,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "identifiesControllerService": "org.apache.nifi.serialization.RecordSetWriterFactory",
+                                    "identifiesControllerServiceBundle": {
+                                        "group": "org.apache.nifi",
+                                        "artifact": "nifi-standard-services-api-nar",
+                                        "version": "2.9.0"
+                                    },
+                                    "dependencies": []
+                                },
+                                "Record Metadata Strategy": {
+                                    "name": "Record Metadata Strategy",
+                                    "displayName": "Record Metadata Strategy",
+                                    "description": "Specifies whether the Record's metadata (topic and partition) should come from the Record's metadata field or if it should come from the configured Topic Name and Partition / Partitioner class properties",
+                                    "defaultValue": "FROM_PROPERTIES",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Metadata From Record",
+                                                "value": "FROM_RECORD",
+                                                "description": "The Kafka Record's Topic and Partition will be determined by looking at the /metadata/topic and /metadata/partition fields of the Record, respectively. If these fields are invalid or not present, the Topic Name and Partition/Partitioner class properties of the processor will be considered."
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Use Configured Values",
+                                                "value": "FROM_PROPERTIES",
+                                                "description": "The Kafka Record's Topic will be determined using the 'Topic Name' processor property. The partition will be determined using the 'Partition' and 'Partitioner class' properties."
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": [
+                                        {
+                                            "propertyName": "Publish Strategy",
+                                            "dependentValues": [
+                                                "USE_WRAPPER"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            },
+                            "schedulingPeriod": "0 sec",
+                            "schedulingStrategy": "TIMER_DRIVEN",
+                            "executionNode": "ALL",
+                            "penaltyDuration": "30 sec",
+                            "yieldDuration": "1 sec",
+                            "bulletinLevel": "WARN",
+                            "runDurationMillis": 0,
+                            "concurrentlySchedulableTaskCount": 1,
+                            "autoTerminatedRelationships": [
+                                "success",
+                                "failure"
+                            ],
+                            "comments": "",
+                            "lossTolerant": false,
+                            "defaultConcurrentTasks": {
+                                "TIMER_DRIVEN": "1",
+                                "CRON_DRIVEN": "1"
+                            },
+                            "defaultSchedulingPeriod": {
+                                "TIMER_DRIVEN": "0 sec",
+                                "CRON_DRIVEN": "* * * * * ?"
+                            },
+                            "retryCount": 10,
+                            "retriedRelationships": [],
+                            "backoffMechanism": "PENALIZE_FLOWFILE",
+                            "maxBackoffPeriod": "10 mins"
+                        },
+                        "validationStatus": "VALID",
+                        "extensionMissing": false
+                    },
+                    "inputRequirement": "INPUT_REQUIRED",
+                    "physicalState": "RUNNING",
+                    "status": {
+                        "groupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                        "id": "a89bea8e-019e-1000-c661-30927a83b77a",
+                        "name": "Publish filtered wallet events",
+                        "runStatus": "Running",
+                        "statsLastRefreshed": "19:01:25 UTC",
+                        "aggregateSnapshot": {
+                            "id": "a89bea8e-019e-1000-c661-30927a83b77a",
+                            "groupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                            "name": "Publish filtered wallet events",
+                            "type": "PublishKafka",
+                            "runStatus": "Running",
+                            "executionNode": "ALL",
+                            "bytesRead": 415,
+                            "bytesWritten": 0,
+                            "read": "415 bytes",
+                            "written": "0 bytes",
+                            "flowFilesIn": 2,
+                            "bytesIn": 415,
+                            "input": "2 (415 bytes)",
+                            "flowFilesOut": 0,
+                            "bytesOut": 0,
+                            "output": "0 (0 bytes)",
+                            "taskCount": 1,
+                            "tasksDurationNanos": 140192916,
+                            "tasks": "1",
+                            "tasksDuration": "00:00:00.140",
+                            "activeThreadCount": 0,
+                            "terminatedThreadCount": 0,
+                            "processingPerformanceStatus": {
+                                "identifier": "a89bea8e-019e-1000-c661-30927a83b77a",
+                                "cpuDuration": 26936500,
+                                "contentReadDuration": 0,
+                                "contentWriteDuration": 0,
+                                "sessionCommitDuration": 508674,
+                                "garbageCollectionDuration": 0
+                            }
+                        }
+                    },
+                    "operatePermissions": {
+                        "canRead": true,
+                        "canWrite": true
+                    }
+                },
+                {
+                    "revision": {
+                        "version": 3
+                    },
+                    "id": "a89be990-019e-1000-69f0-4de08bbadfc2",
+                    "uri": "http://localhost:8080/nifi-api/processors/a89be990-019e-1000-69f0-4de08bbadfc2",
+                    "position": {
+                        "x": 0.0,
+                        "y": 260.0
+                    },
+                    "permissions": {
+                        "canRead": true,
+                        "canWrite": true
+                    },
+                    "bulletins": [],
+                    "component": {
+                        "id": "a89be990-019e-1000-69f0-4de08bbadfc2",
+                        "parentGroupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                        "position": {
+                            "x": 0.0,
+                            "y": 260.0
+                        },
+                        "name": "Filter and enrich wallet JSON",
+                        "type": "org.apache.nifi.processors.script.ExecuteScript",
+                        "bundle": {
+                            "group": "org.apache.nifi",
+                            "artifact": "nifi-scripting-nar",
+                            "version": "2.9.0"
+                        },
+                        "state": "RUNNING",
+                        "style": {},
+                        "relationships": [
+                            {
+                                "name": "failure",
+                                "description": "FlowFiles that failed to be processed",
+                                "autoTerminate": true,
+                                "retry": false
+                            },
+                            {
+                                "name": "success",
+                                "description": "FlowFiles that were successfully processed",
+                                "autoTerminate": false,
+                                "retry": false
+                            }
+                        ],
+                        "supportsParallelProcessing": true,
+                        "supportsBatching": false,
+                        "supportsSensitiveDynamicProperties": true,
+                        "persistsState": true,
+                        "restricted": true,
+                        "deprecated": false,
+                        "executionNodeRestricted": false,
+                        "multipleVersionsAvailable": false,
+                        "inputRequirement": "INPUT_ALLOWED",
+                        "physicalState": "RUNNING",
+                        "config": {
+                            "properties": {
+                                "Script Engine": "Groovy",
+                                "Script File": null,
+                                "Script Body": "\nimport groovy.json.JsonOutput\nimport groovy.json.JsonSlurper\nimport java.nio.charset.StandardCharsets\nimport org.apache.commons.io.IOUtils\nimport org.apache.nifi.processor.io.InputStreamCallback\nimport org.apache.nifi.processor.io.OutputStreamCallback\n\ndef flowFile = session.get()\nif (flowFile == null) {\n    return\n}\n\ndef raw = \"\"\nsession.read(flowFile, { inputStream ->\n    raw = IOUtils.toString(inputStream, StandardCharsets.UTF_8)\n} as InputStreamCallback)\n\ntry {\n    def event = new JsonSlurper().parseText(raw)\n    def amount = new BigDecimal(event.amount.toString())\n    if (event.event_type == \"wallet.payment.authorized\" && amount >= 100G) {\n        event.pipeline = \"nifi-k8s-phase2\"\n        event.risk_tier = amount >= 1000G ? \"HIGH\" : \"STANDARD\"\n        flowFile = session.write(flowFile, { outputStream ->\n            outputStream.write(JsonOutput.toJson(event).getBytes(StandardCharsets.UTF_8))\n        } as OutputStreamCallback)\n        flowFile = session.putAttribute(flowFile, \"wallet.filter\", \"authorized-amount-gte-100\")\n        session.transfer(flowFile, REL_SUCCESS)\n    } else {\n        flowFile = session.putAttribute(flowFile, \"wallet.filter\", \"rejected-or-low-value\")\n        session.transfer(flowFile, REL_FAILURE)\n    }\n} catch (Exception e) {\n    flowFile = session.putAttribute(flowFile, \"wallet.filter.error\", e.toString())\n    session.transfer(flowFile, REL_FAILURE)\n}\n",
+                                "Module Directory": null
+                            },
+                            "descriptors": {
+                                "Script Engine": {
+                                    "name": "Script Engine",
+                                    "displayName": "Script Engine",
+                                    "description": "Language Engine for executing scripts",
+                                    "defaultValue": "Clojure",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Clojure",
+                                                "value": "Clojure",
+                                                "description": "Clojure 1.8.0 [Clojure UNKNOWN]"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Groovy",
+                                                "value": "Groovy",
+                                                "description": "Groovy 5.0.5 [Groovy Scripting Engine 2.0]"
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "Script File": {
+                                    "name": "Script File",
+                                    "displayName": "Script File",
+                                    "description": "Path to script file to execute. Only one of Script File or Script Body may be used",
+                                    "required": false,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": true,
+                                    "expressionLanguageScope": "Environment variables defined at JVM level and system properties",
+                                    "dependencies": []
+                                },
+                                "Script Body": {
+                                    "name": "Script Body",
+                                    "displayName": "Script Body",
+                                    "description": "Body of script to execute. Only one of Script File or Script Body may be used",
+                                    "required": false,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "Module Directory": {
+                                    "name": "Module Directory",
+                                    "displayName": "Module Directory",
+                                    "description": "Comma-separated list of paths to files and/or directories which contain modules required by the script.",
+                                    "required": false,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": true,
+                                    "expressionLanguageScope": "Environment variables defined at JVM level and system properties",
+                                    "dependencies": []
+                                }
+                            },
+                            "schedulingPeriod": "0 sec",
+                            "schedulingStrategy": "TIMER_DRIVEN",
+                            "executionNode": "ALL",
+                            "penaltyDuration": "30 sec",
+                            "yieldDuration": "1 sec",
+                            "bulletinLevel": "WARN",
+                            "runDurationMillis": 0,
+                            "concurrentlySchedulableTaskCount": 1,
+                            "autoTerminatedRelationships": [
+                                "failure"
+                            ],
+                            "comments": "",
+                            "lossTolerant": false,
+                            "defaultConcurrentTasks": {
+                                "TIMER_DRIVEN": "1",
+                                "CRON_DRIVEN": "1"
+                            },
+                            "defaultSchedulingPeriod": {
+                                "TIMER_DRIVEN": "0 sec",
+                                "CRON_DRIVEN": "* * * * * ?"
+                            },
+                            "retryCount": 10,
+                            "retriedRelationships": [],
+                            "backoffMechanism": "PENALIZE_FLOWFILE",
+                            "maxBackoffPeriod": "10 mins"
+                        },
+                        "validationStatus": "VALID",
+                        "extensionMissing": false
+                    },
+                    "inputRequirement": "INPUT_ALLOWED",
+                    "physicalState": "RUNNING",
+                    "status": {
+                        "groupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                        "id": "a89be990-019e-1000-69f0-4de08bbadfc2",
+                        "name": "Filter and enrich wallet JSON",
+                        "runStatus": "Running",
+                        "statsLastRefreshed": "19:01:25 UTC",
+                        "aggregateSnapshot": {
+                            "id": "a89be990-019e-1000-69f0-4de08bbadfc2",
+                            "groupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                            "name": "Filter and enrich wallet JSON",
+                            "type": "ExecuteScript",
+                            "runStatus": "Running",
+                            "executionNode": "ALL",
+                            "bytesRead": 624,
+                            "bytesWritten": 415,
+                            "read": "624 bytes",
+                            "written": "415 bytes",
+                            "flowFilesIn": 4,
+                            "bytesIn": 624,
+                            "input": "4 (624 bytes)",
+                            "flowFilesOut": 2,
+                            "bytesOut": 415,
+                            "output": "2 (415 bytes)",
+                            "taskCount": 4,
+                            "tasksDurationNanos": 525202490,
+                            "tasks": "4",
+                            "tasksDuration": "00:00:00.525",
+                            "activeThreadCount": 0,
+                            "terminatedThreadCount": 0,
+                            "processingPerformanceStatus": {
+                                "identifier": "a89be990-019e-1000-69f0-4de08bbadfc2",
+                                "cpuDuration": 424508528,
+                                "contentReadDuration": 0,
+                                "contentWriteDuration": 19834,
+                                "sessionCommitDuration": 956888,
+                                "garbageCollectionDuration": 0
+                            }
+                        }
+                    },
+                    "operatePermissions": {
+                        "canRead": true,
+                        "canWrite": true
+                    }
+                },
+                {
+                    "revision": {
+                        "version": 3
+                    },
+                    "id": "a89be972-019e-1000-3b0f-6edf78211a4c",
+                    "uri": "http://localhost:8080/nifi-api/processors/a89be972-019e-1000-3b0f-6edf78211a4c",
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "permissions": {
+                        "canRead": true,
+                        "canWrite": true
+                    },
+                    "bulletins": [],
+                    "component": {
+                        "id": "a89be972-019e-1000-3b0f-6edf78211a4c",
+                        "parentGroupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "name": "Consume wallet events from Redpanda",
+                        "type": "org.apache.nifi.kafka.processors.ConsumeKafka",
+                        "bundle": {
+                            "group": "org.apache.nifi",
+                            "artifact": "nifi-kafka-nar",
+                            "version": "2.9.0"
+                        },
+                        "state": "RUNNING",
+                        "style": {},
+                        "relationships": [
+                            {
+                                "name": "success",
+                                "description": "FlowFiles containing one or more serialized Kafka Records",
+                                "autoTerminate": false,
+                                "retry": false
+                            }
+                        ],
+                        "supportsParallelProcessing": true,
+                        "supportsBatching": false,
+                        "supportsSensitiveDynamicProperties": false,
+                        "persistsState": false,
+                        "restricted": false,
+                        "deprecated": false,
+                        "executionNodeRestricted": false,
+                        "multipleVersionsAvailable": false,
+                        "inputRequirement": "INPUT_FORBIDDEN",
+                        "physicalState": "RUNNING",
+                        "config": {
+                            "properties": {
+                                "Kafka Connection Service": "a89be146-019e-1000-835b-bec27d18e4d3",
+                                "Group ID": "phase2-nifi-wallet-flow-1780945194",
+                                "Topic Format": "names",
+                                "Topics": "phase2-nifi-wallet-events-1780945194",
+                                "auto.offset.reset": "earliest",
+                                "Commit Offsets": "true",
+                                "Max Uncommitted Size": null,
+                                "Max Uncommitted Time": "100 millis",
+                                "Header Name Pattern": null,
+                                "Header Encoding": "UTF-8",
+                                "Processing Strategy": "FLOW_FILE",
+                                "Header Name Prefix": null,
+                                "Record Reader": null,
+                                "Record Writer": null,
+                                "Output Strategy": "USE_VALUE",
+                                "Key Attribute Encoding": "utf-8",
+                                "Key Format": "byte-array",
+                                "Key Record Reader": null,
+                                "Message Demarcator": null,
+                                "Separate By Key": "false"
+                            },
+                            "descriptors": {
+                                "Kafka Connection Service": {
+                                    "name": "Kafka Connection Service",
+                                    "displayName": "Kafka Connection Service",
+                                    "description": "Provides connections to Kafka Broker for publishing Kafka Records",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Redpanda Kafka connection",
+                                                "value": "a89be146-019e-1000-835b-bec27d18e4d3"
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "identifiesControllerService": "org.apache.nifi.kafka.service.api.KafkaConnectionService",
+                                    "identifiesControllerServiceBundle": {
+                                        "group": "org.apache.nifi",
+                                        "artifact": "nifi-kafka-service-api-nar",
+                                        "version": "2.9.0"
+                                    },
+                                    "dependencies": []
+                                },
+                                "Group ID": {
+                                    "name": "Group ID",
+                                    "displayName": "Group ID",
+                                    "description": "Kafka Consumer Group Identifier corresponding to Kafka group.id property",
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "Topic Format": {
+                                    "name": "Topic Format",
+                                    "displayName": "Topic Format",
+                                    "description": "Specifies whether the Topics provided are a comma separated list of names or a single regular expression",
+                                    "defaultValue": "names",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "names",
+                                                "value": "names",
+                                                "description": "Topic is a full topic name or comma separated list of names"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "pattern",
+                                                "value": "pattern",
+                                                "description": "Topic is a regular expression according to the Java Pattern syntax"
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "Topics": {
+                                    "name": "Topics",
+                                    "displayName": "Topics",
+                                    "description": "The name or pattern of the Kafka Topics from which the Processor consumes Kafka Records. More than one can be supplied if comma separated.",
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": true,
+                                    "expressionLanguageScope": "Environment variables defined at JVM level and system properties",
+                                    "dependencies": []
+                                },
+                                "auto.offset.reset": {
+                                    "name": "auto.offset.reset",
+                                    "displayName": "Auto Offset Reset",
+                                    "description": "Automatic offset configuration applied when no previous consumer offset found corresponding to Kafka auto.offset.reset property",
+                                    "defaultValue": "latest",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "earliest",
+                                                "value": "earliest",
+                                                "description": "Automatically reset the offset to the earliest offset"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "latest",
+                                                "value": "latest",
+                                                "description": "Automatically reset the offset to the latest offset"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "none",
+                                                "value": "none",
+                                                "description": "Throw exception to the consumer if no previous offset found for the consumer group"
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "Commit Offsets": {
+                                    "name": "Commit Offsets",
+                                    "displayName": "Commit Offsets",
+                                    "description": "Specifies whether this Processor should commit the offsets to Kafka after receiving messages. Typically, this value should be set to true so that messages that are received are not duplicated. However, in certain scenarios, we may want to avoid committing the offsets, that the data can be processed and later acknowledged by PublishKafka in order to provide Exactly Once semantics.",
+                                    "defaultValue": "true",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "true",
+                                                "value": "true"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "false",
+                                                "value": "false"
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "Max Uncommitted Size": {
+                                    "name": "Max Uncommitted Size",
+                                    "displayName": "Max Uncommitted Size",
+                                    "description": "Maximum total size of records to consume from Kafka before transferring FlowFiles to an output\nrelationship. Evaluated when specified based on the size of serialized keys and values from each\nKafka record, before reaching the [Max Uncommitted Time].\n",
+                                    "required": false,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "Max Uncommitted Time": {
+                                    "name": "Max Uncommitted Time",
+                                    "displayName": "Max Uncommitted Time",
+                                    "description": "Maximum amount of time to spend consuming records from Kafka before transferring FlowFiles to an\noutput relationship. Longer amounts of time may produce larger FlowFiles and increase processing\nlatency for individual records.\n",
+                                    "defaultValue": "100 millis",
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "Header Name Pattern": {
+                                    "name": "Header Name Pattern",
+                                    "displayName": "Header Name Pattern",
+                                    "description": "Regular Expression Pattern applied to Kafka Record Header Names for selecting Header Values to be written as FlowFile attributes",
+                                    "required": false,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "Header Encoding": {
+                                    "name": "Header Encoding",
+                                    "displayName": "Header Encoding",
+                                    "description": "Character encoding applied when reading Kafka Record Header values and writing FlowFile attributes",
+                                    "defaultValue": "UTF-8",
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "Processing Strategy": {
+                                    "name": "Processing Strategy",
+                                    "displayName": "Processing Strategy",
+                                    "description": "Strategy for processing Kafka Records and writing serialized output to FlowFiles",
+                                    "defaultValue": "FLOW_FILE",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "FLOW_FILE",
+                                                "value": "FLOW_FILE",
+                                                "description": "Write one FlowFile for each Kafka Record consumed"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "DEMARCATOR",
+                                                "value": "DEMARCATOR",
+                                                "description": "Write one FlowFile for each batch of Kafka Records consumed (optionally grouped by Kafka key)"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "RECORD",
+                                                "value": "RECORD",
+                                                "description": "Write one FlowFile containing multiple Kafka Records consumed and processed with Record Reader and Record Writer"
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "Header Name Prefix": {
+                                    "name": "Header Name Prefix",
+                                    "displayName": "Header Name Prefix",
+                                    "description": "A prefix to apply to the FlowFile attribute name when writing Kafka Record Header values.\nThis is useful to avoid conflicts with reserved FlowFile attribute names such as 'uuid'.\nFor example, if set to 'kafka.header.', a Kafka header named 'uuid' would be written as 'kafka.header.uuid'.\n",
+                                    "required": false,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": [
+                                        {
+                                            "propertyName": "Processing Strategy",
+                                            "dependentValues": [
+                                                "FLOW_FILE"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "Record Reader": {
+                                    "name": "Record Reader",
+                                    "displayName": "Record Reader",
+                                    "description": "The Record Reader to use for incoming Kafka messages",
+                                    "allowableValues": [],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "identifiesControllerService": "org.apache.nifi.serialization.RecordReaderFactory",
+                                    "identifiesControllerServiceBundle": {
+                                        "group": "org.apache.nifi",
+                                        "artifact": "nifi-standard-services-api-nar",
+                                        "version": "2.9.0"
+                                    },
+                                    "dependencies": [
+                                        {
+                                            "propertyName": "Processing Strategy",
+                                            "dependentValues": [
+                                                "RECORD"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "Record Writer": {
+                                    "name": "Record Writer",
+                                    "displayName": "Record Writer",
+                                    "description": "The Record Writer to use in order to serialize the outgoing FlowFiles",
+                                    "allowableValues": [],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "identifiesControllerService": "org.apache.nifi.serialization.RecordSetWriterFactory",
+                                    "identifiesControllerServiceBundle": {
+                                        "group": "org.apache.nifi",
+                                        "artifact": "nifi-standard-services-api-nar",
+                                        "version": "2.9.0"
+                                    },
+                                    "dependencies": [
+                                        {
+                                            "propertyName": "Processing Strategy",
+                                            "dependentValues": [
+                                                "RECORD"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "Output Strategy": {
+                                    "name": "Output Strategy",
+                                    "displayName": "Output Strategy",
+                                    "description": "The format used to output the Kafka Record into a FlowFile Record.",
+                                    "defaultValue": "USE_VALUE",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Use Content as Value",
+                                                "value": "USE_VALUE",
+                                                "description": "Write only the Kafka Record value to the FlowFile record."
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Use Wrapper",
+                                                "value": "USE_WRAPPER",
+                                                "description": "Write the Kafka Record key, value, headers, and metadata into the FlowFile record. (See processor's additional details for more information.)"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Inject Metadata",
+                                                "value": "INJECT_METADATA",
+                                                "description": "Write the Kafka Record value to the FlowFile record and add a sub-record to it with key, headers, and metadata. (See processor's additional details for more information.)"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Inject Offset",
+                                                "value": "INJECT_OFFSET",
+                                                "description": "Write the Kafka Record value to the FlowFile record and write the Kafka Record offset to a field named kafkaOffset"
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": [
+                                        {
+                                            "propertyName": "Processing Strategy",
+                                            "dependentValues": [
+                                                "RECORD"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "Key Attribute Encoding": {
+                                    "name": "Key Attribute Encoding",
+                                    "displayName": "Key Attribute Encoding",
+                                    "description": "Encoding for value of configured FlowFile attribute containing Kafka Record Key.",
+                                    "defaultValue": "utf-8",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "UTF-8 Encoded",
+                                                "value": "utf-8",
+                                                "description": "The key is interpreted as a UTF-8 Encoded string."
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Hex Encoded",
+                                                "value": "hex",
+                                                "description": "The key is interpreted as arbitrary binary data and is encoded using hexadecimal characters with uppercase letters"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Do Not Add Key as Attribute",
+                                                "value": "do-not-add",
+                                                "description": "The key will not be added as an Attribute"
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": []
+                                },
+                                "Key Format": {
+                                    "name": "Key Format",
+                                    "displayName": "Key Format",
+                                    "description": "Specifies how to represent the Kafka Record Key in the output FlowFile",
+                                    "defaultValue": "byte-array",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "String",
+                                                "value": "string",
+                                                "description": "Format the Kafka ConsumerRecord key as a UTF-8 string."
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Byte Array",
+                                                "value": "byte-array",
+                                                "description": "Format the Kafka ConsumerRecord key as a byte array."
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "Record",
+                                                "value": "record",
+                                                "description": "Format the Kafka ConsumerRecord key as a record."
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": [
+                                        {
+                                            "propertyName": "Output Strategy",
+                                            "dependentValues": [
+                                                "USE_WRAPPER",
+                                                "INJECT_METADATA"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "Key Record Reader": {
+                                    "name": "Key Record Reader",
+                                    "displayName": "Key Record Reader",
+                                    "description": "The Record Reader to use for parsing the Kafka Record Key into a Record",
+                                    "allowableValues": [],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "identifiesControllerService": "org.apache.nifi.serialization.RecordReaderFactory",
+                                    "identifiesControllerServiceBundle": {
+                                        "group": "org.apache.nifi",
+                                        "artifact": "nifi-standard-services-api-nar",
+                                        "version": "2.9.0"
+                                    },
+                                    "dependencies": [
+                                        {
+                                            "propertyName": "Key Format",
+                                            "dependentValues": [
+                                                "record"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "Message Demarcator": {
+                                    "name": "Message Demarcator",
+                                    "displayName": "Message Demarcator",
+                                    "description": "Since KafkaConsumer receives messages in batches, this Processor has an option to output FlowFiles which contains all Kafka messages in a single batch for a given topic and partition and this property allows you to provide a string (interpreted as UTF-8) to use for demarcating apart multiple Kafka messages. This is an optional property and if not provided each Kafka message received will result in a single FlowFile which  time it is triggered. To enter special character such as 'new line' use CTRL+Enter or Shift+Enter depending on the OS",
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": [
+                                        {
+                                            "propertyName": "Processing Strategy",
+                                            "dependentValues": [
+                                                "DEMARCATOR"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "Separate By Key": {
+                                    "name": "Separate By Key",
+                                    "displayName": "Separate By Key",
+                                    "description": "When this property is enabled, two messages will only be added to the same FlowFile if both of the Kafka Messages have identical keys.",
+                                    "defaultValue": "false",
+                                    "allowableValues": [
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "true",
+                                                "value": "true"
+                                            },
+                                            "canRead": true
+                                        },
+                                        {
+                                            "allowableValue": {
+                                                "displayName": "false",
+                                                "value": "false"
+                                            },
+                                            "canRead": true
+                                        }
+                                    ],
+                                    "required": true,
+                                    "sensitive": false,
+                                    "dynamic": false,
+                                    "supportsEl": false,
+                                    "expressionLanguageScope": "Not Supported",
+                                    "dependencies": [
+                                        {
+                                            "propertyName": "Message Demarcator"
+                                        }
+                                    ]
+                                }
+                            },
+                            "schedulingPeriod": "0 sec",
+                            "schedulingStrategy": "TIMER_DRIVEN",
+                            "executionNode": "ALL",
+                            "penaltyDuration": "30 sec",
+                            "yieldDuration": "1 sec",
+                            "bulletinLevel": "WARN",
+                            "runDurationMillis": 0,
+                            "concurrentlySchedulableTaskCount": 1,
+                            "autoTerminatedRelationships": [
+                                "parse.failure"
+                            ],
+                            "comments": "",
+                            "lossTolerant": false,
+                            "defaultConcurrentTasks": {
+                                "TIMER_DRIVEN": "1",
+                                "CRON_DRIVEN": "1"
+                            },
+                            "defaultSchedulingPeriod": {
+                                "TIMER_DRIVEN": "0 sec",
+                                "CRON_DRIVEN": "* * * * * ?"
+                            },
+                            "retryCount": 10,
+                            "retriedRelationships": [],
+                            "backoffMechanism": "PENALIZE_FLOWFILE",
+                            "maxBackoffPeriod": "10 mins"
+                        },
+                        "validationStatus": "VALID",
+                        "extensionMissing": false
+                    },
+                    "inputRequirement": "INPUT_FORBIDDEN",
+                    "physicalState": "RUNNING",
+                    "status": {
+                        "groupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                        "id": "a89be972-019e-1000-3b0f-6edf78211a4c",
+                        "name": "Consume wallet events from Redpanda",
+                        "runStatus": "Running",
+                        "statsLastRefreshed": "19:01:25 UTC",
+                        "aggregateSnapshot": {
+                            "id": "a89be972-019e-1000-3b0f-6edf78211a4c",
+                            "groupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                            "name": "Consume wallet events from Redpanda",
+                            "type": "ConsumeKafka",
+                            "runStatus": "Running",
+                            "executionNode": "ALL",
+                            "bytesRead": 0,
+                            "bytesWritten": 624,
+                            "read": "0 bytes",
+                            "written": "624 bytes",
+                            "flowFilesIn": 0,
+                            "bytesIn": 0,
+                            "input": "0 (0 bytes)",
+                            "flowFilesOut": 4,
+                            "bytesOut": 624,
+                            "output": "4 (624 bytes)",
+                            "taskCount": 339,
+                            "tasksDurationNanos": 34480819677,
+                            "tasks": "339",
+                            "tasksDuration": "00:00:34.480",
+                            "activeThreadCount": 1,
+                            "terminatedThreadCount": 0,
+                            "processingPerformanceStatus": {
+                                "identifier": "a89be972-019e-1000-3b0f-6edf78211a4c",
+                                "cpuDuration": 25270896184,
+                                "contentReadDuration": 0,
+                                "contentWriteDuration": 0,
+                                "sessionCommitDuration": 12377088,
+                                "garbageCollectionDuration": 0
+                            }
+                        }
+                    },
+                    "operatePermissions": {
+                        "canRead": true,
+                        "canWrite": true
+                    }
+                }
+            ],
+            "inputPorts": [],
+            "outputPorts": [],
+            "connections": [
+                {
+                    "revision": {
+                        "version": 1
+                    },
+                    "id": "a89beaae-019e-1000-f0c1-2b23ca6b1295",
+                    "uri": "http://localhost:8080/nifi-api/connections/a89beaae-019e-1000-f0c1-2b23ca6b1295",
+                    "permissions": {
+                        "canRead": true,
+                        "canWrite": true
+                    },
+                    "component": {
+                        "id": "a89beaae-019e-1000-f0c1-2b23ca6b1295",
+                        "parentGroupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                        "source": {
+                            "id": "a89be972-019e-1000-3b0f-6edf78211a4c",
+                            "type": "PROCESSOR",
+                            "groupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                            "name": "Consume wallet events from Redpanda",
+                            "running": true,
+                            "comments": ""
+                        },
+                        "destination": {
+                            "id": "a89be990-019e-1000-69f0-4de08bbadfc2",
+                            "type": "PROCESSOR",
+                            "groupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                            "name": "Filter and enrich wallet JSON",
+                            "running": true,
+                            "comments": ""
+                        },
+                        "name": "raw Kafka JSON to transform",
+                        "labelIndex": 1,
+                        "zIndex": 0,
+                        "selectedRelationships": [
+                            "success"
+                        ],
+                        "availableRelationships": [
+                            "success"
+                        ],
+                        "backPressureObjectThreshold": 10000,
+                        "backPressureDataSizeThreshold": "1 GB",
+                        "flowFileExpiration": "0 sec",
+                        "prioritizers": [],
+                        "bends": [],
+                        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+                        "loadBalanceCompression": "DO_NOT_COMPRESS",
+                        "loadBalanceStatus": "LOAD_BALANCE_NOT_CONFIGURED"
+                    },
+                    "status": {
+                        "id": "a89beaae-019e-1000-f0c1-2b23ca6b1295",
+                        "groupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                        "name": "raw Kafka JSON to transform",
+                        "statsLastRefreshed": "19:01:25 UTC",
+                        "sourceId": "a89be972-019e-1000-3b0f-6edf78211a4c",
+                        "sourceName": "Consume wallet events from Redpanda",
+                        "destinationId": "a89be990-019e-1000-69f0-4de08bbadfc2",
+                        "destinationName": "Filter and enrich wallet JSON",
+                        "aggregateSnapshot": {
+                            "id": "a89beaae-019e-1000-f0c1-2b23ca6b1295",
+                            "groupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                            "name": "raw Kafka JSON to transform",
+                            "sourceName": "Consume wallet events from Redpanda",
+                            "destinationName": "Filter and enrich wallet JSON",
+                            "flowFilesIn": 4,
+                            "bytesIn": 624,
+                            "input": "4 (624 bytes)",
+                            "flowFilesOut": 4,
+                            "bytesOut": 624,
+                            "output": "4 (624 bytes)",
+                            "flowFilesQueued": 0,
+                            "bytesQueued": 0,
+                            "queued": "0 (0 bytes)",
+                            "queuedSize": "0 bytes",
+                            "queuedCount": "0",
+                            "percentUseCount": 0,
+                            "percentUseBytes": 0,
+                            "flowFileAvailability": "ACTIVE_QUEUE_EMPTY",
+                            "loadBalanceStatus": "LOAD_BALANCE_NOT_CONFIGURED"
+                        }
+                    },
+                    "bends": [],
+                    "labelIndex": 1,
+                    "zIndex": 0,
+                    "sourceId": "a89be972-019e-1000-3b0f-6edf78211a4c",
+                    "sourceGroupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                    "sourceType": "PROCESSOR",
+                    "destinationId": "a89be990-019e-1000-69f0-4de08bbadfc2",
+                    "destinationGroupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                    "destinationType": "PROCESSOR"
+                },
+                {
+                    "revision": {
+                        "version": 1
+                    },
+                    "id": "a89beac0-019e-1000-477e-6ec7a208cea2",
+                    "uri": "http://localhost:8080/nifi-api/connections/a89beac0-019e-1000-477e-6ec7a208cea2",
+                    "permissions": {
+                        "canRead": true,
+                        "canWrite": true
+                    },
+                    "component": {
+                        "id": "a89beac0-019e-1000-477e-6ec7a208cea2",
+                        "parentGroupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                        "source": {
+                            "id": "a89be990-019e-1000-69f0-4de08bbadfc2",
+                            "type": "PROCESSOR",
+                            "groupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                            "name": "Filter and enrich wallet JSON",
+                            "running": true,
+                            "comments": ""
+                        },
+                        "destination": {
+                            "id": "a89bea8e-019e-1000-c661-30927a83b77a",
+                            "type": "PROCESSOR",
+                            "groupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                            "name": "Publish filtered wallet events",
+                            "running": true,
+                            "comments": ""
+                        },
+                        "name": "authorized JSON to Kafka sink",
+                        "labelIndex": 1,
+                        "zIndex": 0,
+                        "selectedRelationships": [
+                            "success"
+                        ],
+                        "availableRelationships": [
+                            "failure",
+                            "success"
+                        ],
+                        "backPressureObjectThreshold": 10000,
+                        "backPressureDataSizeThreshold": "1 GB",
+                        "flowFileExpiration": "0 sec",
+                        "prioritizers": [],
+                        "bends": [],
+                        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+                        "loadBalanceCompression": "DO_NOT_COMPRESS",
+                        "loadBalanceStatus": "LOAD_BALANCE_NOT_CONFIGURED"
+                    },
+                    "status": {
+                        "id": "a89beac0-019e-1000-477e-6ec7a208cea2",
+                        "groupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                        "name": "authorized JSON to Kafka sink",
+                        "statsLastRefreshed": "19:01:25 UTC",
+                        "sourceId": "a89be990-019e-1000-69f0-4de08bbadfc2",
+                        "sourceName": "Filter and enrich wallet JSON",
+                        "destinationId": "a89bea8e-019e-1000-c661-30927a83b77a",
+                        "destinationName": "Publish filtered wallet events",
+                        "aggregateSnapshot": {
+                            "id": "a89beac0-019e-1000-477e-6ec7a208cea2",
+                            "groupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                            "name": "authorized JSON to Kafka sink",
+                            "sourceName": "Filter and enrich wallet JSON",
+                            "destinationName": "Publish filtered wallet events",
+                            "flowFilesIn": 2,
+                            "bytesIn": 415,
+                            "input": "2 (415 bytes)",
+                            "flowFilesOut": 2,
+                            "bytesOut": 415,
+                            "output": "2 (415 bytes)",
+                            "flowFilesQueued": 0,
+                            "bytesQueued": 0,
+                            "queued": "0 (0 bytes)",
+                            "queuedSize": "0 bytes",
+                            "queuedCount": "0",
+                            "percentUseCount": 0,
+                            "percentUseBytes": 0,
+                            "flowFileAvailability": "ACTIVE_QUEUE_EMPTY",
+                            "loadBalanceStatus": "LOAD_BALANCE_NOT_CONFIGURED"
+                        }
+                    },
+                    "bends": [],
+                    "labelIndex": 1,
+                    "zIndex": 0,
+                    "sourceId": "a89be990-019e-1000-69f0-4de08bbadfc2",
+                    "sourceGroupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                    "sourceType": "PROCESSOR",
+                    "destinationId": "a89bea8e-019e-1000-c661-30927a83b77a",
+                    "destinationGroupId": "a89b2b1f-019e-1000-d720-6009d534e258",
+                    "destinationType": "PROCESSOR"
+                }
+            ],
+            "labels": [],
+            "funnels": []
+        },
+        "lastRefreshed": "19:01:25 UTC"
+    }
+}

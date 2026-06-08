@@ -134,14 +134,14 @@ Verified working pipelines:
 | Coverage Type | Candidates |
 |---|---|
 | Local runtime/service execution with UI/API screenshot or proof | Flink, SeaTunnel, NiFi, InLong, Node-RED, Kafka Connect, Bento, eKuiper, Camel/Spring Boot, Spark, Pulsar, RocketMQ broker/dashboard, RocketMQ Streams, RocketMQ Connect, RocketMQ EventBridge, Beam DirectRunner, Spring Cloud Data Flow, StreamPipes, StreamPark, Dinky, Storm, Redpanda broker/console |
-| Verified end-to-end wallet event filter/transform/sink | Bento, Camel/Spring Boot, SeaTunnel, RocketMQ Streams, Beam DirectRunner |
+| Verified end-to-end wallet event filter/transform/sink | NiFi, Bento, Camel/Spring Boot, SeaTunnel, RocketMQ Streams, Beam DirectRunner |
 | Verified runtime connector/source-sink movement | RocketMQ Connect |
 | Verified runtime event bus/rule/API/storage/target sink | RocketMQ EventBridge |
 | Local config prepared but not yet executed | None |
 | Broker-only local validation plus source/card validation | None |
 | Research card and source validation only | None |
 
-This means all 20 candidates now have at least one local setup, runtime, UI, or execution proof. The strongest current local evidence remains the Kafka-compatible PoC path, the Java/Spring-owned Camel path, SeaTunnel config-first ETL, the RocketMQ-native Streams path, the Beam local DirectRunner path, runtime source/sink proof for RocketMQ Connect, runtime bus/rule/storage/target sink proof for RocketMQ EventBridge, and local runtime proof for Spark/Pulsar/Spring Cloud Data Flow/StreamPipes/StreamPark/Dinky/Storm. InLong is included as UI/control-plane proof only because the manager API did not become healthy in this local run.
+This means all 20 candidates now have at least one local setup, runtime, UI, or execution proof. The strongest current local evidence remains the Kafka-compatible PoC path, the Java/Spring-owned Camel path, NiFi REST-created Kafka flow, SeaTunnel config-first ETL, the RocketMQ-native Streams path, the Beam local DirectRunner path, runtime source/sink proof for RocketMQ Connect, runtime bus/rule/storage/target sink proof for RocketMQ EventBridge, and local runtime proof for Spark/Pulsar/Spring Cloud Data Flow/StreamPipes/StreamPark/Dinky/Storm. InLong is included as UI/control-plane proof only because the manager API did not become healthy in this local run.
 
 ## Phase 2 K8s Source-Transform-Sink Proofs
 
@@ -153,7 +153,7 @@ Phase-2 requirement: each candidate must run as a Kubernetes pod/job, consume fr
 |---:|---|---|---|---|---|---|
 | 1 | Apache Flink | Complete | Kafka/Redpanda | `phase2-flink-wallet-events-v3` -> Java DataStream JSON parse/filter/enrich -> `phase2-flink-wallet-filtered-v3` | [pods](../local-setup/phase2-k8s-proofs/01-flink-pods-running.txt), [sink](../local-setup/phase2-k8s-proofs/01-flink-filtered.txt) | ![Flink K8s proof](../screenshots/phase2-k8s/01-flink-k8s-proof.png) |
 | 2 | Apache SeaTunnel | Complete | Kafka/Redpanda | `phase2-seatunnel-wallet-events-v2` -> SQL JSON filter/enrich -> `phase2-seatunnel-wallet-filtered-v2` | [pods](../local-setup/phase2-k8s-proofs/02-seatunnel-pods-running.txt), [sink](../local-setup/phase2-k8s-proofs/02-seatunnel-filtered.txt) | ![SeaTunnel K8s proof](../screenshots/phase2-k8s/02-seatunnel-k8s-proof.png) |
-| 3 | Apache NiFi | Pending phase-2 proof | TBD | Existing proof is runtime/UI only; needs K8s queue-backed flow | Pending | Pending |
+| 3 | Apache NiFi | Complete | Kafka/Redpanda | `phase2-nifi-wallet-events-<run-id>` -> NiFi `ConsumeKafka` -> Groovy `ExecuteScript` JSON parse/filter/enrich -> NiFi `PublishKafka` -> `phase2-nifi-wallet-filtered-<run-id>` | [pods](../local-setup/phase2-k8s-proofs/03-nifi-pods-running.txt), [flow](../local-setup/phase2-k8s-proofs/03-nifi-flow-status-summary.txt), [source](../local-setup/phase2-k8s-proofs/03-nifi-source-topic.txt), [sink](../local-setup/phase2-k8s-proofs/03-nifi-sink-topic.txt) | ![NiFi K8s proof](../screenshots/phase2-k8s/03-nifi-k8s-proof.png) |
 | 4 | Apache InLong | Pending phase-2 proof | TBD | Existing proof is UI/control-plane only; manager API was unhealthy locally | Pending | Pending |
 | 5 | Apache Camel | Complete | Kafka/Redpanda | `phase2-camel-wallet-events` -> Spring Boot route JSON parse/filter/enrich -> filtered/deadletter topics | [pods](../local-setup/phase2-k8s-proofs/05-camel-pods-running.txt), [filtered](../local-setup/phase2-k8s-proofs/05-camel-filtered.txt), [deadletter](../local-setup/phase2-k8s-proofs/05-camel-deadletter.txt) | ![Camel K8s proof](../screenshots/phase2-k8s/05-camel-k8s-proof.png) |
 | 6 | Spring Cloud Data Flow + Spring Cloud Stream | Pending phase-2 proof | TBD | Existing proof is runtime/UI only; needs deployed stream app flow | Pending | Pending |

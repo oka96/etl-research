@@ -1,0 +1,6 @@
+Apache NiFi phase-2 K8s proof
+Pipeline: NiFi ConsumeKafka from Redpanda topic phase2-nifi-wallet-events-1780945194 -> ExecuteScript Groovy JSON parse/filter/enrich -> PublishKafka to Redpanda topic phase2-nifi-wallet-filtered-1780945194.
+Filter rule: keep only wallet.payment.authorized events with amount >= 100.
+JSON transform: Groovy JsonSlurper parses each JSON payload, then JsonOutput writes enriched JSON with pipeline=nifi-k8s-phase2 and risk_tier STANDARD/HIGH.
+Result: four source events were produced; the rejected event and low-value authorized event were filtered out; two enriched authorized events reached the sink topic.
+Runtime: phase2-nifi pod was 1/1 Running and phase2-nifi-setup job Completed while evidence was captured.

@@ -1,0 +1,433 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-nifi-flow
+  namespace: etl-research-phase2
+data:
+  create_flow.py: |
+    #!/usr/bin/env python3
+    import json
+    import time
+    from pathlib import Path
+    import urllib.error
+    import urllib.request
+
+    BASE = "http://phase2-nifi:8080/nifi-api"
+    BROKERS = "phase2-redpanda.etl-research-phase2.svc.cluster.local:9092"
+    RUN_ID = str(int(time.time()))
+    SOURCE_TOPIC = f"phase2-nifi-wallet-events-{RUN_ID}"
+    SINK_TOPIC = f"phase2-nifi-wallet-filtered-{RUN_ID}"
+    GROUP_ID = f"phase2-nifi-wallet-flow-{RUN_ID}"
+    TOPIC_ENV = Path("/work/topics.env")
+
+    TRANSFORM_SCRIPT = r'''
+    import groovy.json.JsonOutput
+    import groovy.json.JsonSlurper
+    import java.nio.charset.StandardCharsets
+    import org.apache.commons.io.IOUtils
+    import org.apache.nifi.processor.io.InputStreamCallback
+    import org.apache.nifi.processor.io.OutputStreamCallback
+
+    def flowFile = session.get()
+    if (flowFile == null) {
+        return
+    }
+
+    def raw = ""
+    session.read(flowFile, { inputStream ->
+        raw = IOUtils.toString(inputStream, StandardCharsets.UTF_8)
+    } as InputStreamCallback)
+
+    try {
+        def event = new JsonSlurper().parseText(raw)
+        def amount = new BigDecimal(event.amount.toString())
+        if (event.event_type == "wallet.payment.authorized" && amount >= 100G) {
+            event.pipeline = "nifi-k8s-phase2"
+            event.risk_tier = amount >= 1000G ? "HIGH" : "STANDARD"
+            flowFile = session.write(flowFile, { outputStream ->
+                outputStream.write(JsonOutput.toJson(event).getBytes(StandardCharsets.UTF_8))
+            } as OutputStreamCallback)
+            flowFile = session.putAttribute(flowFile, "wallet.filter", "authorized-amount-gte-100")
+            session.transfer(flowFile, REL_SUCCESS)
+        } else {
+            flowFile = session.putAttribute(flowFile, "wallet.filter", "rejected-or-low-value")
+            session.transfer(flowFile, REL_FAILURE)
+        }
+    } catch (Exception e) {
+        flowFile = session.putAttribute(flowFile, "wallet.filter.error", e.toString())
+        session.transfer(flowFile, REL_FAILURE)
+    }
+    '''
+
+    def request(method, path, payload=None, timeout=30):
+        body = None
+        headers = {"Accept": "application/json"}
+        if payload is not None:
+            body = json.dumps(payload).encode("utf-8")
+            headers["Content-Type"] = "application/json"
+        req = urllib.request.Request(BASE + path, data=body, headers=headers, method=method)
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as response:
+                text = response.read().decode("utf-8")
+                return json.loads(text) if text else {}
+        except urllib.error.HTTPError as exc:
+            text = exc.read().decode("utf-8", errors="replace")
+            raise RuntimeError(f"{method} {path} failed: {exc.code} {text}") from exc
+
+    def wait_for_api():
+        for _ in range(180):
+            try:
+                flow = request("GET", "/flow/process-groups/root")
+                if flow.get("processGroupFlow"):
+                    return flow
+            except Exception as exc:
+                print(f"Waiting for NiFi API: {exc}", flush=True)
+            time.sleep(2)
+        raise RuntimeError("NiFi API did not become ready")
+
+    def find_property(component, *labels):
+        component_body = component.get("component", {})
+        descriptors = component_body.get("descriptors") or component_body.get("config", {}).get("descriptors", {})
+        wanted = {label.lower() for label in labels}
+        for key, descriptor in descriptors.items():
+            names = {
+                key.lower(),
+                str(descriptor.get("name", "")).lower(),
+                str(descriptor.get("displayName", "")).lower(),
+            }
+            if names & wanted:
+                return key
+        raise RuntimeError(
+            "Could not find property "
+            + "/".join(labels)
+            + " in "
+            + ", ".join(sorted(descriptors.keys()))
+        )
+
+    def create_controller_service(group_id, service_type, name, position):
+        created = request("POST", f"/process-groups/{group_id}/controller-services", {
+            "revision": {"version": 0},
+            "component": {
+                "type": service_type,
+                "name": name,
+                "position": position,
+            },
+        })
+        return request("GET", f"/controller-services/{created['component']['id']}")
+
+    def update_controller_service(entity, properties):
+        component = entity["component"]
+        revision = entity["revision"]
+        return request("PUT", f"/controller-services/{component['id']}", {
+            "revision": revision,
+            "component": {
+                "id": component["id"],
+                "properties": properties,
+            },
+        })
+
+    def set_controller_service_state(entity, state):
+        return request("PUT", f"/controller-services/{entity['component']['id']}/run-status", {
+            "revision": entity["revision"],
+            "state": state,
+        })
+
+    def wait_controller_service_enabled(entity):
+        service_id = entity["component"]["id"]
+        for _ in range(60):
+            current = request("GET", f"/controller-services/{service_id}")
+            state = current.get("component", {}).get("state")
+            validation = current.get("component", {}).get("validationStatus")
+            print(f"Kafka3ConnectionService state={state} validation={validation}", flush=True)
+            if state == "ENABLED":
+                return current
+            time.sleep(2)
+        raise RuntimeError("Kafka3ConnectionService did not become ENABLED")
+
+    def create_processor(group_id, processor_type, name, position):
+        created = request("POST", f"/process-groups/{group_id}/processors", {
+            "revision": {"version": 0},
+            "component": {
+                "type": processor_type,
+                "name": name,
+                "position": position,
+            },
+        })
+        return request("GET", f"/processors/{created['component']['id']}")
+
+    def update_processor(entity, properties, auto_terminated=None):
+        component = entity["component"]
+        config = {"properties": properties}
+        if auto_terminated is not None:
+            config["autoTerminatedRelationships"] = auto_terminated
+        return request("PUT", f"/processors/{component['id']}", {
+            "revision": entity["revision"],
+            "component": {
+                "id": component["id"],
+                "config": config,
+            },
+        })
+
+    def create_connection(group_id, source, destination, relationships, name):
+        return request("POST", f"/process-groups/{group_id}/connections", {
+            "revision": {"version": 0},
+            "component": {
+                "name": name,
+                "source": {
+                    "id": source["component"]["id"],
+                    "type": "PROCESSOR",
+                    "groupId": group_id,
+                },
+                "destination": {
+                    "id": destination["component"]["id"],
+                    "type": "PROCESSOR",
+                    "groupId": group_id,
+                },
+                "selectedRelationships": relationships,
+            },
+        })
+
+    def set_processor_state(entity, state):
+        return request("PUT", f"/processors/{entity['component']['id']}/run-status", {
+            "revision": entity["revision"],
+            "state": state,
+        })
+
+    def main():
+        TOPIC_ENV.write_text(
+            f"BROKERS={BROKERS}\n"
+            f"SOURCE_TOPIC={SOURCE_TOPIC}\n"
+            f"SINK_TOPIC={SINK_TOPIC}\n"
+            f"GROUP_ID={GROUP_ID}\n"
+        )
+        print(f"Source topic: {SOURCE_TOPIC}", flush=True)
+        print(f"Sink topic: {SINK_TOPIC}", flush=True)
+        root_flow = wait_for_api()
+        group_id = root_flow["processGroupFlow"]["id"]
+        print(f"Root process group: {group_id}", flush=True)
+
+        service = create_controller_service(
+            group_id,
+            "org.apache.nifi.kafka.service.Kafka3ConnectionService",
+            "Redpanda Kafka connection",
+            {"x": 0.0, "y": -180.0},
+        )
+        service = update_controller_service(service, {
+            find_property(service, "Bootstrap Servers", "bootstrap.servers"): BROKERS,
+            find_property(service, "Security Protocol", "security.protocol"): "PLAINTEXT",
+        })
+        service = set_controller_service_state(service, "ENABLED")
+        service = wait_controller_service_enabled(service)
+        print(f"Enabled Kafka3ConnectionService {service['component']['id']}", flush=True)
+
+        consume = create_processor(
+            group_id,
+            "org.apache.nifi.kafka.processors.ConsumeKafka",
+            "Consume wallet events from Redpanda",
+            {"x": 0.0, "y": 0.0},
+        )
+        transform = create_processor(
+            group_id,
+            "org.apache.nifi.processors.script.ExecuteScript",
+            "Filter and enrich wallet JSON",
+            {"x": 0.0, "y": 260.0},
+        )
+        publish = create_processor(
+            group_id,
+            "org.apache.nifi.kafka.processors.PublishKafka",
+            "Publish filtered wallet events",
+            {"x": 0.0, "y": 520.0},
+        )
+
+        consume = update_processor(consume, {
+            find_property(consume, "Kafka Connection Service"): service["component"]["id"],
+            find_property(consume, "Topics", "Topic Name", "topic"): SOURCE_TOPIC,
+            find_property(consume, "Group ID", "group.id"): GROUP_ID,
+            find_property(consume, "auto.offset.reset", "Auto Offset Reset"): "earliest",
+            find_property(consume, "Commit Offsets"): "true",
+        }, auto_terminated=["parse.failure"])
+
+        transform = update_processor(transform, {
+            find_property(transform, "Script Engine", "Script Engine Name"): "Groovy",
+            find_property(transform, "Script Body"): TRANSFORM_SCRIPT,
+        }, auto_terminated=["failure"])
+
+        publish = update_processor(publish, {
+            find_property(publish, "Kafka Connection Service"): service["component"]["id"],
+            find_property(publish, "Topic Name", "topic"): SINK_TOPIC,
+        }, auto_terminated=["success", "failure"])
+
+        create_connection(group_id, consume, transform, ["success"], "raw Kafka JSON to transform")
+        create_connection(group_id, transform, publish, ["success"], "authorized JSON to Kafka sink")
+
+        publish = set_processor_state(publish, "RUNNING")
+        transform = set_processor_state(transform, "RUNNING")
+        consume = set_processor_state(consume, "RUNNING")
+        print("Started NiFi Kafka source -> Groovy JSON filter/enrich -> Kafka sink flow", flush=True)
+
+    if __name__ == "__main__":
+        main()
+  run-proof.sh: |
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    source /work/topics.env
+    echo "Source topic: $SOURCE_TOPIC"
+    echo "Sink topic: $SINK_TOPIC"
+
+    rpk topic create "$SOURCE_TOPIC" --brokers "$BROKERS" || true
+    rpk topic create "$SINK_TOPIC" --brokers "$BROKERS" || true
+
+    sleep 8
+
+    cat >/tmp/wallet-events.jsonl <<'EOF'
+    {"event_id":"evt-nifi-k8s-001","event_type":"wallet.payment.authorized","wallet_id":"wallet-nifi-001","amount":250.50,"currency":"MYR","status":"authorized"}
+    {"event_id":"evt-nifi-k8s-002","event_type":"wallet.payment.rejected","wallet_id":"wallet-nifi-002","amount":880.00,"currency":"MYR","status":"rejected"}
+    {"event_id":"evt-nifi-k8s-003","event_type":"wallet.payment.authorized","wallet_id":"wallet-nifi-003","amount":80.00,"currency":"MYR","status":"authorized"}
+    {"event_id":"evt-nifi-k8s-004","event_type":"wallet.payment.authorized","wallet_id":"wallet-nifi-004","amount":1500.00,"currency":"MYR","status":"authorized"}
+    EOF
+
+    echo "Producing source wallet events"
+    rpk topic produce "$SOURCE_TOPIC" --brokers "$BROKERS" < /tmp/wallet-events.jsonl
+
+    echo "Consuming filtered sink records"
+    for i in $(seq 1 60); do
+      if timeout 5 rpk topic consume "$SINK_TOPIC" --brokers "$BROKERS" --offset start -n 2 >/tmp/nifi-sink.jsonl 2>/tmp/nifi-consume.err; then
+        cat /tmp/nifi-sink.jsonl
+        exit 0
+      fi
+      cat /tmp/nifi-consume.err || true
+      sleep 3
+    done
+
+    echo "Timed out waiting for NiFi sink records" >&2
+    exit 1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phase2-nifi
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-nifi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phase2-nifi
+  template:
+    metadata:
+      labels:
+        app: phase2-nifi
+    spec:
+      containers:
+        - name: nifi
+          image: apache/nifi:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/bash
+            - -lc
+          args:
+            - |
+              set -euo pipefail
+              props=/opt/nifi/nifi-current/conf/nifi.properties
+              set_prop() {
+                local key="$1"
+                local value="$2"
+                sed -i "s|^${key}=.*|${key}=${value}|" "$props"
+              }
+              set_prop nifi.web.http.host 0.0.0.0
+              set_prop nifi.web.http.port 8080
+              set_prop nifi.web.https.host ""
+              set_prop nifi.web.https.port ""
+              set_prop nifi.web.proxy.host phase2-nifi:8080
+              set_prop nifi.remote.input.secure false
+              set_prop nifi.security.user.authorizer ""
+              set_prop nifi.security.user.login.identity.provider ""
+              set_prop nifi.security.keystore ""
+              set_prop nifi.security.keystoreType ""
+              set_prop nifi.security.keystorePasswd ""
+              set_prop nifi.security.truststore ""
+              set_prop nifi.security.truststoreType ""
+              set_prop nifi.security.truststorePasswd ""
+              set_prop nifi.sensitive.props.key "${NIFI_SENSITIVE_PROPS_KEY:-$(cat /proc/sys/kernel/random/uuid)}"
+              /opt/nifi/nifi-current/bin/nifi.sh run
+          env:
+            - name: NIFI_JVM_HEAP_INIT
+              value: 512m
+            - name: NIFI_JVM_HEAP_MAX
+              value: 768m
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /nifi-api/system-diagnostics
+              port: http
+            initialDelaySeconds: 45
+            periodSeconds: 10
+            failureThreshold: 36
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1100Mi
+            limits:
+              cpu: "2"
+              memory: 1800Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phase2-nifi
+  namespace: etl-research-phase2
+spec:
+  selector:
+    app: phase2-nifi
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: phase2-nifi-setup
+  namespace: etl-research-phase2
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 86400
+  template:
+    metadata:
+      labels:
+        app: phase2-nifi-setup
+    spec:
+      restartPolicy: Never
+      initContainers:
+        - name: create-flow
+          image: python:3.12-alpine
+          command:
+            - python3
+            - /etc/nifi-phase2/create_flow.py
+          volumeMounts:
+            - name: flow
+              mountPath: /etc/nifi-phase2
+            - name: work
+              mountPath: /work
+      containers:
+        - name: run-proof
+          image: redpandadata/redpanda:v25.2.9
+          command:
+            - /bin/bash
+            - /etc/nifi-phase2/run-proof.sh
+          volumeMounts:
+            - name: flow
+              mountPath: /etc/nifi-phase2
+            - name: work
+              mountPath: /work
+      volumes:
+        - name: flow
+          configMap:
+            name: phase2-nifi-flow
+            defaultMode: 0755
+        - name: work
+          emptyDir: {}

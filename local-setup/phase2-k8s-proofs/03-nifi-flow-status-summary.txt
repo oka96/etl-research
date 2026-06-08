@@ -1,0 +1,6 @@
+NiFi process group status summary
+Publish filtered wallet events: Running; flowFilesIn=2; flowFilesOut=0; read=415 bytes; written=0 bytes
+Filter and enrich wallet JSON: Running; flowFilesIn=4; flowFilesOut=2; read=624 bytes; written=415 bytes
+Consume wallet events from Redpanda: Running; flowFilesIn=0; flowFilesOut=4; read=0 bytes; written=624 bytes
+Connection raw Kafka JSON to transform: flowFilesIn=4; flowFilesOut=4; queued=0 (0 bytes)
+Connection authorized JSON to Kafka sink: flowFilesIn=2; flowFilesOut=2; queued=0 (0 bytes)

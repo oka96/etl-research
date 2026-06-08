@@ -1,0 +1,26 @@
+NAME                                           READY   STATUS      RESTARTS   AGE     IP            NODE     NOMINATED NODE   READINESS GATES
+phase2-beam-kch87                              0/1     Completed   0          4h58m   10.42.0.29    colima   <none>           <none>
+phase2-bento-7696f75f4f-dkr9r                  1/1     Running     0          5h35m   10.42.0.15    colima   <none>           <none>
+phase2-camel-98c95dd7c-8cdx6                   1/1     Running     0          5h32m   10.42.0.16    colima   <none>           <none>
+phase2-ekuiper-6574bbb598-kctxs                1/1     Running     0          5h24m   10.42.0.21    colima   <none>           <none>
+phase2-flink-fhbpr                             0/1     Completed   0          4h51m   10.42.0.32    colima   <none>           <none>
+phase2-kafka-connect-6d7bfc67b6-zs6gd          1/1     Running     0          129m    10.42.0.44    colima   <none>           <none>
+phase2-kafka-connect-setup-kllkj               0/1     Completed   0          127m    10.42.0.48    colima   <none>           <none>
+phase2-mosquitto-744b8979bd-b9tnm              1/1     Running     0          5h30m   10.42.0.17    colima   <none>           <none>
+phase2-nifi-6b7967d7fd-qd4nt                   1/1     Running     0          94s     10.42.0.119   colima   <none>           <none>
+phase2-nifi-setup-772hs                        0/1     Completed   0          93s     10.42.0.120   colima   <none>           <none>
+phase2-node-red-54996777c8-bxnqx               1/1     Running     0          5h25m   10.42.0.20    colima   <none>           <none>
+phase2-pulsar-65fcbddbb5-nscgm                 1/1     Running     0          4h46m   10.42.0.33    colima   <none>           <none>
+phase2-pulsar-setup-rhm4q                      0/1     Completed   0          4h42m   10.42.0.39    colima   <none>           <none>
+phase2-redpanda-68985d9b4b-p9g58               1/1     Running     0          5h37m   10.42.0.14    colima   <none>           <none>
+phase2-rocketmq-broker-6b6447bddb-sjpq7        1/1     Running     0          119m    10.42.0.51    colima   <none>           <none>
+phase2-rocketmq-connect-5664bd958c-cr2zb       1/1     Running     0          79m     10.42.0.69    colima   <none>           <none>
+phase2-rocketmq-connect-setup-s9lp7            0/1     Completed   0          76m     10.42.0.71    colima   <none>           <none>
+phase2-rocketmq-eventbridge-5f5bdfd8b6-g7zcg   2/2     Running     0          34m     10.42.0.98    colima   <none>           <none>
+phase2-rocketmq-eventbridge-setup-8m88s        0/1     Completed   0          34m     10.42.0.99    colima   <none>           <none>
+phase2-rocketmq-namesrv-6bfcf5f874-7sx9v       1/1     Running     0          119m    10.42.0.50    colima   <none>           <none>
+phase2-rocketmq-streams-697944979-zprxl        1/1     Running     0          109m    10.42.0.61    colima   <none>           <none>
+phase2-rocketmq-streams-setup-24kzk            0/1     Completed   0          109m    10.42.0.62    colima   <none>           <none>
+phase2-seatunnel-wr29f                         0/1     Completed   0          5h10m   10.42.0.24    colima   <none>           <none>
+phase2-spark-z5hdj                             0/1     Completed   0          5h4m    10.42.0.26    colima   <none>           <none>
+phase2-storm-9jkp4                             0/1     Completed   0          90m     10.42.0.66    colima   <none>           <none>

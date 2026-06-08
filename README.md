@@ -39,6 +39,21 @@ kubectl wait -n etl-research-phase2 --for=condition=complete job/phase2-storm --
 
 This proof runs a Storm `KafkaSpout -> JSON filter/enrich bolt -> KafkaBolt` topology against the phase-2 Redpanda broker.
 
+For the Apache NiFi phase-2 proof:
+
+```bash
+kubectl create namespace etl-research-phase2 --dry-run=client -o yaml | kubectl apply -f -
+kubectl apply -f local-setup/phase2-k8s/redpanda.yaml
+kubectl wait -n etl-research-phase2 --for=condition=available deployment/phase2-redpanda --timeout=3m
+kubectl delete -f local-setup/phase2-k8s/nifi.yaml --ignore-not-found
+kubectl apply -f local-setup/phase2-k8s/nifi.yaml
+kubectl wait -n etl-research-phase2 --for=condition=available deployment/phase2-nifi --timeout=6m
+kubectl wait -n etl-research-phase2 --for=condition=complete job/phase2-nifi-setup --timeout=7m
+kubectl logs -n etl-research-phase2 job/phase2-nifi-setup -c run-proof
+```
+
+This proof runs NiFi over local in-cluster HTTP only, creates the NiFi flow through the REST API, consumes Kafka-compatible Redpanda source events with `ConsumeKafka`, applies a Groovy `ExecuteScript` JSON filter/enrichment, and publishes the filtered events with `PublishKafka`. Source and sink topic names include a generated run id so reruns do not depend on stale broker state. No NiFi login/password is tracked for this local proof.
+
 For the Apache RocketMQ Connect phase-2 proof:
 
 ```bash
