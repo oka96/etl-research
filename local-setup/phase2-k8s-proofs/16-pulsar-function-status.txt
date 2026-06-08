@@ -1,0 +1,21 @@
+{
+  "numInstances" : 1,
+  "numRunning" : 1,
+  "instances" : [ {
+    "instanceId" : 0,
+    "status" : {
+      "running" : true,
+      "error" : "",
+      "numRestarts" : 0,
+      "numReceived" : 3,
+      "numSuccessfullyProcessed" : 3,
+      "numUserExceptions" : 0,
+      "latestUserExceptions" : [ ],
+      "numSystemExceptions" : 0,
+      "latestSystemExceptions" : [ ],
+      "averageLatency" : 0.03329912821451823,
+      "lastInvocationTime" : 1780928371617,
+      "workerId" : "c-standalone-fw-localhost-8080"
+    }
+  } ]
+}

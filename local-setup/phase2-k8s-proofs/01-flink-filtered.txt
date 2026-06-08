@@ -1,0 +1,2 @@
+{"event_id":"evt-001","event_type":"wallet.payment.authorized","wallet_id":"wallet-1001","amount":250.5,"currency":"MYR","pipeline":"flink-k8s-phase2","risk_tier":"STANDARD"}
+{"event_id":"evt-003","event_type":"wallet.payment.authorized","wallet_id":"wallet-1003","amount":1500.0,"currency":"MYR","pipeline":"flink-k8s-phase2","risk_tier":"HIGH"}

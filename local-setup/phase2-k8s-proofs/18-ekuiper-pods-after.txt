@@ -1,0 +1,7 @@
+NAME                                READY   STATUS    RESTARTS   AGE     IP           NODE     NOMINATED NODE   READINESS GATES
+phase2-bento-7696f75f4f-dkr9r       1/1     Running   0          12m     10.42.0.15   colima   <none>           <none>
+phase2-camel-98c95dd7c-8cdx6        1/1     Running   0          9m44s   10.42.0.16   colima   <none>           <none>
+phase2-ekuiper-6574bbb598-kctxs     1/1     Running   0          88s     10.42.0.21   colima   <none>           <none>
+phase2-mosquitto-744b8979bd-b9tnm   1/1     Running   0          7m54s   10.42.0.17   colima   <none>           <none>
+phase2-node-red-54996777c8-bxnqx    1/1     Running   0          2m56s   10.42.0.20   colima   <none>           <none>
+phase2-redpanda-68985d9b4b-p9g58    1/1     Running   0          14m     10.42.0.14   colima   <none>           <none>

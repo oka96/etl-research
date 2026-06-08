@@ -1,0 +1,210 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-pulsar-function
+  namespace: etl-research-phase2
+data:
+  wallet_filter.py: |
+    import json
+    import time
+
+    from pulsar import Function
+
+
+    class WalletFilter(Function):
+        def process(self, input, context):
+            if isinstance(input, (bytes, bytearray)):
+                raw = input.decode("utf-8")
+            else:
+                raw = str(input)
+
+            event = json.loads(raw)
+            amount = float(event.get("amount", 0))
+            if event.get("event_type") != "wallet.payment.authorized" or amount < 100:
+                return None
+
+            event["amount"] = amount
+            event["pipeline"] = "pulsar-functions-k8s-phase2"
+            event["risk_tier"] = "HIGH" if amount >= 1000 else "STANDARD"
+            event["processed_at_epoch_ms"] = int(time.time() * 1000)
+            return json.dumps(event, separators=(",", ":"), sort_keys=True).encode("utf-8")
+  setup.sh: |
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    ADMIN_URL="http://phase2-pulsar:8080"
+    BROKER_URL="pulsar://phase2-pulsar:6650"
+    FUNCTION_NAME="phase2-wallet-filter-v3"
+    INPUT_TOPIC="persistent://public/default/phase2-pulsar-wallet-events-v3"
+    OUTPUT_TOPIC="persistent://public/default/phase2-pulsar-wallet-filtered-v3"
+    LOG_TOPIC="persistent://public/default/phase2-pulsar-wallet-function-log-v3"
+
+    echo "Waiting for Pulsar admin at ${ADMIN_URL}"
+    for i in $(seq 1 120); do
+      if bin/pulsar-admin --admin-url "${ADMIN_URL}" clusters list >/tmp/pulsar-clusters.txt 2>&1; then
+        cat /tmp/pulsar-clusters.txt
+        break
+      fi
+      cat /tmp/pulsar-clusters.txt || true
+      sleep 2
+      if [ "${i}" = "120" ]; then
+        echo "Pulsar admin did not become ready" >&2
+        exit 1
+      fi
+    done
+
+    bin/pulsar-admin --admin-url "${ADMIN_URL}" topics create "${INPUT_TOPIC}" || true
+    bin/pulsar-admin --admin-url "${ADMIN_URL}" topics create "${OUTPUT_TOPIC}" || true
+    bin/pulsar-admin --admin-url "${ADMIN_URL}" topics create "${LOG_TOPIC}" || true
+
+    bin/pulsar-admin --admin-url "${ADMIN_URL}" functions delete \
+      --tenant public \
+      --namespace default \
+      --name "${FUNCTION_NAME}" || true
+
+    bin/pulsar-admin --admin-url "${ADMIN_URL}" functions create \
+      --tenant public \
+      --namespace default \
+      --name "${FUNCTION_NAME}" \
+      --py /etc/pulsar-phase2/wallet_filter.py \
+      --classname wallet_filter.WalletFilter \
+      --inputs "${INPUT_TOPIC}" \
+      --output "${OUTPUT_TOPIC}" \
+      --log-topic "${LOG_TOPIC}" \
+      --processing-guarantees ATLEAST_ONCE
+
+    echo "Function metadata:"
+    bin/pulsar-admin --admin-url "${ADMIN_URL}" functions get \
+      --tenant public \
+      --namespace default \
+      --name "${FUNCTION_NAME}"
+
+    echo "Waiting for function to run"
+    for i in $(seq 1 90); do
+      bin/pulsar-admin --admin-url "${ADMIN_URL}" functions status \
+        --tenant public \
+        --namespace default \
+        --name "${FUNCTION_NAME}" > /tmp/pulsar-function-status.json || true
+      cat /tmp/pulsar-function-status.json
+      if grep -q '"running" : true' /tmp/pulsar-function-status.json || grep -q '"running":true' /tmp/pulsar-function-status.json; then
+        break
+      fi
+      sleep 2
+      if [ "${i}" = "90" ]; then
+        echo "Function did not report running" >&2
+        exit 1
+      fi
+    done
+
+    echo "Producing wallet source events"
+    mkdir -p /tmp/phase2-pulsar-events
+    printf '%s\n' '{"event_id":"evt-001","event_type":"wallet.payment.authorized","amount":128.45,"currency":"MYR","user_id":"u-1001"}' > /tmp/phase2-pulsar-events/evt-001.json
+    printf '%s\n' '{"event_id":"evt-002","event_type":"wallet.payment.rejected","amount":510.00,"currency":"MYR","user_id":"u-1002"}' > /tmp/phase2-pulsar-events/evt-002.json
+    printf '%s\n' '{"event_id":"evt-003","event_type":"wallet.payment.authorized","amount":1288.00,"currency":"MYR","user_id":"u-1003"}' > /tmp/phase2-pulsar-events/evt-003.json
+
+    for event_file in /tmp/phase2-pulsar-events/evt-001.json /tmp/phase2-pulsar-events/evt-002.json /tmp/phase2-pulsar-events/evt-003.json; do
+      bin/pulsar-client --url "${BROKER_URL}" produce "${INPUT_TOPIC}" \
+        -vs string \
+        -f "${event_file}"
+    done
+
+    echo "Consuming transformed sink events"
+    timeout 90 bin/pulsar-client --url "${BROKER_URL}" consume "${OUTPUT_TOPIC}" \
+      -s phase2-pulsar-proof-sub \
+      -p Earliest \
+      -n 2
+
+    echo "Function final status:"
+    bin/pulsar-admin --admin-url "${ADMIN_URL}" functions status \
+      --tenant public \
+      --namespace default \
+      --name "${FUNCTION_NAME}"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phase2-pulsar
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-pulsar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phase2-pulsar
+  template:
+    metadata:
+      labels:
+        app: phase2-pulsar
+    spec:
+      containers:
+        - name: pulsar
+          image: apachepulsar/pulsar:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - bin/pulsar
+            - standalone
+          env:
+            - name: PULSAR_MEM
+              value: "-Xms512m -Xmx512m -XX:MaxDirectMemorySize=512m"
+          ports:
+            - name: broker
+              containerPort: 6650
+            - name: admin
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /admin/v2/clusters
+              port: admin
+            initialDelaySeconds: 25
+            periodSeconds: 10
+            failureThreshold: 18
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phase2-pulsar
+  namespace: etl-research-phase2
+spec:
+  selector:
+    app: phase2-pulsar
+  ports:
+    - name: broker
+      port: 6650
+      targetPort: broker
+    - name: admin
+      port: 8080
+      targetPort: admin
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: phase2-pulsar-setup
+  namespace: etl-research-phase2
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 86400
+  template:
+    metadata:
+      labels:
+        app: phase2-pulsar-setup
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: pulsar-admin
+          image: apachepulsar/pulsar:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/bash
+            - /etc/pulsar-phase2/setup.sh
+          env:
+            - name: PULSAR_MEM
+              value: "-Xms256m -Xmx512m -XX:MaxDirectMemorySize=256m"
+          volumeMounts:
+            - name: function-config
+              mountPath: /etc/pulsar-phase2
+      volumes:
+        - name: function-config
+          configMap:
+            name: phase2-pulsar-function
+            defaultMode: 0755

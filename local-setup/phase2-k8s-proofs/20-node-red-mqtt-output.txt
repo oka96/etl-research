@@ -1,0 +1,5 @@
+FILTERED
+{"event_id":"evt-001","event_type":"wallet.payment.authorized","wallet_id":"wallet-1001","amount":250.5,"currency":"MYR","pipeline":"node-red-k8s-phase2","processed_at":"2026-06-08T13:36:33.972Z","risk_tier":"STANDARD"}
+{"event_id":"evt-003","event_type":"wallet.payment.authorized","wallet_id":"wallet-1003","amount":1500,"currency":"MYR","pipeline":"node-red-k8s-phase2","processed_at":"2026-06-08T13:36:33.973Z","risk_tier":"HIGH"}
+DEADLETTER
+{"event_id":"evt-002","event_type":"wallet.payment.rejected","wallet_id":"wallet-1002","amount":80,"currency":"MYR","pipeline":"node-red-k8s-phase2","processed_at":"2026-06-08T13:36:33.973Z","risk_tier":"STANDARD"}

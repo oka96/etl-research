@@ -1,0 +1,3 @@
+TOPIC                            STATUS
+phase2-flink-wallet-events-v3    OK
+phase2-flink-wallet-filtered-v3  OK

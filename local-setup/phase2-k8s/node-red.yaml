@@ -1,0 +1,155 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-node-red-flows
+  namespace: etl-research-phase2
+data:
+  flows.json: |
+    [
+      {
+        "id": "phase2-flow",
+        "type": "tab",
+        "label": "Wallet MQTT filter transform",
+        "disabled": false,
+        "info": ""
+      },
+      {
+        "id": "mqtt-in-wallet",
+        "type": "mqtt in",
+        "z": "phase2-flow",
+        "name": "wallet-events",
+        "topic": "phase2/nodered/wallet-events",
+        "qos": "0",
+        "datatype": "utf8",
+        "broker": "phase2-mqtt-config",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 120,
+        "wires": [["parse-json"]]
+      },
+      {
+        "id": "parse-json",
+        "type": "json",
+        "z": "phase2-flow",
+        "name": "parse json",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 310,
+        "y": 120,
+        "wires": [["filter-transform"]]
+      },
+      {
+        "id": "filter-transform",
+        "type": "function",
+        "z": "phase2-flow",
+        "name": "filter + json transform",
+        "func": "const event = msg.payload || {};\nconst amount = Number(event.amount || 0);\nconst accepted = event.event_type === 'wallet.payment.authorized' && amount >= 100;\nevent.pipeline = 'node-red-k8s-phase2';\nevent.processed_at = new Date().toISOString();\nevent.risk_tier = amount >= 1000 ? 'HIGH' : 'STANDARD';\nmsg.payload = event;\nmsg.topic = accepted ? 'phase2/nodered/wallet-filtered' : 'phase2/nodered/wallet-deadletter';\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 120,
+        "wires": [["encode-json"]]
+      },
+      {
+        "id": "encode-json",
+        "type": "json",
+        "z": "phase2-flow",
+        "name": "encode json",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 750,
+        "y": 120,
+        "wires": [["mqtt-out-wallet"]]
+      },
+      {
+        "id": "mqtt-out-wallet",
+        "type": "mqtt out",
+        "z": "phase2-flow",
+        "name": "wallet sink",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "phase2-mqtt-config",
+        "x": 940,
+        "y": 120,
+        "wires": []
+      },
+      {
+        "id": "phase2-mqtt-config",
+        "type": "mqtt-broker",
+        "name": "phase2-mosquitto",
+        "broker": "phase2-mosquitto",
+        "port": "1883",
+        "clientid": "node-red-k8s-phase2",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+      }
+    ]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phase2-node-red
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-node-red
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phase2-node-red
+  template:
+    metadata:
+      labels:
+        app: phase2-node-red
+    spec:
+      containers:
+        - name: node-red
+          image: nodered/node-red:4.1.1-22
+          ports:
+            - name: http
+              containerPort: 1880
+          volumeMounts:
+            - name: flows
+              mountPath: /data/flows.json
+              subPath: flows.json
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
+      volumes:
+        - name: flows
+          configMap:
+            name: phase2-node-red-flows

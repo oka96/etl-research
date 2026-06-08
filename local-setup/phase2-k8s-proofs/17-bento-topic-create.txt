@@ -1,0 +1,4 @@
+TOPIC                           STATUS
+phase2-bento-wallet-events      OK
+phase2-bento-wallet-filtered    OK
+phase2-bento-wallet-deadletter  OK

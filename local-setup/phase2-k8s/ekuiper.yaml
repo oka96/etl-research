@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-ekuiper-mqtt-source
+  namespace: etl-research-phase2
+data:
+  mqtt_source.yaml: |
+    default:
+      qos: 0
+      server: "tcp://phase2-mosquitto:1883"
+      protocolVersion: "3.1.1"
+      insecureSkipVerify: false
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phase2-ekuiper
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-ekuiper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phase2-ekuiper
+  template:
+    metadata:
+      labels:
+        app: phase2-ekuiper
+    spec:
+      containers:
+        - name: ekuiper
+          image: lfedge/ekuiper:2.4.0-slim
+          ports:
+            - name: rest
+              containerPort: 9081
+          volumeMounts:
+            - name: mqtt-source
+              mountPath: /kuiper/etc/mqtt_source.yaml
+              subPath: mqtt_source.yaml
+          readinessProbe:
+            httpGet:
+              path: /
+              port: rest
+            initialDelaySeconds: 10
+            periodSeconds: 5
+      volumes:
+        - name: mqtt-source
+          configMap:
+            name: phase2-ekuiper-mqtt-source
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phase2-ekuiper
+  namespace: etl-research-phase2
+spec:
+  selector:
+    app: phase2-ekuiper
+  ports:
+    - name: rest
+      port: 9081
+      targetPort: rest

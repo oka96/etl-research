@@ -1,0 +1,3 @@
+TOPIC                        STATUS
+phase2-beam-wallet-events    OK
+phase2-beam-wallet-filtered  OK

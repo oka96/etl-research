@@ -1,0 +1,6 @@
+level=info msg="Running main config from specified file" @service=bento bento_version=v1.11.0 path=/etc/bento/wallet-pipeline.yaml
+level=info msg="Listening for HTTP requests at: http://0.0.0.0:4195" @service=bento
+level=info msg="Input type kafka_franz is now active" @service=bento label="" path=root.input
+level=info msg="Launching a Bento instance, use CTRL+C to close" @service=bento
+level=info msg="Output type kafka_franz is now active" @service=bento label="" path=root.output.switch.output
+level=info msg="Output type kafka_franz is now active" @service=bento label="" path=root.output.switch.output

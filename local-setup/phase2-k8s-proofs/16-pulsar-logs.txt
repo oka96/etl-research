@@ -1,0 +1,20 @@
+Created successfully
+Function metadata:
+Waiting for function to run
+      "running" : true,
+      "numReceived" : 0,
+      "numSuccessfullyProcessed" : 0,
+Producing wallet source events
+2026-06-08T14:19:27,712+0000 [main] INFO  org.apache.pulsar.client.cli.PulsarClientTool - 1 messages successfully produced
+2026-06-08T14:19:30,706+0000 [main] INFO  org.apache.pulsar.client.cli.PulsarClientTool - 1 messages successfully produced
+2026-06-08T14:19:33,641+0000 [main] INFO  org.apache.pulsar.client.cli.PulsarClientTool - 1 messages successfully produced
+Consuming transformed sink events
+----- got message -----
+publishTime:[1780928365682], eventTime:[0], key:[null], properties:[__pfn_input_msg_id__=CBEQAA==, __pfn_input_topic__=persistent://public/default/phase2-pulsar-wallet-events-v3], content:{"amount":128.45,"currency":"MYR","event_id":"evt-001","event_type":"wallet.payment.authorized","pipeline":"pulsar-functions-k8s-phase2","processed_at_epoch_ms":1780928365680,"risk_tier":"STANDARD","user_id":"u-1001"}
+----- got message -----
+publishTime:[1780928371617], eventTime:[0], key:[null], properties:[__pfn_input_msg_id__=CBEQAg==, __pfn_input_topic__=persistent://public/default/phase2-pulsar-wallet-events-v3], content:{"amount":1288.0,"currency":"MYR","event_id":"evt-003","event_type":"wallet.payment.authorized","pipeline":"pulsar-functions-k8s-phase2","processed_at_epoch_ms":1780928371617,"risk_tier":"HIGH","user_id":"u-1003"}
+2026-06-08T14:19:36,603+0000 [main] INFO  org.apache.pulsar.client.cli.PulsarClientTool - 2 messages successfully consumed
+Function final status:
+      "running" : true,
+      "numReceived" : 3,
+      "numSuccessfullyProcessed" : 3,

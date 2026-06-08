@@ -1,0 +1,3 @@
+NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE     SELECTOR
+phase2-mosquitto   ClusterIP   10.43.81.175    <none>        1883/TCP            14s     app=phase2-mosquitto
+phase2-redpanda    ClusterIP   10.43.226.159   <none>        9092/TCP,9644/TCP   6m48s   app=phase2-redpanda

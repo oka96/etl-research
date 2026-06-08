@@ -143,6 +143,35 @@ Verified working pipelines:
 
 This means all 20 candidates now have at least one local setup, runtime, UI, or execution proof. The strongest current local evidence remains the Kafka-compatible PoC path, the Java/Spring-owned Camel path, SeaTunnel config-first ETL, the RocketMQ-native Streams path, the Beam local DirectRunner path, runtime source/sink proof for RocketMQ Connect, runtime bus/rule/storage proof for RocketMQ EventBridge, and local runtime proof for Spark/Pulsar/Spring Cloud Data Flow/StreamPipes/StreamPark/Dinky/Storm. InLong is included as UI/control-plane proof only because the manager API did not become healthy in this local run.
 
+## Phase 2 K8s Source-Transform-Sink Proofs
+
+The stricter phase-2 run uses Kubernetes namespace `etl-research-phase2`. Raw pod records and command outputs are in [phase2-k8s-proofs](/Users/oka/Documents/etl-research/local-setup/phase2-k8s-proofs), manifests are in [phase2-k8s](/Users/oka/Documents/etl-research/local-setup/phase2-k8s), and screenshots are in [screenshots/phase2-k8s](/Users/oka/Documents/etl-research/screenshots/phase2-k8s).
+
+Phase-2 requirement: each candidate must run as a Kubernetes pod/job, consume from a queue, apply at least JSON conversion plus filtering/enrichment, write to a sink, record pod state while running, and include a screenshot in the report.
+
+| Rank | Candidate | Phase 2 Status | Queue | Source -> Transform -> Sink | K8s Pod Record | Screenshot |
+|---:|---|---|---|---|---|---|
+| 1 | Apache Flink | Complete | Kafka/Redpanda | `phase2-flink-wallet-events-v3` -> Java DataStream JSON parse/filter/enrich -> `phase2-flink-wallet-filtered-v3` | [pods](../local-setup/phase2-k8s-proofs/01-flink-pods-running.txt), [sink](../local-setup/phase2-k8s-proofs/01-flink-filtered.txt) | ![Flink K8s proof](../screenshots/phase2-k8s/01-flink-k8s-proof.png) |
+| 2 | Apache SeaTunnel | Complete | Kafka/Redpanda | `phase2-seatunnel-wallet-events-v2` -> SQL JSON filter/enrich -> `phase2-seatunnel-wallet-filtered-v2` | [pods](../local-setup/phase2-k8s-proofs/02-seatunnel-pods-running.txt), [sink](../local-setup/phase2-k8s-proofs/02-seatunnel-filtered.txt) | ![SeaTunnel K8s proof](../screenshots/phase2-k8s/02-seatunnel-k8s-proof.png) |
+| 3 | Apache NiFi | Pending phase-2 proof | TBD | Existing proof is runtime/UI only; needs K8s queue-backed flow | Pending | Pending |
+| 4 | Apache InLong | Pending phase-2 proof | TBD | Existing proof is UI/control-plane only; manager API was unhealthy locally | Pending | Pending |
+| 5 | Apache Camel | Complete | Kafka/Redpanda | `phase2-camel-wallet-events` -> Spring Boot route JSON parse/filter/enrich -> filtered/deadletter topics | [pods](../local-setup/phase2-k8s-proofs/05-camel-pods-running.txt), [filtered](../local-setup/phase2-k8s-proofs/05-camel-filtered.txt), [deadletter](../local-setup/phase2-k8s-proofs/05-camel-deadletter.txt) | ![Camel K8s proof](../screenshots/phase2-k8s/05-camel-k8s-proof.png) |
+| 6 | Spring Cloud Data Flow + Spring Cloud Stream | Pending phase-2 proof | TBD | Existing proof is runtime/UI only; needs deployed stream app flow | Pending | Pending |
+| 7 | Apache Kafka Connect | Pending phase-2 proof | Kafka/Redpanda likely | Existing proof is connector movement only; needs content filter/enrich SMT or connector chain | Pending | Pending |
+| 8 | Apache StreamPipes | Pending phase-2 proof | MQTT/Kafka likely | Existing proof is runtime/UI/extensions only; needs actual pipeline execution | Pending | Pending |
+| 9 | Apache StreamPark | Pending phase-2 proof | Kafka/Redpanda likely | Existing proof is console/runtime only; needs managed Flink job evidence | Pending | Pending |
+| 10 | Dinky | Pending phase-2 proof | Kafka/Redpanda likely | Existing proof is console/runtime only; needs Flink SQL job evidence | Pending | Pending |
+| 11 | Apache RocketMQ Streams | Pending K8s phase-2 proof | RocketMQ | Existing non-K8s RocketMQ source/filter/enrich/sink proof exists; needs K8s pod record | Pending | Pending |
+| 12 | Apache RocketMQ Connect | Pending phase-2 proof | RocketMQ | Existing proof is source/sink movement only; needs transform/filter evidence | Pending | Pending |
+| 13 | Apache RocketMQ EventBridge | Pending phase-2 proof | RocketMQ | Existing proof is bus/rule/storage only; needs target sink delivery proof | Pending | Pending |
+| 14 | Apache Beam | Complete | Kafka/Redpanda | `phase2-beam-wallet-events-v3` -> Beam Kafka source + Python JSON filter/enrich -> `phase2-beam-wallet-filtered-v3` | [pods](../local-setup/phase2-k8s-proofs/14-beam-pods-running.txt), [sink](../local-setup/phase2-k8s-proofs/14-beam-filtered.txt) | ![Beam K8s proof](../screenshots/phase2-k8s/14-beam-k8s-proof.png) |
+| 15 | Apache Spark Structured Streaming | Complete | Kafka/Redpanda | `phase2-spark-wallet-events-v2` -> Spark JSON filter/enrich -> `phase2-spark-wallet-filtered-v2` | [pods](../local-setup/phase2-k8s-proofs/15-spark-pods-running.txt), [sink](../local-setup/phase2-k8s-proofs/15-spark-filtered.txt) | ![Spark K8s proof](../screenshots/phase2-k8s/15-spark-k8s-proof.png) |
+| 16 | Apache Pulsar Functions/IO | Complete | Pulsar | `phase2-pulsar-wallet-events-v3` -> Pulsar Python Function JSON parse/filter/enrich -> `phase2-pulsar-wallet-filtered-v3` | [pods](../local-setup/phase2-k8s-proofs/16-pulsar-pods-running.txt), [status](../local-setup/phase2-k8s-proofs/16-pulsar-function-status.txt), [sink](../local-setup/phase2-k8s-proofs/16-pulsar-filtered.txt) | ![Pulsar Functions K8s proof](../screenshots/phase2-k8s/16-pulsar-k8s-proof.png) |
+| 17 | Bento | Complete | Kafka/Redpanda | `phase2-bento-wallet-events` -> Bloblang JSON filter/enrich -> filtered/deadletter topics | [pods](../local-setup/phase2-k8s-proofs/17-bento-pods-running.txt), [filtered](../local-setup/phase2-k8s-proofs/17-bento-filtered.txt), [deadletter](../local-setup/phase2-k8s-proofs/17-bento-deadletter.txt) | ![Bento K8s proof](../screenshots/phase2-k8s/17-bento-k8s-proof.png) |
+| 18 | LF Edge eKuiper | Complete | MQTT/Mosquitto | `phase2/ekuiper/wallet-events` -> SQL JSON filter/enrich -> filtered/deadletter MQTT topics | [pods](../local-setup/phase2-k8s-proofs/18-ekuiper-pods-running.txt), [sink](../local-setup/phase2-k8s-proofs/18-ekuiper-mqtt-output.txt) | ![eKuiper K8s proof](../screenshots/phase2-k8s/18-ekuiper-k8s-proof.png) |
+| 19 | Apache Storm | Pending phase-2 proof | Kafka/Redpanda likely | Existing proof is cluster runtime only; needs topology execution | Pending | Pending |
+| 20 | Node-RED | Complete | MQTT/Mosquitto | `phase2/nodered/wallet-events` -> flow JSON parse/filter/enrich -> filtered/deadletter MQTT topics | [pods](../local-setup/phase2-k8s-proofs/20-node-red-pods-running.txt), [sink](../local-setup/phase2-k8s-proofs/20-node-red-mqtt-output.txt) | ![Node-RED K8s proof](../screenshots/phase2-k8s/20-node-red-k8s-proof.png) |
+
 ## Ranked Table
 
 GitHub stars were collected from GitHub REST API on 2026-06-08 MYT.

@@ -1,0 +1,1 @@
+{"amount":80.00,"currency":"MYR","event_id":"evt-002","event_type":"wallet.payment.rejected","pipeline":"bento-k8s-phase2","processed_at":"2026-06-08T13:26:59.501830618Z","risk_tier":"STANDARD","wallet_id":"wallet-1002"}

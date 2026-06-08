@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-seatunnel-config
+  namespace: etl-research-phase2
+data:
+  seatunnel-kafka-wallet.conf: |
+    env {
+      job.mode = "STREAMING"
+      execution.parallelism = 1
+      checkpoint.interval = 10000
+    }
+
+    source {
+      Kafka {
+        bootstrap.servers = "phase2-redpanda:9092"
+        topic = "phase2-seatunnel-wallet-events-v2"
+        consumer.group = "phase2-seatunnel-wallet-poc-v2"
+        start_mode = "earliest"
+        format = "json"
+        schema = {
+          fields {
+            event_id = "string"
+            event_type = "string"
+            wallet_id = "string"
+            amount = "double"
+            currency = "string"
+          }
+        }
+      }
+    }
+
+    transform {
+      Sql {
+        plugin_input = "Kafka"
+        plugin_output = "wallet_filtered"
+        query = "select event_id, event_type, wallet_id, amount, currency, case when amount >= 1000 then 'HIGH' else 'STANDARD' end as risk_tier, 'seatunnel-k8s-phase2' as pipeline from Kafka where event_type = 'wallet.payment.authorized' and amount >= 100"
+      }
+    }
+
+    sink {
+      Kafka {
+        source_table_name = "wallet_filtered"
+        bootstrap.servers = "phase2-redpanda:9092"
+        topic = "phase2-seatunnel-wallet-filtered-v2"
+        format = "json"
+      }
+    }
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: phase2-seatunnel
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-seatunnel
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: phase2-seatunnel
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: seatunnel
+          image: etl-research/seatunnel-jre:phase2
+          imagePullPolicy: Never
+          command:
+            - sh
+            - -lc
+            - |
+              set +e
+              timeout 45 ./bin/seatunnel.sh -m local -c /config/seatunnel-kafka-wallet.conf
+              code=$?
+              if [ "$code" = "124" ]; then
+                echo "SeaTunnel proof window completed after timeout"
+                exit 0
+              fi
+              exit "$code"
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          configMap:
+            name: phase2-seatunnel-config

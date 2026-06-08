@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-beam-script
+  namespace: etl-research-phase2
+data:
+  beam_kafka_pipeline.py: |
+    import json
+
+    import apache_beam as beam
+    from apache_beam.io.kafka import ReadFromKafka
+    from apache_beam.options.pipeline_options import PipelineOptions
+
+
+    def transform(record):
+        _, value = record
+        event = json.loads(value.decode("utf-8"))
+        amount = float(event.get("amount") or 0)
+        if event.get("event_type") != "wallet.payment.authorized" or amount < 100:
+            return []
+        event["pipeline"] = "beam-k8s-phase2"
+        event["risk_tier"] = "HIGH" if amount >= 1000 else "STANDARD"
+        payload = json.dumps(event, separators=(",", ":")).encode("utf-8")
+        return [(event["event_id"].encode("utf-8"), payload)]
+
+
+    class PublishToKafka(beam.DoFn):
+        def setup(self):
+            from kafka import KafkaProducer
+            self.producer = KafkaProducer(bootstrap_servers=["phase2-redpanda:9092"])
+
+        def process(self, record):
+            key, value = record
+            self.producer.send("phase2-beam-wallet-filtered-v3", key=key, value=value).get(timeout=30)
+            yield value.decode("utf-8")
+
+        def teardown(self):
+            self.producer.flush()
+            self.producer.close()
+
+
+    with beam.Pipeline(options=PipelineOptions(["--runner=DirectRunner"])) as pipeline:
+        (
+            pipeline
+            | "Read Kafka wallet events" >> ReadFromKafka(
+                consumer_config={
+                    "bootstrap.servers": "phase2-redpanda:9092",
+                    "auto.offset.reset": "earliest",
+                    "group.id": "phase2-beam-wallet-poc-v3",
+                },
+                topics=["phase2-beam-wallet-events-v3"],
+                max_num_records=3,
+            )
+            | "Filter and enrich JSON" >> beam.FlatMap(transform)
+            | "Write Kafka wallet filtered" >> beam.ParDo(PublishToKafka())
+        )
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: phase2-beam
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-beam
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: phase2-beam
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: beam
+          image: etl-research/beam-python-jre:phase2
+          imagePullPolicy: Never
+          command:
+            - python
+            - /app/beam_kafka_pipeline.py
+          volumeMounts:
+            - name: script
+              mountPath: /app
+      volumes:
+        - name: script
+          configMap:
+            name: phase2-beam-script

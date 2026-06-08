@@ -1,0 +1,1 @@
+Stream phase2_ekuiper_wallet_events is created.Rule phase2_ekuiper_filtered was created successfully.["phase2_ekuiper_wallet_events"][{"id":"phase2_ekuiper_filtered","name":"phase2_ekuiper_filtered","status":"running","tags":null,"trace":false,"version":""}]

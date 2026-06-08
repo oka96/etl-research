@@ -1,0 +1,160 @@
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class org.apache.kafka.common.serialization.ByteArraySerializer
+
+2026-06-08 13:47:16,623 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.seaTunnel.task.thread-2] - Kafka version: 3.2.0
+2026-06-08 13:47:16,623 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.seaTunnel.task.thread-2] - Kafka commitId: 38103ffaa962ef50
+2026-06-08 13:47:16,623 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.seaTunnel.task.thread-2] - Kafka startTimeMs: 1780926436623
+2026-06-08 13:47:16,627 INFO  [o.a.k.c.p.KafkaProducer       ] [hz.main.seaTunnel.task.thread-5] - [Producer clientId=producer-1] Instantiated an idempotent producer.
+2026-06-08 13:47:16,636 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.seaTunnel.task.thread-5] - Kafka version: 3.2.0
+2026-06-08 13:47:16,636 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.seaTunnel.task.thread-5] - Kafka commitId: 38103ffaa962ef50
+2026-06-08 13:47:16,636 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.seaTunnel.task.thread-5] - Kafka startTimeMs: 1780926436636
+2026-06-08 13:47:16,724 INFO  [o.a.s.a.e.LoggingEventHandler ] [hz.main.generic-operation.thread-11] - log event: ReaderOpenEvent(createdTime=1780926436723, jobId=1116362815662194689, eventType=LIFECYCLE_READER_OPEN)
+2026-06-08 13:47:16,724 INFO  [a.s.c.s.c.s.r.SourceReaderBase] [BlockingWorker-TaskGroupLocation{jobId=1116362815662194689, pipelineId=1, taskGroupId=2}] - Open Source Reader.
+2026-06-08 13:47:16,725 INFO  [.s.t.SourceSplitEnumeratorTask] [hz.main.seaTunnel.task.thread-5] - received reader register, readerID: TaskLocation{taskGroupLocation=TaskGroupLocation{jobId=1116362815662194689, pipelineId=1, taskGroupId=2}, taskID=1000200000000, index=0}
+2026-06-08 13:47:16,729 INFO  [.s.e.s.c.CheckpointCoordinator] [seatunnel-coordinator-service-8] - checkpoint is enabled, start schedule trigger pending checkpoint.
+2026-06-08 13:47:16,729 INFO  [.s.e.s.c.CheckpointCoordinator] [seatunnel-coordinator-service-9] - checkpoint is enabled, start schedule trigger pending checkpoint.
+2026-06-08 13:47:16,739 INFO  [o.a.k.c.Metadata              ] [kafka-producer-network-thread | producer-1] - [Producer clientId=producer-1] Cluster ID: redpanda.15fadf2f-d49d-4049-83d3-791b89aa1542
+2026-06-08 13:47:16,739 INFO  [o.a.k.c.p.i.TransactionManager] [kafka-producer-network-thread | producer-1] - [Producer clientId=producer-1] ProducerId set to 7 with epoch 0
+2026-06-08 13:47:16,787 INFO  [.s.t.SourceSplitEnumeratorTask] [BlockingWorker-TaskGroupLocation{jobId=1116362815662194689, pipelineId=1, taskGroupId=1}] - received enough reader, starting enumerator...
+2026-06-08 13:47:16,788 INFO  [o.a.s.a.e.LoggingEventHandler ] [hz.main.generic-operation.thread-22] - log event: EnumeratorOpenEvent(createdTime=1780926436787, jobId=1116362815662194689, eventType=LIFECYCLE_ENUMERATOR_OPEN)
+2026-06-08 13:47:16,788 INFO  [k.s.KafkaSourceSplitEnumerator] [BlockingWorker-TaskGroupLocation{jobId=1116362815662194689, pipelineId=1, taskGroupId=1}] - Discovered topics: [phase2-seatunnel-wallet-events]
+2026-06-08 13:47:16,810 INFO  [o.a.k.c.c.ConsumerConfig      ] [hz.main.generic-operation.thread-23] - ConsumerConfig values:
+	allow.auto.create.topics = false
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [phase2-redpanda:9092]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = seatunnel-consumer-0
+	client.rack =
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = phase2-seatunnel-wallet-poc
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+
+2026-06-08 13:47:16,837 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.generic-operation.thread-23] - Kafka version: 3.2.0
+2026-06-08 13:47:16,837 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.generic-operation.thread-23] - Kafka commitId: 38103ffaa962ef50
+2026-06-08 13:47:16,837 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.generic-operation.thread-23] - Kafka startTimeMs: 1780926436836
+2026-06-08 13:47:16,838 INFO  [o.a.s.c.s.c.s.r.f.SplitFetcher] [Source Data Fetcher for BlockingWorker-TaskGroupLocation{jobId=1116362815662194689, pipelineId=1, taskGroupId=2}] - Starting split fetcher 0
+2026-06-08 13:47:16,838 INFO  [a.s.c.s.c.s.r.SourceReaderBase] [hz.main.generic-operation.thread-24] - Reader 0 received NoMoreSplits event.
+2026-06-08 13:47:16,839 INFO  [o.a.k.c.c.KafkaConsumer       ] [Source Data Fetcher for BlockingWorker-TaskGroupLocation{jobId=1116362815662194689, pipelineId=1, taskGroupId=2}] - [Consumer clientId=seatunnel-consumer-0, groupId=phase2-seatunnel-wallet-poc] Subscribed to partition(s): phase2-seatunnel-wallet-events-0
+2026-06-08 13:47:16,922 INFO  [o.a.k.c.Metadata              ] [Source Data Fetcher for BlockingWorker-TaskGroupLocation{jobId=1116362815662194689, pipelineId=1, taskGroupId=2}] - [Consumer clientId=seatunnel-consumer-0, groupId=phase2-seatunnel-wallet-poc] Cluster ID: redpanda.15fadf2f-d49d-4049-83d3-791b89aa1542
+2026-06-08 13:47:16,922 INFO  [.a.k.c.c.i.ConsumerCoordinator] [Source Data Fetcher for BlockingWorker-TaskGroupLocation{jobId=1116362815662194689, pipelineId=1, taskGroupId=2}] - [Consumer clientId=seatunnel-consumer-0, groupId=phase2-seatunnel-wallet-poc] Discovered group coordinator phase2-redpanda.etl-research-phase2.svc.cluster.local:9092 (id: 2147483647 rack: null)
+2026-06-08 13:47:16,924 INFO  [.a.k.c.c.i.ConsumerCoordinator] [Source Data Fetcher for BlockingWorker-TaskGroupLocation{jobId=1116362815662194689, pipelineId=1, taskGroupId=2}] - [Consumer clientId=seatunnel-consumer-0, groupId=phase2-seatunnel-wallet-poc] Found no committed offset for partition phase2-seatunnel-wallet-events-0
+2026-06-08 13:47:16,927 INFO  [o.a.k.c.c.i.SubscriptionState ] [Source Data Fetcher for BlockingWorker-TaskGroupLocation{jobId=1116362815662194689, pipelineId=1, taskGroupId=2}] - [Consumer clientId=seatunnel-consumer-0, groupId=phase2-seatunnel-wallet-poc] Resetting offset for partition phase2-seatunnel-wallet-events-0 to position FetchPosition{offset=3, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[phase2-redpanda.etl-research-phase2.svc.cluster.local:9092 (id: 0 rack: null)], epoch=absent}}.

@@ -1,0 +1,2 @@
+{"amount":1500.00,"currency":"MYR","event_id":"evt-003","event_type":"wallet.payment.authorized","pipeline":"bento-k8s-phase2","processed_at":"2026-06-08T13:26:59.501784828Z","risk_tier":"HIGH","wallet_id":"wallet-1003"}
+{"amount":250.50,"currency":"MYR","event_id":"evt-001","event_type":"wallet.payment.authorized","pipeline":"bento-k8s-phase2","processed_at":"2026-06-08T13:26:59.50224994Z","risk_tier":"STANDARD","wallet_id":"wallet-1001"}

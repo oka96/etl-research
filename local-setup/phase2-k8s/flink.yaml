@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: phase2-flink
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-flink
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: phase2-flink
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: flink
+          image: etl-research/flink-wallet-pipeline:phase2
+          imagePullPolicy: Never
+          env:
+            - name: KAFKA_BROKERS
+              value: phase2-redpanda:9092
+            - name: SOURCE_TOPIC
+              value: phase2-flink-wallet-events-v3
+            - name: SINK_TOPIC
+              value: phase2-flink-wallet-filtered-v3
+            - name: GROUP_ID
+              value: phase2-flink-wallet-poc-v3

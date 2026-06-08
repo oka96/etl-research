@@ -1,0 +1,1 @@
+Rule phase2_ekuiper_deadletter was created successfully.[{"id":"phase2_ekuiper_deadletter","name":"phase2_ekuiper_deadletter","status":"running","tags":null,"trace":false,"version":""},{"id":"phase2_ekuiper_filtered","name":"phase2_ekuiper_filtered","status":"running","tags":null,"trace":false,"version":""}]

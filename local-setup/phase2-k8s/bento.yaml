@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase2-bento-config
+  namespace: etl-research-phase2
+data:
+  wallet-pipeline.yaml: |
+    http:
+      enabled: true
+      address: 0.0.0.0:4195
+
+    input:
+      kafka_franz:
+        seed_brokers:
+          - phase2-redpanda:9092
+        topics:
+          - phase2-bento-wallet-events
+        consumer_group: phase2-bento-wallet-poc
+        start_from_oldest: true
+
+    pipeline:
+      processors:
+        - bloblang: |
+            root = this
+            root.pipeline = "bento-k8s-phase2"
+            root.processed_at = now()
+            root.risk_tier = if this.amount.or(0) >= 1000 {
+              "HIGH"
+            } else {
+              "STANDARD"
+            }
+
+    output:
+      switch:
+        cases:
+          - check: this.event_type == "wallet.payment.authorized" && this.amount.or(0) >= 100
+            output:
+              kafka_franz:
+                seed_brokers:
+                  - phase2-redpanda:9092
+                topic: phase2-bento-wallet-filtered
+          - output:
+              kafka_franz:
+                seed_brokers:
+                  - phase2-redpanda:9092
+                topic: phase2-bento-wallet-deadletter
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phase2-bento
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-bento
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phase2-bento
+  template:
+    metadata:
+      labels:
+        app: phase2-bento
+    spec:
+      containers:
+        - name: bento
+          image: ghcr.io/warpstreamlabs/bento:1.11.0
+          args:
+            - -c
+            - /etc/bento/wallet-pipeline.yaml
+          ports:
+            - name: http
+              containerPort: 4195
+          volumeMounts:
+            - name: config
+              mountPath: /etc/bento
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      volumes:
+        - name: config
+          configMap:
+            name: phase2-bento-config

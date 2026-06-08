@@ -1,0 +1,1 @@
+{"event_id":"evt-002","event_type":"wallet.payment.rejected","wallet_id":"wallet-1002","amount":80.0,"currency":"MYR","pipeline":"camel-k8s-phase2","processed_at":"2026-06-08T13:30:12.172716456Z","risk_tier":"STANDARD"}

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phase2-camel
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-camel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phase2-camel
+  template:
+    metadata:
+      labels:
+        app: phase2-camel
+    spec:
+      containers:
+        - name: camel-wallet
+          image: etl-research/camel-wallet-pipeline:phase2
+          imagePullPolicy: Never
+          args:
+            - --wallet.kafka.brokers=phase2-redpanda:9092
+            - --wallet.kafka.group-id=phase2-camel-wallet-poc
+            - --wallet.kafka.source-topic=phase2-camel-wallet-events
+            - --wallet.kafka.filtered-topic=phase2-camel-wallet-filtered
+            - --wallet.kafka.deadletter-topic=phase2-camel-wallet-deadletter
+            - --wallet.pipeline-name=camel-k8s-phase2
+            - --server.port=18084
+          ports:
+            - name: http
+              containerPort: 18084
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 5

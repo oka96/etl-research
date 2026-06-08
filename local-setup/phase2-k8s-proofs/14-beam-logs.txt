@@ -1,0 +1,6 @@
+WARNING:apache_beam.utils.subprocess_server:   WARNING: Apache Beam is downloading dependencies from a public repository at runtime.
+   This may pose security risks or cause instability due to repository availability.
+   URL: https://repo.maven.apache.org/maven2/org/apache/beam/beam-sdks-java-io-expansion-service/2.74.0/beam-sdks-java-io-expansion-service-2.74.0.jar
+   Destination: /root/.apache_beam/cache/jars/beam-sdks-java-io-expansion-service-2.74.0.jar
+   Consider pre-staging dependencies or using a private repository mirror.
+   For more information, see: https://beam.apache.org/documentation/sdks/python-dependencies/

@@ -1,0 +1,2 @@
+NAME              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE   SELECTOR
+phase2-redpanda   ClusterIP   10.43.226.159   <none>        9092/TCP,9644/TCP   28s   app=phase2-redpanda

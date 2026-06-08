@@ -1,0 +1,544 @@
+WARNING: sun.reflect.Reflection.getCallerClass is not supported. This will impact performance.
+2026-06-08 13:50:33,211 INFO  [c.h.i.c.AbstractConfigLocator ] [main] - Loading configuration '/opt/seatunnel/config/seatunnel.yaml' from System property 'seatunnel.config'
+2026-06-08 13:50:33,212 INFO  [c.h.i.c.AbstractConfigLocator ] [main] - Using configuration file at /opt/seatunnel/config/seatunnel.yaml
+2026-06-08 13:50:33,213 INFO  [o.a.s.e.c.c.SeaTunnelConfig   ] [main] - seatunnel.home is /opt/seatunnel
+2026-06-08 13:50:33,260 INFO  [amlSeaTunnelDomConfigProcessor] [main] - Dynamic slot is enabled, the schedule strategy is set to REJECT
+2026-06-08 13:50:33,260 INFO  [c.h.i.c.AbstractConfigLocator ] [main] - Loading configuration '/opt/seatunnel/config/hazelcast.yaml' from System property 'hazelcast.config'
+2026-06-08 13:50:33,260 INFO  [c.h.i.c.AbstractConfigLocator ] [main] - Using configuration file at /opt/seatunnel/config/hazelcast.yaml
+2026-06-08 13:50:33,260 WARN  [amlSeaTunnelDomConfigProcessor] [main] - Unrecognized element: log
+2026-06-08 13:50:33,449 INFO  [c.h.i.c.AbstractConfigLocator ] [main] - Loading configuration '/opt/seatunnel/config/hazelcast-client.yaml' from System property 'hazelcast.client.config'
+2026-06-08 13:50:33,450 INFO  [c.h.i.c.AbstractConfigLocator ] [main] - Using configuration file at /opt/seatunnel/config/hazelcast-client.yaml
+2026-06-08 13:50:33,464 WARN  [h.i.i.HazelcastInstanceFactory] [main] - Hazelcast is starting in a Java modular environment (Java 9 and newer) but without proper access to required Java packages. Use additional Java arguments to provide Hazelcast access to Java internal API. The internal API access is used to get the best performance results. Arguments to be used:
+ --add-modules java.se --add-exports java.base/jdk.internal.ref=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.management/sun.management=ALL-UNNAMED --add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED
+2026-06-08 13:50:33,478 INFO  [c.h.i.AddressPicker           ] [main] - [LOCAL] [seatunnel-178816] [5.1] Resolving domain name 'localhost' to address(es): [127.0.0.1, 0:0:0:0:0:0:0:1]
+2026-06-08 13:50:33,478 INFO  [c.h.i.AddressPicker           ] [main] - [LOCAL] [seatunnel-178816] [5.1] Interfaces is disabled, trying to pick one address from TCP-IP config addresses: [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1]
+2026-06-08 13:50:33,478 WARN  [c.h.i.AddressPicker           ] [main] - [LOCAL] [seatunnel-178816] [5.1] You configured your member address as host name. Please be aware of that your dns can be spoofed. Make sure that your dns configurations are correct.
+2026-06-08 13:50:33,487 INFO  [o.a.s.e.s.SeaTunnelServer     ] [main] - SeaTunnel server start...
+2026-06-08 13:50:33,488 INFO  [c.h.system                    ] [main] - [localhost]:5801 [seatunnel-178816] [5.1] Based on Hazelcast IMDG version: 5.1.0 (20220228 - 21f20e7)
+2026-06-08 13:50:33,488 INFO  [c.h.system                    ] [main] - [localhost]:5801 [seatunnel-178816] [5.1] Cluster name: seatunnel-178816
+2026-06-08 13:50:33,488 INFO  [c.h.system                    ] [main] - [localhost]:5801 [seatunnel-178816] [5.1]
+
+ _____               _____                             _
+/  ___|             |_   _|                           | |
+\ `--.   ___   __ _   | |   _   _  _ __   _ __    ___ | |
+ `--. \ / _ \ / _` |  | |  | | | || '_ \ | '_ \  / _ \| |
+/\__/ /|  __/| (_| |  | |  | |_| || | | || | | ||  __/| |
+\____/  \___| \__,_|  \_/   \__,_||_| |_||_| |_| \___||_|
+
+
+2026-06-08 13:50:33,488 INFO  [c.h.system                    ] [main] - [localhost]:5801 [seatunnel-178816] [5.1] Copyright © 2021-2024 The Apache Software Foundation. Apache SeaTunnel, SeaTunnel, and its feather logo are trademarks of The Apache Software Foundation.
+2026-06-08 13:50:33,488 INFO  [c.h.system                    ] [main] - [localhost]:5801 [seatunnel-178816] [5.1] Integrity Checker is disabled. Fail-fast on corrupted executables will not be performed.
+To enable integrity checker do one of the following:
+  - Change member config using Java API: config.setIntegrityCheckerEnabled(true);
+  - Change XML/YAML configuration property: Set hazelcast.integrity-checker.enabled to true
+  - Add system property: -Dhz.integritychecker.enabled=true (for Hazelcast embedded, works only when loading config via Config.load)
+  - Add environment variable: HZ_INTEGRITYCHECKER_ENABLED=true (recommended when running container image. For Hazelcast embedded, works only when loading config via Config.load)
+2026-06-08 13:50:33,489 INFO  [c.h.system                    ] [main] - [localhost]:5801 [seatunnel-178816] [5.1] The Jet engine is disabled.
+To enable the Jet engine on the members, do one of the following:
+  - Change member config using Java API: config.getJetConfig().setEnabled(true)
+  - Change XML/YAML configuration property: Set hazelcast.jet.enabled to true
+  - Add system property: -Dhz.jet.enabled=true (for Hazelcast embedded, works only when loading config via Config.load)
+  - Add environment variable: HZ_JET_ENABLED=true (recommended when running container image. For Hazelcast embedded, works only when loading config via Config.load)
+2026-06-08 13:50:33,636 INFO  [c.h.s.security                ] [main] - [localhost]:5801 [seatunnel-178816] [5.1] Enable DEBUG/FINE log level for log category com.hazelcast.system.security  or use -Dhazelcast.security.recommendations system property to see 🔒 security recommendations and the status of current config.
+2026-06-08 13:50:33,677 WARN  [c.h.c.CPSubsystem             ] [main] - [localhost]:5801 [seatunnel-178816] [5.1] CP Subsystem is not enabled. CP data structures will operate in UNSAFE mode! Please note that UNSAFE mode will not provide strong consistency guarantees.
+2026-06-08 13:50:33,676 INFO  [o.a.s.e.s.SeaTunnelNodeContext] [main] - Using LiteNodeDropOutTcpIpJoiner TCP/IP discovery
+2026-06-08 13:50:33,780 INFO  [.c.c.DefaultClassLoaderService] [main] - start classloader service with cache mode
+2026-06-08 13:50:33,789 INFO  [c.h.i.c.AbstractConfigLocator ] [main] - Loading configuration '/opt/seatunnel/config/seatunnel.yaml' from System property 'seatunnel.config'
+2026-06-08 13:50:33,789 INFO  [c.h.i.c.AbstractConfigLocator ] [main] - Using configuration file at /opt/seatunnel/config/seatunnel.yaml
+2026-06-08 13:50:33,796 WARN  [amlSeaTunnelDomConfigProcessor] [main] - Unrecognized element: log
+2026-06-08 13:50:33,796 INFO  [amlSeaTunnelDomConfigProcessor] [main] - Dynamic slot is enabled, the schedule strategy is set to REJECT
+2026-06-08 13:50:33,796 INFO  [c.h.i.c.AbstractConfigLocator ] [main] - Loading configuration '/opt/seatunnel/config/hazelcast.yaml' from System property 'hazelcast.config'
+2026-06-08 13:50:33,796 INFO  [c.h.i.c.AbstractConfigLocator ] [main] - Using configuration file at /opt/seatunnel/config/hazelcast.yaml
+2026-06-08 13:50:33,804 INFO  [o.a.s.e.s.TaskExecutionService] [main] - [localhost]:5801 [seatunnel-178816] [5.1] Created new BusWork : 1725885575
+2026-06-08 13:50:33,803 WARN  [o.a.s.e.s.TaskExecutionService] [pool-3-thread-1] - [localhost]:5801 [seatunnel-178816] [5.1] The Node is not ready yet, Node state STARTING,looking forward to the next scheduling
+2026-06-08 13:50:33,811 WARN  [a.s.e.s.s.s.DefaultSlotService] [hz.main.seaTunnel.slotService.thread] - failed send heartbeat to resource manager, will retry later. this address: [localhost]:5801
+2026-06-08 13:50:33,815 INFO  [o.a.s.e.s.CoordinatorService  ] [main] - [localhost]:5801 [seatunnel-178816] [5.1] Start pending job schedule thread
+2026-06-08 13:50:33,916 WARN  [o.a.h.u.NativeCodeLoader      ] [main] - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2026-06-08 13:50:34,009 INFO  [o.a.s.e.s.CoordinatorService  ] [pool-7-thread-1] - [localhost]:5801 [seatunnel-178816] [5.1]
+***********************************************
+     CoordinatorService Thread Pool Status
+***********************************************
+activeCount               :                   1
+corePoolSize              :                  10
+maximumPoolSize           :          2147483647
+poolSize                  :                   1
+completedTaskCount        :                   0
+taskCount                 :                   1
+***********************************************
+
+2026-06-08 13:50:34,012 INFO  [o.a.s.e.s.JettyService        ] [main] - SeaTunnel REST service will start on port 8080
+2026-06-08 13:50:34,019 INFO  [o.a.s.s.o.e.j.u.log           ] [main] - Logging initialized @1173ms to org.apache.seatunnel.shade.org.eclipse.jetty.util.log.Slf4jLog
+2026-06-08 13:50:34,039 WARN  [a.s.s.o.e.j.s.h.ContextHandler] [main] - Empty contextPath
+2026-06-08 13:50:34,046 INFO  [o.a.s.s.o.e.j.s.Server        ] [main] - jetty-9.4.56.v20240826; built: 2024-08-26T17:15:05.868Z; git: ec6782ff5ead824dabdcf47fa98f90a4aedff401; jvm 17.0.19+10
+2026-06-08 13:50:34,056 INFO  [o.a.s.s.o.e.j.s.session       ] [main] - DefaultSessionIdManager workerName=node0
+2026-06-08 13:50:34,056 INFO  [o.a.s.s.o.e.j.s.session       ] [main] - No SessionScavenger set, using defaults
+2026-06-08 13:50:34,057 INFO  [o.a.s.s.o.e.j.s.session       ] [main] - node0 Scavenging every 600000ms
+2026-06-08 13:50:34,106 INFO  [a.s.s.o.e.j.s.h.ContextHandler] [main] - Started o.a.s.s.o.e.j.s.ServletContextHandler@7708b66a{/,null,AVAILABLE}
+2026-06-08 13:50:34,112 INFO  [.s.s.o.e.j.s.AbstractConnector] [main] - Started ServerConnector@149274cb{HTTP/1.1, (http/1.1)}{0.0.0.0:8080}
+2026-06-08 13:50:34,113 INFO  [o.a.s.s.o.e.j.s.Server        ] [main] - Started @1267ms
+2026-06-08 13:50:34,134 INFO  [c.h.i.d.Diagnostics           ] [main] - [localhost]:5801 [seatunnel-178816] [5.1] Diagnostics disabled. To enable add -Dhazelcast.diagnostics.enabled=true to the JVM arguments.
+2026-06-08 13:50:34,136 INFO  [c.h.c.LifecycleService        ] [main] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5801 is STARTING
+2026-06-08 13:50:34,157 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-4] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5827 is added to the blacklist.
+2026-06-08 13:50:34,157 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-7] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5813 is added to the blacklist.
+2026-06-08 13:50:34,157 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-2] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5817 is added to the blacklist.
+2026-06-08 13:50:34,157 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-6] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5815 is added to the blacklist.
+2026-06-08 13:50:34,157 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-5] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5825 is added to the blacklist.
+2026-06-08 13:50:34,158 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-6] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5804 is added to the blacklist.
+2026-06-08 13:50:34,158 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-10] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5810 is added to the blacklist.
+2026-06-08 13:50:34,158 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-4] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5806 is added to the blacklist.
+2026-06-08 13:50:34,158 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-1] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5821 is added to the blacklist.
+2026-06-08 13:50:34,158 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-11] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5808 is added to the blacklist.
+2026-06-08 13:50:34,159 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-8] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5819 is added to the blacklist.
+2026-06-08 13:50:34,159 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-1] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5829 is added to the blacklist.
+2026-06-08 13:50:34,159 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-4] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5802 is added to the blacklist.
+2026-06-08 13:50:34,160 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-8] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5822 is added to the blacklist.
+2026-06-08 13:50:34,160 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-9] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5820 is added to the blacklist.
+2026-06-08 13:50:34,161 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-9] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5826 is added to the blacklist.
+2026-06-08 13:50:34,162 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-4] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5814 is added to the blacklist.
+2026-06-08 13:50:34,162 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-9] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5824 is added to the blacklist.
+2026-06-08 13:50:34,162 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-13] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5812 is added to the blacklist.
+2026-06-08 13:50:34,162 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-1] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5818 is added to the blacklist.
+2026-06-08 13:50:34,163 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-3] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5823 is added to the blacklist.
+2026-06-08 13:50:34,163 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-7] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5807 is added to the blacklist.
+2026-06-08 13:50:34,163 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-4] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5816 is added to the blacklist.
+2026-06-08 13:50:34,163 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-13] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5805 is added to the blacklist.
+2026-06-08 13:50:34,164 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-9] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5809 is added to the blacklist.
+2026-06-08 13:50:34,164 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-8] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5830 is added to the blacklist.
+2026-06-08 13:50:34,164 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-1] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5811 is added to the blacklist.
+2026-06-08 13:50:34,164 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-3] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5828 is added to the blacklist.
+2026-06-08 13:50:34,164 INFO  [s.j.LiteNodeDropOutTcpIpJoiner] [hz.main.cached.thread-13] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5803 is added to the blacklist.
+2026-06-08 13:50:35,169 INFO  [c.h.i.c.ClusterService        ] [main] - [localhost]:5801 [seatunnel-178816] [5.1]
+
+Members {size:1, ver:1} [
+	Member [localhost]:5801 - d03b1fdd-1b01-4f5a-85c6-9bc4b192db70 [master node] [active master] this
+]
+
+2026-06-08 13:50:35,186 INFO  [c.h.c.LifecycleService        ] [main] - [localhost]:5801 [seatunnel-178816] [5.1] [localhost]:5801 is STARTED
+2026-06-08 13:50:35,215 INFO  [o.a.s.e.s.CoordinatorService  ] [pool-5-thread-1] - [localhost]:5801 [seatunnel-178816] [5.1] This node become a new active master node, begin init coordinator service
+2026-06-08 13:50:35,216 INFO  [.c.i.s.ClientInvocationService] [main] - hz.client_1 [seatunnel-178816] [5.1] Running with 2 response threads, dynamic=true
+2026-06-08 13:50:35,231 INFO  [c.h.c.LifecycleService        ] [main] - hz.client_1 [seatunnel-178816] [5.1] HazelcastClient 5.1 (20220228 - 21f20e7) is STARTING
+2026-06-08 13:50:35,233 INFO  [c.h.c.LifecycleService        ] [main] - hz.client_1 [seatunnel-178816] [5.1] HazelcastClient 5.1 (20220228 - 21f20e7) is STARTED
+2026-06-08 13:50:35,237 INFO  [o.a.s.e.s.CoordinatorService  ] [pool-5-thread-1] - [localhost]:5801 [seatunnel-178816] [5.1] Loaded event handlers: [org.apache.seatunnel.api.event.LoggingEventHandler@5a4ec80f]
+2026-06-08 13:50:35,245 INFO  [.c.i.c.ClientConnectionManager] [main] - hz.client_1 [seatunnel-178816] [5.1] Trying to connect to cluster: seatunnel-178816
+2026-06-08 13:50:35,245 INFO  [.c.i.c.ClientConnectionManager] [main] - hz.client_1 [seatunnel-178816] [5.1] Trying to connect to [localhost]:5801
+2026-06-08 13:50:35,258 INFO  [.h.i.p.i.PartitionStateManager] [seatunnel-coordinator-service-1] - [localhost]:5801 [seatunnel-178816] [5.1] Initializing cluster partition table arrangement...
+2026-06-08 13:50:35,263 INFO  [.p.t.AuthenticationMessageTask] [hz.main.priority-generic-operation.thread-0] - [localhost]:5801 [seatunnel-178816] [5.1] Received auth from Connection[id=1, /127.0.0.1:5801->/127.0.0.1:37371, qualifier=null, endpoint=[127.0.0.1]:37371, remoteUuid=e852c3b1-1c87-4fc3-bc72-19e82e09b66b, alive=true, connectionType=JVM, planeIndex=-1], successfully authenticated, clientUuid: e852c3b1-1c87-4fc3-bc72-19e82e09b66b, client name: hz.client_1, client version: 5.1
+2026-06-08 13:50:35,265 INFO  [c.h.c.LifecycleService        ] [main] - hz.client_1 [seatunnel-178816] [5.1] HazelcastClient 5.1 (20220228 - 21f20e7) is CLIENT_CONNECTED
+2026-06-08 13:50:35,265 INFO  [.c.i.c.ClientConnectionManager] [main] - hz.client_1 [seatunnel-178816] [5.1] Authenticated with server [localhost]:5801:d03b1fdd-1b01-4f5a-85c6-9bc4b192db70, server version: 5.1, local address: /127.0.0.1:37371
+2026-06-08 13:50:35,267 INFO  [c.h.i.d.Diagnostics           ] [main] - hz.client_1 [seatunnel-178816] [5.1] Diagnostics disabled. To enable add -Dhazelcast.diagnostics.enabled=true to the JVM arguments.
+2026-06-08 13:50:35,279 INFO  [c.h.c.i.s.ClientClusterService] [hz.client_1.event-9] - hz.client_1 [seatunnel-178816] [5.1]
+
+Members [1] {
+	Member [localhost]:5801 - d03b1fdd-1b01-4f5a-85c6-9bc4b192db70 [master node]
+}
+
+2026-06-08 13:50:35,294 INFO  [.c.i.s.ClientStatisticsService] [main] - Client statistics is enabled with period 5 seconds.
+2026-06-08 13:50:35,307 INFO  [o.a.s.c.s.u.ConfigBuilder     ] [main] - Loading config file from path: /config/seatunnel-kafka-wallet.conf
+2026-06-08 13:50:35,339 INFO  [o.a.s.c.s.u.ConfigShadeUtils  ] [main] - Load config shade spi: [base64]
+2026-06-08 13:50:35,351 INFO  [o.a.s.c.s.u.ConfigBuilder     ] [main] - Parsed config file:
+{
+    "env" : {
+        "job.mode" : "STREAMING",
+        "execution.parallelism" : 1,
+        "checkpoint.interval" : 10000
+    },
+    "source" : [
+        {
+            "bootstrap.servers" : "phase2-redpanda:9092",
+            "topic" : "phase2-seatunnel-wallet-events-v2",
+            "consumer.group" : "phase2-seatunnel-wallet-poc-v2",
+            "start_mode" : "earliest",
+            "format" : "json",
+            "schema" : {
+                "fields" : {
+                    "event_id" : "string",
+                    "event_type" : "string",
+                    "wallet_id" : "string",
+                    "amount" : "double",
+                    "currency" : "string"
+                }
+            },
+            "plugin_name" : "Kafka"
+        }
+    ],
+    "transform" : [
+        {
+            "plugin_input" : "Kafka",
+            "plugin_output" : "wallet_filtered",
+            "query" : "select event_id, event_type, wallet_id, amount, currency, case when amount >= 1000 then 'HIGH' else 'STANDARD' end as risk_tier, 'seatunnel-k8s-phase2' as pipeline from Kafka where event_type = 'wallet.payment.authorized' and amount >= 100",
+            "plugin_name" : "Sql"
+        }
+    ],
+    "sink" : [
+        {
+            "source_table_name" : "wallet_filtered",
+            "bootstrap.servers" : "phase2-redpanda:9092",
+            "topic" : "phase2-seatunnel-wallet-filtered-v2",
+            "format" : "json",
+            "plugin_name" : "Kafka"
+        }
+    ]
+}
+
+2026-06-08 13:50:35,353 INFO  [p.MultipleTableJobConfigParser] [main] - add common jar in plugins :[]
+2026-06-08 13:50:35,360 INFO  [.s.p.d.AbstractPluginDiscovery] [main] - Load SeaTunnelSink Plugin from /opt/seatunnel/connectors
+2026-06-08 13:50:35,361 INFO  [.s.p.d.AbstractPluginDiscovery] [main] - Discovery plugin jar for: PluginIdentifier{engineType='seatunnel', pluginType='source', pluginName='Kafka'} at: file:/opt/seatunnel/connectors/connector-kafka-2.3.10.jar
+2026-06-08 13:50:35,364 INFO  [.s.p.d.AbstractPluginDiscovery] [main] - Load SeaTunnelSink Plugin from /opt/seatunnel/connectors
+2026-06-08 13:50:35,364 INFO  [.s.p.d.AbstractPluginDiscovery] [main] - Discovery plugin jar for: PluginIdentifier{engineType='seatunnel', pluginType='transform', pluginName='Sql'} at: file:/opt/seatunnel/connectors/seatunnel-transforms-v2-2.3.10.jar
+2026-06-08 13:50:35,367 INFO  [.s.p.d.AbstractPluginDiscovery] [main] - Load SeaTunnelSink Plugin from /opt/seatunnel/connectors
+2026-06-08 13:50:35,367 INFO  [.s.p.d.AbstractPluginDiscovery] [main] - Discovery plugin jar for: PluginIdentifier{engineType='seatunnel', pluginType='sink', pluginName='Kafka'} at: file:/opt/seatunnel/connectors/connector-kafka-2.3.10.jar
+2026-06-08 13:50:35,369 WARN  [o.a.s.a.c.u.ConfigUtil        ] [main] - Option 'plugin_input' is a List, and it is recommended to configure it as ["string1","string2"]; we will only use ',' to split the String into a list.
+2026-06-08 13:50:35,369 INFO  [o.a.s.e.c.p.ConfigParserUtil  ] [main] - Currently, incorrect configuration of plugin_input and plugin_output options don't affect job running. In the future we will ban incorrect configurations.
+2026-06-08 13:50:35,369 WARN  [o.a.s.e.c.p.ConfigParserUtil  ] [main] - This configuration is not recommended.A source/transform(Kafka) is not configured with 'plugin_output' option, but subsequent transform/sink(Sql) is configured with 'plugin_input' option value of 'Kafka'.
+2026-06-08 13:50:35,370 WARN  [o.a.s.a.c.ReadonlyConfig      ] [main] - Please use the new key 'plugin_input' instead of the deprecated key 'source_table_name'.
+2026-06-08 13:50:35,370 WARN  [o.a.s.a.c.u.ConfigUtil        ] [main] - Option 'plugin_input' is a List, and it is recommended to configure it as ["string1","string2"]; we will only use ',' to split the String into a list.
+2026-06-08 13:50:35,370 INFO  [p.MultipleTableJobConfigParser] [main] - start generating all sources.
+2026-06-08 13:50:35,387 INFO  [o.a.s.a.t.f.FactoryUtil       ] [main] - get the CatalogTable from source Kafka: .null.phase2-seatunnel-wallet-events-v2
+2026-06-08 13:50:35,393 INFO  [.s.p.d.AbstractPluginDiscovery] [main] - Load SeaTunnelSource Plugin from /opt/seatunnel/connectors
+2026-06-08 13:50:35,394 INFO  [.s.p.d.AbstractPluginDiscovery] [main] - Discovery plugin jar for: PluginIdentifier{engineType='seatunnel', pluginType='source', pluginName='Kafka'} at: file:/opt/seatunnel/connectors/connector-kafka-2.3.10.jar
+2026-06-08 13:50:35,395 INFO  [p.MultipleTableJobConfigParser] [main] - start generating all transforms.
+2026-06-08 13:50:35,397 INFO  [.s.p.d.AbstractPluginDiscovery] [main] - Load SeaTunnelTransform Plugin from /opt/seatunnel/connectors
+2026-06-08 13:50:35,397 INFO  [.s.p.d.AbstractPluginDiscovery] [main] - Discovery plugin jar for: PluginIdentifier{engineType='seatunnel', pluginType='transform', pluginName='Sql'} at: file:/opt/seatunnel/connectors/seatunnel-transforms-v2-2.3.10.jar
+2026-06-08 13:50:35,398 WARN  [o.a.s.a.c.u.ConfigUtil        ] [main] - Option 'plugin_input' is a List, and it is recommended to configure it as ["string1","string2"]; we will only use ',' to split the String into a list.
+2026-06-08 13:50:35,402 WARN  [o.a.s.a.c.u.ConfigUtil        ] [main] - Option 'plugin_input' is a List, and it is recommended to configure it as ["string1","string2"]; we will only use ',' to split the String into a list.
+2026-06-08 13:50:35,428 INFO  [p.MultipleTableJobConfigParser] [main] - start generating all sinks.
+2026-06-08 13:50:35,428 WARN  [o.a.s.a.c.ReadonlyConfig      ] [main] - Please use the new key 'plugin_input' instead of the deprecated key 'source_table_name'.
+2026-06-08 13:50:35,428 WARN  [o.a.s.a.c.u.ConfigUtil        ] [main] - Option 'plugin_input' is a List, and it is recommended to configure it as ["string1","string2"]; we will only use ',' to split the String into a list.
+2026-06-08 13:50:35,431 INFO  [.s.p.d.AbstractPluginDiscovery] [main] - Load SeaTunnelSink Plugin from /opt/seatunnel/connectors
+2026-06-08 13:50:35,431 INFO  [.s.p.d.AbstractPluginDiscovery] [main] - Discovery plugin jar for: PluginIdentifier{engineType='seatunnel', pluginType='sink', pluginName='Kafka'} at: file:/opt/seatunnel/connectors/connector-kafka-2.3.10.jar
+2026-06-08 13:50:35,435 INFO  [o.a.s.a.t.f.FactoryUtil       ] [main] - Create sink 'Kafka' with upstream input catalog-table[database: null, schema: null, table: phase2-seatunnel-wallet-events-v2]
+2026-06-08 13:50:35,436 INFO  [p.MultipleTableJobConfigParser] [main] - Unsupported multi table sink api, rollback to sink template
+2026-06-08 13:50:35,472 INFO  [o.a.s.e.c.j.ClientJobProxy    ] [main] - Start submit job, job id: 1116363650467102721, with plugin jar [file:/opt/seatunnel/connectors/connector-kafka-2.3.10.jar, file:/opt/seatunnel/connectors/seatunnel-transforms-v2-2.3.10.jar]
+2026-06-08 13:50:35,477 INFO  [.e.s.r.AbstractResourceManager] [hz.main.client.thread-4] - Init ResourceManager
+2026-06-08 13:50:35,477 INFO  [.e.s.r.AbstractResourceManager] [hz.main.client.thread-4] - initWorker...
+2026-06-08 13:50:35,477 INFO  [.e.s.r.AbstractResourceManager] [hz.main.client.thread-4] - init live nodes: [[localhost]:5801]
+2026-06-08 13:50:35,478 INFO  [.e.s.r.AbstractResourceManager] [SeaTunnel-CompletableFuture-Thread-2] - received new worker register: [localhost]:5801
+2026-06-08 13:50:35,478 INFO  [.e.s.r.AbstractResourceManager] [hz.main.client.thread-4] - registerWorker: {[localhost]:5801=WorkerProfile(address=[localhost]:5801, profile=ResourceProfile{cpu=CPU{core=0}, heapMemory=Memory{bytes=536870912}}, unassignedResource=ResourceProfile{cpu=CPU{core=0}, heapMemory=Memory{bytes=536870912}}, dynamicSlot=true, assignedSlots=[], unassignedSlots=[], attributes={}, systemLoadInfo=null)}
+2026-06-08 13:50:35,485 INFO  [o.a.s.e.s.m.JobMaster         ] [seatunnel-coordinator-service-2] - Init JobMaster for Job SeaTunnel_Job (1116363650467102721)
+2026-06-08 13:50:35,485 INFO  [o.a.s.e.s.m.JobMaster         ] [seatunnel-coordinator-service-2] - Job SeaTunnel_Job (1116363650467102721) needed jar urls [file:/opt/seatunnel/connectors/connector-kafka-2.3.10.jar, file:/opt/seatunnel/connectors/seatunnel-transforms-v2-2.3.10.jar]
+2026-06-08 13:50:35,485 INFO  [.c.c.DefaultClassLoaderService] [seatunnel-coordinator-service-2] - Create classloader for job 1 with jars [file:/opt/seatunnel/connectors/connector-kafka-2.3.10.jar]
+2026-06-08 13:50:35,486 INFO  [.c.c.DefaultClassLoaderService] [seatunnel-coordinator-service-2] - Create classloader for job 1 with jars [file:/opt/seatunnel/connectors/seatunnel-transforms-v2-2.3.10.jar]
+2026-06-08 13:50:35,532 INFO  [.s.e.s.c.CheckpointCoordinator] [seatunnel-coordinator-service-2] - Create CheckpointCoordinator for job(1@1116363650467102721) with plan(CheckpointPlan(pipelineId=1, pipelineSubtasks=[TaskLocation{taskGroupLocation=TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}, taskID=1000200000000, index=0}, TaskLocation{taskGroupLocation=TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}, taskID=1000200010000, index=0}, TaskLocation{taskGroupLocation=TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=1}, taskID=1000100000000, index=0}], startingSubtasks=[TaskLocation{taskGroupLocation=TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=1}, taskID=1000100000000, index=0}], pipelineActions={ActionStateKey(name=ActionStateKey - pipeline-1 [Sink[0]-Kafka-phase2-seatunnel-wallet-events-v2])=1, ActionStateKey(name=ActionStateKey - pipeline-1 [TransformChain[Transform[0]-Sql]])=1, ActionStateKey(name=ActionStateKey - pipeline-1 [Source[0]-Kafka])=1}, subtaskActions={TaskLocation{taskGroupLocation=TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}, taskID=1000200000000, index=0}=[(ActionStateKey(name=ActionStateKey - pipeline-1 [TransformChain[Transform[0]-Sql]]), 0), (ActionStateKey(name=ActionStateKey - pipeline-1 [Source[0]-Kafka]), 0)], TaskLocation{taskGroupLocation=TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}, taskID=1000200010000, index=0}=[(ActionStateKey(name=ActionStateKey - pipeline-1 [Sink[0]-Kafka-phase2-seatunnel-wallet-events-v2]), 0)], TaskLocation{taskGroupLocation=TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=1}, taskID=1000100000000, index=0}=[(ActionStateKey(name=ActionStateKey - pipeline-1 [Source[0]-Kafka]), -1)]}))
+2026-06-08 13:50:35,534 INFO  [o.a.s.e.s.d.p.PhysicalVertex  ] [seatunnel-coordinator-service-2] - The task Job (1116363650467102721), Pipeline: [(1/1)], task: [pipeline-1 [Source[0]-Kafka]-SourceTask (1/1)], taskGroupLocation: [TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}] is in state CREATED when init state future
+2026-06-08 13:50:35,534 INFO  [o.a.s.e.s.d.p.PhysicalVertex  ] [seatunnel-coordinator-service-2] - The task Job (1116363650467102721), Pipeline: [(1/1)], task: [pipeline-1 [Source[0]-Kafka]-SplitEnumerator (1/1)], taskGroupLocation: [TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=1}] is in state CREATED when init state future
+2026-06-08 13:50:35,535 INFO  [o.a.s.e.c.j.ClientJobProxy    ] [main] - Submit job finished, job id: 1116363650467102721, job name: SeaTunnel_Job
+2026-06-08 13:50:35,538 INFO  [o.a.s.e.s.d.p.PhysicalPlan    ] [seatunnel-coordinator-service-2] - Job SeaTunnel_Job (1116363650467102721) turned from state CREATED to PENDING.
+2026-06-08 13:50:35,538 WARN  [o.a.s.e.s.d.p.PhysicalPlan    ] [seatunnel-coordinator-service-2] - Job SeaTunnel_Job (1116363650467102721) state process is stopped
+2026-06-08 13:50:35,538 INFO  [o.a.s.e.s.CoordinatorService  ] [seatunnel-coordinator-service-2] - [localhost]:5801 [seatunnel-178816] [5.1] The submit job enter the pending queue , jobId: 1116363650467102721 , jobName: SeaTunnel_Job
+2026-06-08 13:50:35,539 WARN  [o.a.s.e.c.j.JobMetricsRunner  ] [job-metrics-runner-1116363650467102721] - Failed to get job metrics summary, it maybe first-run
+2026-06-08 13:50:35,541 INFO  [o.a.s.e.s.CoordinatorService  ] [pending-job-schedule-runner] - [localhost]:5801 [seatunnel-178816] [5.1] Resources enough, start running: 1116363650467102721
+2026-06-08 13:50:35,542 INFO  [o.a.s.e.s.CoordinatorService  ] [seatunnel-coordinator-service-3] - [localhost]:5801 [seatunnel-178816] [5.1] The SUBMIT Job SeaTunnel_Job (1116363650467102721) is in PENDING state, restore pipeline and take over this job running
+2026-06-08 13:50:35,542 INFO  [o.a.s.e.s.d.p.PhysicalPlan    ] [seatunnel-coordinator-service-3] - Job SeaTunnel_Job (1116363650467102721) state process is start
+2026-06-08 13:50:35,542 INFO  [o.a.s.e.s.d.p.SubPlan         ] [seatunnel-coordinator-service-3] - Job SeaTunnel_Job (1116363650467102721), Pipeline: [(1/1)] state process is start
+2026-06-08 13:50:35,544 INFO  [o.a.s.e.s.d.p.SubPlan         ] [seatunnel-coordinator-service-3] - Job SeaTunnel_Job (1116363650467102721), Pipeline: [(1/1)] turned from state CREATED to SCHEDULED.
+2026-06-08 13:50:35,547 INFO  [o.a.s.e.s.d.p.SubPlan         ] [seatunnel-coordinator-service-3] - Job SeaTunnel_Job (1116363650467102721), Pipeline: [(1/1)] turned from state SCHEDULED to DEPLOYING.
+2026-06-08 13:50:35,548 INFO  [o.a.s.e.s.d.p.PhysicalVertex  ] [seatunnel-coordinator-service-3] - Job (1116363650467102721), Pipeline: [(1/1)], task: [pipeline-1 [Source[0]-Kafka]-SplitEnumerator (1/1)], taskGroupLocation: [TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=1}] state process is start
+2026-06-08 13:50:35,548 INFO  [o.a.s.e.s.d.p.PhysicalVertex  ] [seatunnel-coordinator-service-3] - Job (1116363650467102721), Pipeline: [(1/1)], task: [pipeline-1 [Source[0]-Kafka]-SplitEnumerator (1/1)], taskGroupLocation: [TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=1}] turned from state CREATED to DEPLOYING.
+2026-06-08 13:50:35,553 INFO  [o.a.s.e.s.TaskExecutionService] [seatunnel-coordinator-service-3] - [localhost]:5801 [seatunnel-178816] [5.1] received deploying task executionId [1116363651507290113]
+2026-06-08 13:50:35,558 INFO  [o.a.s.e.s.TaskExecutionService] [seatunnel-coordinator-service-3] - [localhost]:5801 [seatunnel-178816] [5.1] deploying task TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=1}, executionId [1116363651507290113]
+2026-06-08 13:50:35,558 INFO  [o.a.s.e.s.TaskExecutionService] [seatunnel-coordinator-service-3] - [localhost]:5801 [seatunnel-178816] [5.1] deploying TaskGroup TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=1} init success
+2026-06-08 13:50:35,561 INFO  [.s.t.SourceSplitEnumeratorTask] [BlockingWorker-TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=1}] - starting seatunnel source split enumerator task, source name: pipeline-1 [Source[0]-Kafka]
+2026-06-08 13:50:35,561 INFO  [o.a.s.e.s.TaskExecutionService] [seatunnel-coordinator-service-3] - [localhost]:5801 [seatunnel-178816] [5.1] deploying TaskGroup TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=1} success
+2026-06-08 13:50:35,563 INFO  [o.a.s.e.s.d.p.PhysicalVertex  ] [seatunnel-coordinator-service-3] - Job (1116363650467102721), Pipeline: [(1/1)], task: [pipeline-1 [Source[0]-Kafka]-SplitEnumerator (1/1)], taskGroupLocation: [TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=1}] turned from state DEPLOYING to RUNNING.
+2026-06-08 13:50:35,564 INFO  [o.a.s.e.s.d.p.PhysicalVertex  ] [seatunnel-coordinator-service-3] - Job (1116363650467102721), Pipeline: [(1/1)], task: [pipeline-1 [Source[0]-Kafka]-SplitEnumerator (1/1)], taskGroupLocation: [TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=1}] current state equals target state: RUNNING, skip
+2026-06-08 13:50:35,564 INFO  [o.a.s.e.s.d.p.PhysicalVertex  ] [seatunnel-coordinator-service-3] - Job (1116363650467102721), Pipeline: [(1/1)], task: [pipeline-1 [Source[0]-Kafka]-SourceTask (1/1)], taskGroupLocation: [TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}] state process is start
+2026-06-08 13:50:35,566 INFO  [o.a.s.e.s.d.p.PhysicalVertex  ] [seatunnel-coordinator-service-3] - Job (1116363650467102721), Pipeline: [(1/1)], task: [pipeline-1 [Source[0]-Kafka]-SourceTask (1/1)], taskGroupLocation: [TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}] turned from state CREATED to DEPLOYING.
+2026-06-08 13:50:35,574 INFO  [o.a.s.e.s.TaskExecutionService] [seatunnel-coordinator-service-3] - [localhost]:5801 [seatunnel-178816] [5.1] received deploying task executionId [1116363651507355649]
+2026-06-08 13:50:35,577 INFO  [.c.c.DefaultClassLoaderService] [seatunnel-coordinator-service-3] - Create classloader for job 1 with jars [file:/opt/seatunnel/connectors/connector-kafka-2.3.10.jar, file:/opt/seatunnel/connectors/seatunnel-transforms-v2-2.3.10.jar]
+2026-06-08 13:50:35,580 INFO  [o.a.k.c.a.AdminClientConfig   ] [hz.main.seaTunnel.task.thread-2] - AdminClientConfig values:
+	bootstrap.servers = [phase2-redpanda:9092]
+	client.dns.lookup = use_all_dns_ips
+	client.id = seatunnel-enumerator-admin-client-75354045
+	connections.max.idle.ms = 300000
+	default.api.timeout.ms = 60000
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+
+2026-06-08 13:50:35,591 INFO  [o.a.s.e.s.TaskExecutionService] [seatunnel-coordinator-service-3] - [localhost]:5801 [seatunnel-178816] [5.1] deploying task TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}, executionId [1116363651507355649]
+2026-06-08 13:50:35,591 INFO  [o.a.s.e.s.TaskExecutionService] [seatunnel-coordinator-service-3] - [localhost]:5801 [seatunnel-178816] [5.1] deploying TaskGroup TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2} init success
+2026-06-08 13:50:35,592 INFO  [o.a.s.e.s.TaskExecutionService] [seatunnel-coordinator-service-3] - [localhost]:5801 [seatunnel-178816] [5.1] deploying TaskGroup TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2} success
+2026-06-08 13:50:35,594 INFO  [o.a.s.e.s.d.p.PhysicalVertex  ] [seatunnel-coordinator-service-3] - Job (1116363650467102721), Pipeline: [(1/1)], task: [pipeline-1 [Source[0]-Kafka]-SourceTask (1/1)], taskGroupLocation: [TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}] turned from state DEPLOYING to RUNNING.
+2026-06-08 13:50:35,594 INFO  [o.a.s.e.s.d.p.PhysicalVertex  ] [seatunnel-coordinator-service-3] - Job (1116363650467102721), Pipeline: [(1/1)], task: [pipeline-1 [Source[0]-Kafka]-SourceTask (1/1)], taskGroupLocation: [TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}] current state equals target state: RUNNING, skip
+2026-06-08 13:50:35,595 INFO  [o.a.s.e.s.d.p.SubPlan         ] [seatunnel-coordinator-service-3] - Job SeaTunnel_Job (1116363650467102721), Pipeline: [(1/1)] turned from state DEPLOYING to RUNNING.
+2026-06-08 13:50:35,596 INFO  [o.a.s.e.s.d.p.PhysicalPlan    ] [seatunnel-coordinator-service-3] - Job SeaTunnel_Job (1116363650467102721) turned from state PENDING to RUNNING.
+2026-06-08 13:50:35,597 INFO  [.a.s.e.s.t.SourceSeaTunnelTask] [BlockingWorker-TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}] - starting seatunnel source task, index 0
+2026-06-08 13:50:35,598 INFO  [s.e.s.t.TransformSeaTunnelTask] [BlockingWorker-TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}] - starting seatunnel transform task, index 0
+2026-06-08 13:50:35,608 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.seaTunnel.task.thread-2] - Kafka version: 3.2.0
+2026-06-08 13:50:35,608 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.seaTunnel.task.thread-2] - Kafka commitId: 38103ffaa962ef50
+2026-06-08 13:50:35,608 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.seaTunnel.task.thread-2] - Kafka startTimeMs: 1780926635607
+2026-06-08 13:50:35,609 INFO  [o.a.k.c.p.ProducerConfig      ] [hz.main.seaTunnel.task.thread-5] - ProducerConfig values:
+	acks = -1
+	batch.size = 16384
+	bootstrap.servers = [phase2-redpanda:9092]
+	buffer.memory = 33554432
+	client.dns.lookup = use_all_dns_ips
+	client.id = producer-1
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.ByteArraySerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metadata.max.idle.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class org.apache.kafka.common.serialization.ByteArraySerializer
+
+2026-06-08 13:50:35,616 INFO  [o.a.k.c.p.KafkaProducer       ] [hz.main.seaTunnel.task.thread-5] - [Producer clientId=producer-1] Instantiated an idempotent producer.
+2026-06-08 13:50:35,627 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.seaTunnel.task.thread-5] - Kafka version: 3.2.0
+2026-06-08 13:50:35,627 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.seaTunnel.task.thread-5] - Kafka commitId: 38103ffaa962ef50
+2026-06-08 13:50:35,627 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.seaTunnel.task.thread-5] - Kafka startTimeMs: 1780926635627
+2026-06-08 13:50:35,701 INFO  [o.a.s.a.e.LoggingEventHandler ] [hz.main.generic-operation.thread-13] - log event: ReaderOpenEvent(createdTime=1780926635700, jobId=1116363650467102721, eventType=LIFECYCLE_READER_OPEN)
+2026-06-08 13:50:35,702 INFO  [a.s.c.s.c.s.r.SourceReaderBase] [BlockingWorker-TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}] - Open Source Reader.
+2026-06-08 13:50:35,703 INFO  [.s.t.SourceSplitEnumeratorTask] [hz.main.seaTunnel.task.thread-5] - received reader register, readerID: TaskLocation{taskGroupLocation=TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}, taskID=1000200000000, index=0}
+2026-06-08 13:50:35,715 INFO  [.s.e.s.c.CheckpointCoordinator] [seatunnel-coordinator-service-9] - checkpoint is enabled, start schedule trigger pending checkpoint.
+2026-06-08 13:50:35,739 INFO  [o.a.k.c.Metadata              ] [kafka-producer-network-thread | producer-1] - [Producer clientId=producer-1] Cluster ID: redpanda.15fadf2f-d49d-4049-83d3-791b89aa1542
+2026-06-08 13:50:35,740 INFO  [o.a.k.c.p.i.TransactionManager] [kafka-producer-network-thread | producer-1] - [Producer clientId=producer-1] ProducerId set to 10 with epoch 0
+2026-06-08 13:50:35,765 INFO  [.s.t.SourceSplitEnumeratorTask] [BlockingWorker-TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=1}] - received enough reader, starting enumerator...
+2026-06-08 13:50:35,765 INFO  [o.a.s.a.e.LoggingEventHandler ] [hz.main.generic-operation.thread-19] - log event: EnumeratorOpenEvent(createdTime=1780926635765, jobId=1116363650467102721, eventType=LIFECYCLE_ENUMERATOR_OPEN)
+2026-06-08 13:50:35,765 INFO  [k.s.KafkaSourceSplitEnumerator] [BlockingWorker-TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=1}] - Discovered topics: [phase2-seatunnel-wallet-events-v2]
+2026-06-08 13:50:35,782 INFO  [o.a.k.c.c.ConsumerConfig      ] [hz.main.generic-operation.thread-20] - ConsumerConfig values:
+	allow.auto.create.topics = false
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [phase2-redpanda:9092]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = seatunnel-consumer-0
+	client.rack =
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = phase2-seatunnel-wallet-poc-v2
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+
+2026-06-08 13:50:35,811 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.generic-operation.thread-20] - Kafka version: 3.2.0
+2026-06-08 13:50:35,811 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.generic-operation.thread-20] - Kafka commitId: 38103ffaa962ef50
+2026-06-08 13:50:35,811 INFO  [o.a.k.c.u.AppInfoParser       ] [hz.main.generic-operation.thread-20] - Kafka startTimeMs: 1780926635810
+2026-06-08 13:50:35,814 INFO  [a.s.c.s.c.s.r.SourceReaderBase] [hz.main.generic-operation.thread-21] - Reader 0 received NoMoreSplits event.
+2026-06-08 13:50:35,814 INFO  [o.a.s.c.s.c.s.r.f.SplitFetcher] [Source Data Fetcher for BlockingWorker-TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}] - Starting split fetcher 0
+2026-06-08 13:50:35,816 INFO  [o.a.k.c.c.KafkaConsumer       ] [Source Data Fetcher for BlockingWorker-TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}] - [Consumer clientId=seatunnel-consumer-0, groupId=phase2-seatunnel-wallet-poc-v2] Subscribed to partition(s): phase2-seatunnel-wallet-events-v2-0
+2026-06-08 13:50:35,817 INFO  [o.a.k.c.c.i.SubscriptionState ] [Source Data Fetcher for BlockingWorker-TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}] - [Consumer clientId=seatunnel-consumer-0, groupId=phase2-seatunnel-wallet-poc-v2] Seeking to EARLIEST offset of partition phase2-seatunnel-wallet-events-v2-0
+2026-06-08 13:50:35,893 INFO  [o.a.k.c.Metadata              ] [Source Data Fetcher for BlockingWorker-TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}] - [Consumer clientId=seatunnel-consumer-0, groupId=phase2-seatunnel-wallet-poc-v2] Cluster ID: redpanda.15fadf2f-d49d-4049-83d3-791b89aa1542
+2026-06-08 13:50:35,896 INFO  [o.a.k.c.c.i.SubscriptionState ] [Source Data Fetcher for BlockingWorker-TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}] - [Consumer clientId=seatunnel-consumer-0, groupId=phase2-seatunnel-wallet-poc-v2] Resetting offset for partition phase2-seatunnel-wallet-events-v2-0 to position FetchPosition{offset=0, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[phase2-redpanda.etl-research-phase2.svc.cluster.local:9092 (id: 0 rack: null)], epoch=absent}}.
+2026-06-08 13:50:35,897 INFO  [.a.k.c.c.i.ConsumerCoordinator] [Source Data Fetcher for BlockingWorker-TaskGroupLocation{jobId=1116363650467102721, pipelineId=1, taskGroupId=2}] - [Consumer clientId=seatunnel-consumer-0, groupId=phase2-seatunnel-wallet-poc-v2] Discovered group coordinator phase2-redpanda.etl-research-phase2.svc.cluster.local:9092 (id: 2147483647 rack: null)
+2026-06-08 13:50:45,726 INFO  [.s.e.s.c.CheckpointCoordinator] [seatunnel-coordinator-service-8] - wait checkpoint completed: 1
+2026-06-08 13:50:45,774 INFO  [.s.e.s.c.CheckpointCoordinator] [seatunnel-coordinator-service-8] - pending checkpoint(1/1@1116363650467102721) notify finished!
+2026-06-08 13:50:45,774 INFO  [.s.e.s.c.CheckpointCoordinator] [seatunnel-coordinator-service-8] - start notify checkpoint completed, job id: 1116363650467102721, pipeline id: 1, checkpoint id:1
+2026-06-08 13:50:55,726 INFO  [.s.e.s.c.CheckpointCoordinator] [seatunnel-coordinator-service-8] - wait checkpoint completed: 2
+2026-06-08 13:50:55,748 INFO  [.s.e.s.c.CheckpointCoordinator] [seatunnel-coordinator-service-8] - pending checkpoint(2/1@1116363650467102721) notify finished!
+2026-06-08 13:50:55,748 INFO  [.s.e.s.c.CheckpointCoordinator] [seatunnel-coordinator-service-8] - start notify checkpoint completed, job id: 1116363650467102721, pipeline id: 1, checkpoint id:2
+2026-06-08 13:51:05,725 INFO  [.s.e.s.c.CheckpointCoordinator] [seatunnel-coordinator-service-8] - wait checkpoint completed: 3
+2026-06-08 13:51:05,737 INFO  [.s.e.s.c.CheckpointCoordinator] [seatunnel-coordinator-service-8] - pending checkpoint(3/1@1116363650467102721) notify finished!
+2026-06-08 13:51:05,737 INFO  [.s.e.s.c.CheckpointCoordinator] [seatunnel-coordinator-service-8] - start notify checkpoint completed, job id: 1116363650467102721, pipeline id: 1, checkpoint id:3
+2026-06-08 13:51:15,726 INFO  [.s.e.s.c.CheckpointCoordinator] [seatunnel-coordinator-service-8] - wait checkpoint completed: 4
+2026-06-08 13:51:15,734 INFO  [.s.e.s.c.CheckpointCoordinator] [seatunnel-coordinator-service-8] - pending checkpoint(4/1@1116363650467102721) notify finished!
+2026-06-08 13:51:15,734 INFO  [.s.e.s.c.CheckpointCoordinator] [seatunnel-coordinator-service-8] - start notify checkpoint completed, job id: 1116363650467102721, pipeline id: 1, checkpoint id:4
+SeaTunnel proof window completed after timeout

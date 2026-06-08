@@ -1,0 +1,13 @@
+NAME                                READY   STATUS      RESTARTS   AGE     IP           NODE     NOMINATED NODE   READINESS GATES
+phase2-beam-kch87                   0/1     Completed   0          17m     10.42.0.29   colima   <none>           <none>
+phase2-bento-7696f75f4f-dkr9r       1/1     Running     0          54m     10.42.0.15   colima   <none>           <none>
+phase2-camel-98c95dd7c-8cdx6        1/1     Running     0          51m     10.42.0.16   colima   <none>           <none>
+phase2-ekuiper-6574bbb598-kctxs     1/1     Running     0          43m     10.42.0.21   colima   <none>           <none>
+phase2-flink-fhbpr                  0/1     Completed   0          10m     10.42.0.32   colima   <none>           <none>
+phase2-mosquitto-744b8979bd-b9tnm   1/1     Running     0          49m     10.42.0.17   colima   <none>           <none>
+phase2-node-red-54996777c8-bxnqx    1/1     Running     0          44m     10.42.0.20   colima   <none>           <none>
+phase2-pulsar-65fcbddbb5-nscgm      1/1     Running     0          5m10s   10.42.0.33   colima   <none>           <none>
+phase2-pulsar-setup-rhm4q           0/1     Completed   0          77s     10.42.0.39   colima   <none>           <none>
+phase2-redpanda-68985d9b4b-p9g58    1/1     Running     0          56m     10.42.0.14   colima   <none>           <none>
+phase2-seatunnel-wr29f              0/1     Completed   0          29m     10.42.0.24   colima   <none>           <none>
+phase2-spark-z5hdj                  0/1     Completed   0          23m     10.42.0.26   colima   <none>           <none>

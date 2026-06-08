@@ -1,0 +1,3 @@
+TOPIC                            STATUS
+phase2-spark-wallet-events-v2    OK
+phase2-spark-wallet-filtered-v2  OK

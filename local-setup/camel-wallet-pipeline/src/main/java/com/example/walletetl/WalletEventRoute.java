@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class WalletEventRoute extends RouteBuilder {
   @Override
   public void configure() {
-    from("kafka:wallet-events"
+    from("kafka:{{wallet.kafka.source-topic}}"
         + "?brokers={{wallet.kafka.brokers}}"
         + "&groupId={{wallet.kafka.group-id}}"
         + "&autoOffsetReset=earliest")
@@ -30,12 +30,14 @@ public class WalletEventRoute extends RouteBuilder {
     boolean accepted =
       "wallet.payment.authorized".equals(event.get("event_type")) && amount >= 100.0;
 
-    event.put("pipeline", "camel-spring-wallet-poc");
+    event.put("pipeline", getContext().resolvePropertyPlaceholders("{{wallet.pipeline-name}}"));
     event.put("processed_at", Instant.now().toString());
     event.put("risk_tier", amount >= 1000.0 ? "HIGH" : "STANDARD");
 
     exchange.getMessage().setBody(event);
-    exchange.setProperty("targetTopic", accepted ? "wallet-filtered" : "wallet-deadletter");
+    String filteredTopic = getContext().resolvePropertyPlaceholders("{{wallet.kafka.filtered-topic}}");
+    String deadletterTopic = getContext().resolvePropertyPlaceholders("{{wallet.kafka.deadletter-topic}}");
+    exchange.setProperty("targetTopic", accepted ? filteredTopic : deadletterTopic);
   }
 
   private double asDouble(Object value) {

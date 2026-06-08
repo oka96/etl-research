@@ -1,0 +1,3 @@
+TOPIC                             STATUS
+phase2-seatunnel-wallet-events    OK
+phase2-seatunnel-wallet-filtered  OK

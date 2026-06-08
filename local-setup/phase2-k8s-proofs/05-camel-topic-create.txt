@@ -1,0 +1,4 @@
+TOPIC                           STATUS
+phase2-camel-wallet-events      TOPIC_ALREADY_EXISTS: The topic has already been created
+phase2-camel-wallet-filtered    OK
+phase2-camel-wallet-deadletter  OK

@@ -1,0 +1,4 @@
+----- got message -----
+publishTime:[1780928365682], eventTime:[0], key:[null], properties:[__pfn_input_msg_id__=CBEQAA==, __pfn_input_topic__=persistent://public/default/phase2-pulsar-wallet-events-v3], content:{"amount":128.45,"currency":"MYR","event_id":"evt-001","event_type":"wallet.payment.authorized","pipeline":"pulsar-functions-k8s-phase2","processed_at_epoch_ms":1780928365680,"risk_tier":"STANDARD","user_id":"u-1001"}
+----- got message -----
+publishTime:[1780928371617], eventTime:[0], key:[null], properties:[__pfn_input_msg_id__=CBEQAg==, __pfn_input_topic__=persistent://public/default/phase2-pulsar-wallet-events-v3], content:{"amount":1288.0,"currency":"MYR","event_id":"evt-003","event_type":"wallet.payment.authorized","pipeline":"pulsar-functions-k8s-phase2","processed_at_epoch_ms":1780928371617,"risk_tier":"HIGH","user_id":"u-1003"}
