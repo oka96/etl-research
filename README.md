@@ -22,3 +22,19 @@ kubectl get pods -n etl-research-phase2
 ```
 
 This proof consumes RocketMQ source events, filters authorized wallet payments with amount >= 100, enriches the JSON, and writes the transformed record to a RocketMQ sink topic.
+
+For the Apache Storm phase-2 proof:
+
+```bash
+cd local-setup/storm-wallet-topology
+mvn clean package
+docker build -t etl-research/storm-wallet-topology:phase2 .
+cd ../..
+kubectl create namespace etl-research-phase2 --dry-run=client -o yaml | kubectl apply -f -
+kubectl apply -f local-setup/phase2-k8s/redpanda.yaml
+kubectl wait -n etl-research-phase2 --for=condition=available deployment/phase2-redpanda --timeout=3m
+kubectl apply -f local-setup/phase2-k8s/storm.yaml
+kubectl wait -n etl-research-phase2 --for=condition=complete job/phase2-storm --timeout=5m
+```
+
+This proof runs a Storm `KafkaSpout -> JSON filter/enrich bolt -> KafkaBolt` topology against the phase-2 Redpanda broker.

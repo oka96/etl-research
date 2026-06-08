@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: phase2-storm
+  namespace: etl-research-phase2
+  labels:
+    app: phase2-storm
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 86400
+  template:
+    metadata:
+      labels:
+        app: phase2-storm
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: storm
+          image: etl-research/storm-wallet-topology:phase2
+          imagePullPolicy: Never
+          env:
+            - name: KAFKA_BROKERS
+              value: phase2-redpanda:9092
+            - name: SOURCE_TOPIC
+              value: phase2-storm-wallet-events
+            - name: SINK_TOPIC
+              value: phase2-storm-wallet-filtered
+            - name: GROUP_ID
+              value: phase2-storm-wallet-poc
+            - name: PIPELINE_NAME
+              value: storm-k8s-phase2
+            - name: HOLD_SECONDS
+              value: "20"

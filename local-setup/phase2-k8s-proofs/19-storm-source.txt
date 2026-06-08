@@ -1,0 +1,3 @@
+{"event_id":"evt-storm-k8s-001","event_type":"wallet.payment.authorized","wallet_id":"wallet-storm-001","amount":250.50,"currency":"MYR","status":"authorized"}
+{"event_id":"evt-storm-k8s-002","event_type":"wallet.payment.rejected","wallet_id":"wallet-storm-002","amount":80.00,"currency":"MYR","status":"rejected"}
+{"event_id":"evt-storm-k8s-003","event_type":"wallet.payment.authorized","wallet_id":"wallet-storm-003","amount":1500.00,"currency":"MYR","status":"authorized"}

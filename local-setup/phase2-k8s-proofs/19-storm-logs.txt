@@ -1,0 +1,8 @@
+Produced source event: {"event_id":"evt-storm-k8s-001","event_type":"wallet.payment.authorized","wallet_id":"wallet-storm-001","amount":250.50,"currency":"MYR","status":"authorized"}
+Produced source event: {"event_id":"evt-storm-k8s-002","event_type":"wallet.payment.rejected","wallet_id":"wallet-storm-002","amount":80.00,"currency":"MYR","status":"rejected"}
+Produced source event: {"event_id":"evt-storm-k8s-003","event_type":"wallet.payment.authorized","wallet_id":"wallet-storm-003","amount":1500.00,"currency":"MYR","status":"authorized"}
+Submitting Apache Storm topology source=phase2-storm-wallet-events transform=json-filter-enrich sink=phase2-storm-wallet-filtered brokers=phase2-redpanda:9092
+Storm sink proof:
+{"event_id":"evt-storm-k8s-001","event_type":"wallet.payment.authorized","wallet_id":"wallet-storm-001","amount":250.5,"currency":"MYR","status":"authorized","risk_tier":"STANDARD","pipeline":"storm-k8s-phase2"}
+{"event_id":"evt-storm-k8s-003","event_type":"wallet.payment.authorized","wallet_id":"wallet-storm-003","amount":1500.0,"currency":"MYR","status":"authorized","risk_tier":"HIGH","pipeline":"storm-k8s-phase2"}
+Holding completed Storm proof pod for 20 seconds so Kubernetes can record Running state
