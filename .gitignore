@@ -4,6 +4,7 @@
 local-setup/camel-wallet-pipeline/target/
 local-setup/flink-wallet-pipeline/target/
 local-setup/kafka-connect-wallet-transform/target/
+local-setup/scdf-wallet-stream/target/
 local-setup/rocketmq-streams-wallet-poc/target/
 local-setup/storm-wallet-topology/target/
 local-setup/rocketmq-connect-src/**/target/

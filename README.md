@@ -69,6 +69,22 @@ kubectl logs -n etl-research-phase2 job/phase2-streampark-proof -c verify-topics
 
 This proof starts the StreamPark console from the Apache 2.1.5 binary distribution inside a Kubernetes pod and runs a companion Flink SQL job. The job creates fresh Kafka-compatible Redpanda topics, writes source wallet events, consumes them through a Flink SQL Kafka source table, applies JSON filtering/enrichment for authorized payments with amount >= 100, and writes the filtered records to a Kafka sink table. The StreamPark distribution and Flink Kafka SQL connector are downloaded at pod runtime into `emptyDir` volumes; no connector jar, distribution archive, or credential is tracked.
 
+For the Spring Cloud Data Flow + Spring Cloud Stream phase-2 proof:
+
+```bash
+docker build -t etl-research/scdf-wallet-stream:phase2 local-setup/scdf-wallet-stream
+kubectl create namespace etl-research-phase2 --dry-run=client -o yaml | kubectl apply -f -
+kubectl apply -f local-setup/phase2-k8s/redpanda.yaml
+kubectl wait -n etl-research-phase2 --for=condition=available deployment/phase2-redpanda --timeout=3m
+kubectl delete -f local-setup/phase2-k8s/scdf.yaml --ignore-not-found
+kubectl apply -f local-setup/phase2-k8s/scdf.yaml
+kubectl wait -n etl-research-phase2 --for=condition=available deployment/phase2-scdf-dataflow --timeout=10m
+kubectl wait -n etl-research-phase2 --for=condition=complete job/phase2-scdf-proof --timeout=12m
+kubectl logs -n etl-research-phase2 job/phase2-scdf-proof -c run-proof
+```
+
+This proof starts Spring Cloud Data Flow and Skipper pods, then runs a purpose-built Spring Cloud Stream Kafka function app in the proof job. The job creates fresh Kafka-compatible Redpanda topics, writes source wallet events, consumes them through the Spring Cloud Stream Kafka binder, applies JSON filtering/enrichment for authorized payments with amount >= 100, and verifies the filtered Kafka sink records. The image is rebuilt locally from tracked source; generated Maven output and local runtime state are not tracked.
+
 For the Dinky phase-2 proof:
 
 ```bash

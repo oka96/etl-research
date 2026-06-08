@@ -1,0 +1,9 @@
+Spring Cloud Data Flow + Spring Cloud Stream phase-2 K8s proof: Complete
+Source topic: phase2-scdf-wallet-events-1780951348
+Sink topic: phase2-scdf-wallet-filtered-1780951348
+Source records verified: 4
+Filtered sink records verified: 2
+Transform: SCDF Data Flow/Skipper runtime plus Spring Cloud Stream Kafka function -> JSON parse/filter/enrich -> Kafka sink
+Filter: event_type = wallet.payment.authorized and amount >= 100
+Runtime: Spring Cloud Data Flow 2.10.2, Data Flow UI 3.3.2, Skipper 2.9.2, Spring Cloud Stream Kafka app
+Credentials: none tracked or required for this local proof

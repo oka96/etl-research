@@ -1,0 +1,111 @@
+Setting Active Processor Count to 4
+Calculating JVM memory based on 5464268K available memory
+For more information on this calculation, see https://paketo.io/docs/reference/java-reference/#memory-calculator
+Calculated JVM Memory Configuration: -XX:MaxDirectMemorySize=10M -Xmx4752837K -XX:MaxMetaspaceSize=199430K -XX:ReservedCodeCacheSize=240M -Xss1M (Total Memory: 5464268K, Thread Count: 250, Loaded Class Count: 32796, Headroom: 0%)
+Enabling Java Native Memory Tracking
+Adding 124 container CA certificates to JVM truststore
+Spring Cloud Bindings Enabled
+Picked up JAVA_TOOL_OPTIONS: -Djava.security.properties=/layers/paketo-buildpacks_bellsoft-liberica/java-security-properties/java-security.properties -XX:+ExitOnOutOfMemoryError -XX:ActiveProcessorCount=4 -XX:MaxDirectMemorySize=10M -Xmx4752837K -XX:MaxMetaspaceSize=199430K -XX:ReservedCodeCacheSize=240M -Xss1M -XX:+UnlockDiagnosticVMOptions -XX:NativeMemoryTracking=summary -XX:+PrintNMTStatistics -Dorg.springframework.cloud.bindings.boot.enable=true
+2026-06-08 20:38:13.283  INFO 1 --- [kground-preinit] o.h.validator.internal.util.Version      : HV000001: Hibernate Validator 6.2.5.Final
+  ____                              ____ _                __
+ / ___| _ __  _ __(_)_ __   __ _   / ___| | ___  _   _  __| |
+ \___ \| '_ \| '__| | '_ \ / _` | | |   | |/ _ \| | | |/ _` |
+  ___) | |_) | |  | | | | | (_| | | |___| | (_) | |_| | (_| |
+ |____/| .__/|_|  |_|_| |_|\__, |  \____|_|\___/ \__,_|\__,_|
+  ____ |_|    _          __|___/                 __________
+ |  _ \  __ _| |_ __ _  |  ___| | _____      __  \ \ \ \ \ \
+ | | | |/ _` | __/ _` | | |_  | |/ _ \ \ /\ / /   \ \ \ \ \ \
+ | |_| | (_| | || (_| | |  _| | | (_) \ V  V /    / / / / / /
+ |____/ \__,_|\__\__,_| |_|   |_|\___/ \_/\_/    /_/_/_/_/_/
+
+Spring Cloud Data Flow Server  (v2.10.2)
+
+2026-06-08 20:38:19.436  WARN 1 --- [           main] s.c.k.f.c.Fabric8ConfigMapPropertySource : Can't read configMap with name: [spring-cloud-dataflow-server] in namespace: [etl-research-phase2]. Ignoring.
+
+io.fabric8.kubernetes.client.KubernetesClientException: Failure executing: GET at: https://10.43.0.1/api/v1/namespaces/etl-research-phase2/configmaps/spring-cloud-dataflow-server. Message: Forbidden!Configured service account doesn't have access. Service account may have been revoked. configmaps "spring-cloud-dataflow-server" is forbidden: User "system:serviceaccount:etl-research-phase2:default" cannot get resource "configmaps" in API group "" in the namespace "etl-research-phase2".
+	at io.fabric8.kubernetes.client.dsl.base.OperationSupport.requestFailure(OperationSupport.java:684)
+	at io.fabric8.kubernetes.client.dsl.base.OperationSupport.requestFailure(OperationSupport.java:664)
+	at io.fabric8.kubernetes.client.dsl.base.OperationSupport.assertResponseCode(OperationSupport.java:613)
+	at io.fabric8.kubernetes.client.dsl.base.OperationSupport.handleResponse(OperationSupport.java:558)
+	at io.fabric8.kubernetes.client.dsl.base.OperationSupport.handleResponse(OperationSupport.java:521)
+	at io.fabric8.kubernetes.client.dsl.base.OperationSupport.handleGet(OperationSupport.java:490)
+	at io.fabric8.kubernetes.client.dsl.base.OperationSupport.handleGet(OperationSupport.java:460)
+	at io.fabric8.kubernetes.client.dsl.base.BaseOperation.handleGet(BaseOperation.java:698)
+	at io.fabric8.kubernetes.client.dsl.base.BaseOperation.getMandatory(BaseOperation.java:184)
+	at io.fabric8.kubernetes.client.dsl.base.BaseOperation.get(BaseOperation.java:151)
+	at io.fabric8.kubernetes.client.dsl.base.BaseOperation.get(BaseOperation.java:83)
+	at org.springframework.cloud.kubernetes.fabric8.config.Fabric8ConfigUtils.getConfigMapData(Fabric8ConfigUtils.java:118)
+	at org.springframework.cloud.kubernetes.fabric8.config.Fabric8ConfigMapPropertySource.getData(Fabric8ConfigMapPropertySource.java:79)
+	at org.springframework.cloud.kubernetes.fabric8.config.Fabric8ConfigMapPropertySource.<init>(Fabric8ConfigMapPropertySource.java:70)
+	at org.springframework.cloud.kubernetes.fabric8.config.Fabric8ConfigMapPropertySourceLocator.getMapPropertySource(Fabric8ConfigMapPropertySourceLocator.java:74)
+	at org.springframework.cloud.kubernetes.commons.config.ConfigMapPropertySourceLocator.getMapPropertySourceForSingleConfigMap(ConfigMapPropertySourceLocator.java:95)
+	at org.springframework.cloud.kubernetes.commons.config.ConfigMapPropertySourceLocator.lambda$locate$0(ConfigMapPropertySourceLocator.java:75)
+	at java.base/java.lang.Iterable.forEach(Unknown Source)
+	at org.springframework.cloud.kubernetes.commons.config.ConfigMapPropertySourceLocator.locate(ConfigMapPropertySourceLocator.java:75)
+	at org.springframework.cloud.bootstrap.config.PropertySourceLocator.locateCollection(PropertySourceLocator.java:51)
+	at org.springframework.cloud.bootstrap.config.PropertySourceLocator.locateCollection(PropertySourceLocator.java:47)
+	at org.springframework.cloud.kubernetes.commons.config.ConfigMapPropertySourceLocator.locateCollection(ConfigMapPropertySourceLocator.java:87)
+	at org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration.initialize(PropertySourceBootstrapConfiguration.java:95)
+	at org.springframework.boot.SpringApplication.applyInitializers(SpringApplication.java:604)
+	at org.springframework.boot.SpringApplication.prepareContext(SpringApplication.java:373)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1303)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1292)
+	at org.springframework.cloud.dataflow.server.single.DataFlowServerApplication.main(DataFlowServerApplication.java:52)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:108)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65)
+
+2026-06-08 20:38:19.449  INFO 1 --- [           main] b.c.PropertySourceBootstrapConfiguration : Located property source: [BootstrapPropertySource {name='bootstrapProperties-configmap.spring-cloud-dataflow-server.etl-research-phase2'}]
+2026-06-08 20:38:19.569  INFO 1 --- [           main] c.c.c.ConfigServicePropertySourceLocator : Fetching config from server at : http://localhost:8888
+2026-06-08 20:38:19.776  INFO 1 --- [           main] c.c.c.ConfigServicePropertySourceLocator : Connect Timeout Exception on Url - http://localhost:8888. Will be trying the next url if available
+2026-06-08 20:38:19.777  WARN 1 --- [           main] c.c.c.ConfigServicePropertySourceLocator : Could not locate PropertySource: I/O error on GET request for "http://localhost:8888/spring-cloud-dataflow-server/kubernetes": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+2026-06-08 20:38:20.005  INFO 1 --- [           main] o.s.c.d.s.s.DataFlowServerApplication    : The following 1 profile is active: "kubernetes"
+2026-06-08 20:38:24.597  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-06-08 20:38:24.601  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Map repositories in DEFAULT mode.
+2026-06-08 20:38:25.468  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 827 ms. Found 1 Map repository interfaces.
+2026-06-08 20:38:27.820  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-06-08 20:38:27.832  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-08 20:38:27.872  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19 ms. Found 0 JPA repository interfaces.
+2026-06-08 20:38:28.721  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-06-08 20:38:28.722  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-08 20:38:28.970  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 248 ms. Found 5 JPA repository interfaces.
+2026-06-08 20:38:29.984  INFO 1 --- [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=f2b67d3a-94fe-3a8e-9237-183fcaeeca1b
+2026-06-08 20:38:30.475  INFO 1 --- [           main] o.s.c.d.s.config.H2ServerConfiguration   : Starting H2 Server with URL: jdbc:h2:tcp://localhost:19092/mem:dataflow
+2026-06-08 20:38:34.907  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9393 (http)
+2026-06-08 20:38:34.952  INFO 1 --- [           main] o.a.coyote.http11.Http11NioProtocol      : Initializing ProtocolHandler ["http-nio-9393"]
+2026-06-08 20:38:34.957  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-08 20:38:34.958  INFO 1 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2026-06-08 20:38:35.319  INFO 1 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-06-08 20:38:36.931  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-08 20:38:37.411  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-08 20:38:37.602  INFO 1 --- [           main] .m.DataFlowFlywayConfigurationCustomizer : Adding vendor specific Flyway callback for H2
+2026-06-08 20:38:37.952  INFO 1 --- [           main] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 8.5.13 by Redgate
+2026-06-08 20:38:37.953  INFO 1 --- [           main] o.f.c.internal.license.VersionPrinter    : See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-06-08 20:38:37.954  INFO 1 --- [           main] o.f.c.internal.license.VersionPrinter    :
+2026-06-08 20:38:38.016  INFO 1 --- [           main] o.f.c.i.database.base.BaseDatabaseType   : Database: jdbc:h2:tcp://localhost:19092/mem:dataflow (H2 2.1)
+2026-06-08 20:38:38.101  WARN 1 --- [           main] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: H2 2.1.214 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.1.210.
+2026-06-08 20:38:38.199  INFO 1 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.060s)
+2026-06-08 20:38:38.226  INFO 1 --- [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "PUBLIC"."flyway_schema_history_dataflow" ...
+2026-06-08 20:38:38.321  INFO 1 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "PUBLIC": << Empty Schema >>
+2026-06-08 20:38:38.394  INFO 1 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "PUBLIC" to version "1 - INITIAL SETUP"
+2026-06-08 20:38:38.548  INFO 1 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "PUBLIC", now at version v1 (execution time 00:00.245s)
+2026-06-08 20:38:38.961  INFO 1 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-08 20:38:39.147  INFO 1 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-06-08 20:38:40.484  INFO 1 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-06-08 20:38:41.113  INFO 1 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2026-06-08 20:38:44.764  INFO 1 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-06-08 20:38:44.865  INFO 1 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-08 20:38:50.498  INFO 1 --- [           main] o.s.b.c.r.s.JobRepositoryFactoryBean     : No database type set, using meta data indicating: H2
+2026-06-08 20:38:50.619  INFO 1 --- [           main] o.s.c.d.s.b.SimpleJobServiceFactoryBean  : No database type set, using meta data indicating: H2
+2026-06-08 20:38:51.517  WARN 1 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-08 20:38:58.940  INFO 1 --- [           main] .s.c.DataFlowControllerAutoConfiguration : Skipper URI [http://phase2-scdf-skipper:7577/api]
+2026-06-08 20:38:59.768  INFO 1 --- [           main] o.a.coyote.http11.Http11NioProtocol      : Starting ProtocolHandler ["http-nio-9393"]
+2026-06-08 20:39:00.502  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9393 (http) with context path ''
+2026-06-08 20:39:00.731  INFO 1 --- [           main] o.s.c.d.s.s.DataFlowServerApplication    : Started DataFlowServerApplication in 55.091 seconds (JVM running for 59.753)
+2026-06-08 20:39:33.529  INFO 1 --- [nio-9393-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'

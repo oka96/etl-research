@@ -1,0 +1,5 @@
+NAME                                      READY   STATUS      RESTARTS   AGE
+phase2-redpanda-69bfdc558b-8ctxf          1/1     Running     0          65m
+phase2-scdf-dataflow-84b4f598ff-kqw4s     1/1     Running     0          4m50s
+phase2-scdf-proof-5szh7                   1/1     Running     0          21s
+phase2-scdf-skipper-7b68fcc97c-r74zk      1/1     Running     0          24m

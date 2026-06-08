@@ -1,0 +1,41 @@
+{
+  "topic": "phase2-scdf-wallet-filtered-1780951348",
+  "value": "{\"event_id\":\"evt-scdf-k8s-001\",\"event_type\":\"wallet.payment.authorized\",\"wallet_id\":\"wallet-scdf-001\",\"amount\":250.5,\"currency\":\"MYR\",\"risk_tier\":\"STANDARD\",\"pipeline\":\"scdf-spring-cloud-stream-k8s-phase2\"}",
+  "headers": [
+    {
+      "key": "contentType",
+      "value": "application/json"
+    },
+    {
+      "key": "spring_json_header_types",
+      "value": "{\"contentType\":\"java.lang.String\"}"
+    }
+  ],
+  "timestamp": 1780951352985,
+  "partition": 0,
+  "offset": 0
+}
+{
+  "topic": "phase2-scdf-wallet-filtered-1780951348",
+  "value": "{\"event_id\":\"evt-scdf-k8s-004\",\"event_type\":\"wallet.payment.authorized\",\"wallet_id\":\"wallet-scdf-004\",\"amount\":1500.0,\"currency\":\"MYR\",\"risk_tier\":\"HIGH\",\"pipeline\":\"scdf-spring-cloud-stream-k8s-phase2\"}",
+  "headers": [
+    {
+      "key": "contentType",
+      "value": "application/json"
+    },
+    {
+      "key": "spring_json_header_types",
+      "value": "{\"contentType\":\"java.lang.String\"}"
+    }
+  ],
+  "timestamp": 1780951352992,
+  "partition": 0,
+  "offset": 1
+}
+Spring Cloud Stream transform log lines:
+2026-06-08T20:42:31.133Z  INFO 22 --- [scdf-wallet-stream] [           main] c.e.e.scdf.ScdfWalletStreamApplication   : Started ScdfWalletStreamApplication in 2.058 seconds (process running for 2.363)
+2026-06-08T20:42:32.981Z  INFO 22 --- [scdf-wallet-stream] [container-0-C-1] c.e.e.scdf.ScdfWalletStreamApplication   : Published enriched wallet event {"event_id":"evt-scdf-k8s-001","event_type":"wallet.payment.authorized","wallet_id":"wallet-scdf-001","amount":250.5,"currency":"MYR","risk_tier":"STANDARD","pipeline":"scdf-spring-cloud-stream-k8s-phase2"}
+2026-06-08T20:42:32.991Z  INFO 22 --- [scdf-wallet-stream] [container-0-C-1] c.e.e.scdf.ScdfWalletStreamApplication   : Filtered event evt-scdf-k8s-002 because event_type=wallet.payment.rejected
+2026-06-08T20:42:32.992Z  INFO 22 --- [scdf-wallet-stream] [container-0-C-1] c.e.e.scdf.ScdfWalletStreamApplication   : Filtered event evt-scdf-k8s-003 because amount=80.0
+2026-06-08T20:42:32.992Z  INFO 22 --- [scdf-wallet-stream] [container-0-C-1] c.e.e.scdf.ScdfWalletStreamApplication   : Published enriched wallet event {"event_id":"evt-scdf-k8s-004","event_type":"wallet.payment.authorized","wallet_id":"wallet-scdf-004","amount":1500.0,"currency":"MYR","risk_tier":"HIGH","pipeline":"scdf-spring-cloud-stream-k8s-phase2"}
+Verified SCDF runtime plus Spring Cloud Stream Kafka source -> JSON filter/enrich -> Kafka sink

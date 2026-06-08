@@ -1,0 +1,83 @@
+TOPIC                                 STATUS
+phase2-scdf-wallet-events-1780951348  OK
+TOPIC                                   STATUS
+phase2-scdf-wallet-filtered-1780951348  OK
+Produced to partition 0 at offset 0 with timestamp 1780951352937.
+Produced to partition 0 at offset 1 with timestamp 1780951352937.
+Produced to partition 0 at offset 2 with timestamp 1780951352937.
+Produced to partition 0 at offset 3 with timestamp 1780951352937.
+Data Flow about:
+{"featureInfo":{"analyticsEnabled":true,"streamsEnabled":true,"tasksEnabled":true,"schedulesEnabled":false,"monitoringDashboardType":"NONE"},"versionInfo":{"implementation":{"name":"spring-cloud-dataflow-server","version":"2.10.2"},"core":{"name":"Spring Cloud Data Flow Core","version":"2.10.2"},"dashboard":{"name":"Spring Cloud Dataflow UI","version":"3.3.2"},"shell":{"name":"Spring Cloud Data Flow Shell","version":"2.10.2","url":"https://repo.maven.apache.org/maven2/org/springframework/cloud/spring-cloud-dataflow-shell/2.10.2/spring-cloud-dataflow-shell-2.10.2.jar"}},"securityInfo":{"authenticationEnabled":false,"authenticated":false,"username":null,"roles":[]},"runtimeEnvironment":{"appDeployer":{"deployerImplementationVersion":"2.9.2","deployerName":"Spring Cloud Skipper Server","deployerSpiVersion":"2.9.2","javaVersion":"11.0.18","platformApiVersion":"","platformClientVersion":"","platformHostVersion":"","platformSpecificInfo":{},"platformType":"Skipper Managed","springBootVersion":"2.7.9","springVersion":"5.3.25"},"taskLaunchers":[]},"monitoringDashboardInfo":{"url":"","refreshInterval":15,"dashboardType":"NONE","source":"default-scdf-source"},"_links":{"self":{"href":"http://phase2-scdf-dataflow:9393/about"}}}
+Spring Cloud Stream app health:
+{"status":"UP","groups":["liveness","readiness"]}
+Source topic: phase2-scdf-wallet-events-1780951348
+{
+  "topic": "phase2-scdf-wallet-events-1780951348",
+  "value": "{\"event_id\":\"evt-scdf-k8s-001\",\"event_type\":\"wallet.payment.authorized\",\"wallet_id\":\"wallet-scdf-001\",\"amount\":250.50,\"currency\":\"MYR\",\"status\":\"authorized\"}",
+  "timestamp": 1780951352937,
+  "partition": 0,
+  "offset": 0
+}
+{
+  "topic": "phase2-scdf-wallet-events-1780951348",
+  "value": "{\"event_id\":\"evt-scdf-k8s-002\",\"event_type\":\"wallet.payment.rejected\",\"wallet_id\":\"wallet-scdf-002\",\"amount\":880.00,\"currency\":\"MYR\",\"status\":\"rejected\"}",
+  "timestamp": 1780951352937,
+  "partition": 0,
+  "offset": 1
+}
+{
+  "topic": "phase2-scdf-wallet-events-1780951348",
+  "value": "{\"event_id\":\"evt-scdf-k8s-003\",\"event_type\":\"wallet.payment.authorized\",\"wallet_id\":\"wallet-scdf-003\",\"amount\":80.00,\"currency\":\"MYR\",\"status\":\"authorized\"}",
+  "timestamp": 1780951352937,
+  "partition": 0,
+  "offset": 2
+}
+{
+  "topic": "phase2-scdf-wallet-events-1780951348",
+  "value": "{\"event_id\":\"evt-scdf-k8s-004\",\"event_type\":\"wallet.payment.authorized\",\"wallet_id\":\"wallet-scdf-004\",\"amount\":1500.00,\"currency\":\"MYR\",\"status\":\"authorized\"}",
+  "timestamp": 1780951352937,
+  "partition": 0,
+  "offset": 3
+}
+Sink topic: phase2-scdf-wallet-filtered-1780951348
+{
+  "topic": "phase2-scdf-wallet-filtered-1780951348",
+  "value": "{\"event_id\":\"evt-scdf-k8s-001\",\"event_type\":\"wallet.payment.authorized\",\"wallet_id\":\"wallet-scdf-001\",\"amount\":250.5,\"currency\":\"MYR\",\"risk_tier\":\"STANDARD\",\"pipeline\":\"scdf-spring-cloud-stream-k8s-phase2\"}",
+  "headers": [
+    {
+      "key": "contentType",
+      "value": "application/json"
+    },
+    {
+      "key": "spring_json_header_types",
+      "value": "{\"contentType\":\"java.lang.String\"}"
+    }
+  ],
+  "timestamp": 1780951352985,
+  "partition": 0,
+  "offset": 0
+}
+{
+  "topic": "phase2-scdf-wallet-filtered-1780951348",
+  "value": "{\"event_id\":\"evt-scdf-k8s-004\",\"event_type\":\"wallet.payment.authorized\",\"wallet_id\":\"wallet-scdf-004\",\"amount\":1500.0,\"currency\":\"MYR\",\"risk_tier\":\"HIGH\",\"pipeline\":\"scdf-spring-cloud-stream-k8s-phase2\"}",
+  "headers": [
+    {
+      "key": "contentType",
+      "value": "application/json"
+    },
+    {
+      "key": "spring_json_header_types",
+      "value": "{\"contentType\":\"java.lang.String\"}"
+    }
+  ],
+  "timestamp": 1780951352992,
+  "partition": 0,
+  "offset": 1
+}
+Spring Cloud Stream transform log lines:
+2026-06-08T20:42:31.133Z  INFO 22 --- [scdf-wallet-stream] [           main] c.e.e.scdf.ScdfWalletStreamApplication   : Started ScdfWalletStreamApplication in 2.058 seconds (process running for 2.363)
+2026-06-08T20:42:32.981Z  INFO 22 --- [scdf-wallet-stream] [container-0-C-1] c.e.e.scdf.ScdfWalletStreamApplication   : Published enriched wallet event {"event_id":"evt-scdf-k8s-001","event_type":"wallet.payment.authorized","wallet_id":"wallet-scdf-001","amount":250.5,"currency":"MYR","risk_tier":"STANDARD","pipeline":"scdf-spring-cloud-stream-k8s-phase2"}
+2026-06-08T20:42:32.991Z  INFO 22 --- [scdf-wallet-stream] [container-0-C-1] c.e.e.scdf.ScdfWalletStreamApplication   : Filtered event evt-scdf-k8s-002 because event_type=wallet.payment.rejected
+2026-06-08T20:42:32.992Z  INFO 22 --- [scdf-wallet-stream] [container-0-C-1] c.e.e.scdf.ScdfWalletStreamApplication   : Filtered event evt-scdf-k8s-003 because amount=80.0
+2026-06-08T20:42:32.992Z  INFO 22 --- [scdf-wallet-stream] [container-0-C-1] c.e.e.scdf.ScdfWalletStreamApplication   : Published enriched wallet event {"event_id":"evt-scdf-k8s-004","event_type":"wallet.payment.authorized","wallet_id":"wallet-scdf-004","amount":1500.0,"currency":"MYR","risk_tier":"HIGH","pipeline":"scdf-spring-cloud-stream-k8s-phase2"}
+Verified SCDF runtime plus Spring Cloud Stream Kafka source -> JSON filter/enrich -> Kafka sink

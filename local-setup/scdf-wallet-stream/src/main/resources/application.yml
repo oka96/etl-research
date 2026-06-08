@@ -1,0 +1,36 @@
+server:
+  port: 18086
+
+spring:
+  application:
+    name: scdf-wallet-stream
+  cloud:
+    function:
+      definition: walletFilterEnrich
+    stream:
+      default-binder: kafka
+      bindings:
+        walletFilterEnrich-in-0:
+          destination: ${SOURCE_TOPIC:phase2-scdf-wallet-events}
+          group: ${GROUP_ID:phase2-scdf-wallet-poc}
+          consumer:
+            max-attempts: 1
+        walletFilterEnrich-out-0:
+          destination: ${SINK_TOPIC:phase2-scdf-wallet-filtered}
+      kafka:
+        binder:
+          brokers: ${KAFKA_BROKERS:phase2-redpanda:9092}
+        bindings:
+          walletFilterEnrich-in-0:
+            consumer:
+              start-offset: earliest
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
