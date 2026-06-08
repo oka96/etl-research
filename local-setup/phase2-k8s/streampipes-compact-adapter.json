@@ -1,0 +1,24 @@
+{
+  "id": "sp:adapterdescription:phase2-streampipes-wallet-simulator",
+  "name": "Phase2 StreamPipes Wallet Simulator",
+  "description": "Phase 2 proof source adapter with runtime transform and Data Lake sink pipeline.",
+  "appId": "org.apache.streampipes.connect.iiot.adapters.simulator.machine",
+  "configuration": [
+    {
+      "wait-time-ms": "1000"
+    },
+    {
+      "selected-simulator-option": "flowrate"
+    }
+  ],
+  "transform": {
+    "rename": {
+      "temperature": "amount"
+    },
+    "measurementUnit": {}
+  },
+  "createOptions": {
+    "persist": true,
+    "start": true
+  }
+}

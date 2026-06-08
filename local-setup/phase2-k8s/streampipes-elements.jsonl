@@ -1,0 +1,7 @@
+{"appId":"org.apache.streampipes.connect.iiot.protocol.stream.kafka","serviceTagPrefix":"ADAPTER","publicElement":true}
+{"appId":"org.apache.streampipes.processors.filters.jvm.numericalfilter","serviceTagPrefix":"DATA_PROCESSOR","publicElement":true}
+{"appId":"org.apache.streampipes.processors.filters.jvm.project","serviceTagPrefix":"DATA_PROCESSOR","publicElement":true}
+{"appId":"org.apache.streampipes.processors.filters.jvm.enrich","serviceTagPrefix":"DATA_PROCESSOR","publicElement":true}
+{"appId":"org.apache.streampipes.sinks.brokers.jvm.kafka","serviceTagPrefix":"DATA_SINK","publicElement":true}
+{"appId":"org.apache.streampipes.connect.iiot.adapters.simulator.machine","serviceTagPrefix":"ADAPTER","publicElement":true}
+{"appId":"org.apache.streampipes.sinks.internal.jvm.datalake","serviceTagPrefix":"DATA_SINK","publicElement":true}

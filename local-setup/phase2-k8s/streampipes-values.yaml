@@ -1,0 +1,57 @@
+# StreamPipes phase-2 Kubernetes proof values.
+# Install from the upstream Apache StreamPipes 0.98.0 chart:
+#   git clone --depth 1 --filter=blob:none --sparse --branch release/0.98.0 https://github.com/apache/streampipes.git /tmp/streampipes-0.98.0
+#   git -C /tmp/streampipes-0.98.0 sparse-checkout set installer/k8s
+#   helm upgrade --install phase2-streampipes /tmp/streampipes-0.98.0/installer/k8s \
+#     --namespace etl-research-phase2 \
+#     --values local-setup/phase2-k8s/streampipes-values.yaml
+#
+# Secret-bearing fields are intentionally empty. The chart generates Kubernetes
+# secrets at install time; those generated values must not be committed.
+deployment: lite
+preferredBroker: nats
+monitoringSystem: false
+pullPolicy: IfNotPresent
+initialDelaySeconds: 20
+periodSeconds: 10
+failureThreshold: 60
+
+streampipes:
+  version: "0.98.0"
+  registry: "apachestreampipes"
+  auth:
+    secretName: "sp-secrets"
+    users:
+      admin:
+        user: "admin@streampipes.apache.org"
+        password: ""
+      service:
+        user: "sp-service-client"
+        secret: ""
+    encryption:
+      passcode: ""
+  core:
+    persistence:
+      storageClassName: "local-path"
+      storageSize: "512Mi"
+  ui:
+    service:
+      type: "ClusterIP"
+  ingress:
+    active: false
+  ingressroute:
+    active: false
+
+external:
+  couchdb:
+    password: ""
+    persistence:
+      storageClassName: "local-path"
+      storageSize: "512Mi"
+  influxdb:
+    password: ""
+    adminToken: ""
+    persistence:
+      storageClassName: "local-path"
+      storageSize: "512Mi"
+      storageSizeV1: "512Mi"

@@ -1,0 +1,18 @@
+Apache StreamPipes phase-2 proof summary
+=========================================
+Runtime: Official Apache StreamPipes 0.98.0 Helm chart rendered from release/0.98.0, installed into namespace etl-research-phase2.
+Pods: backend, ui, couchdb, influxdb, nats, and extensions-all-iiot are Running/Ready.
+Credential handling: Helm values leave secret fields empty; generated Kubernetes secrets were used only inside API commands and were not printed or committed.
+Installed elements: Machine Data Simulator adapter, Data Lake sink, Kafka adapter/sink, numerical filter, projection, and related filter elements.
+Managed source: Phase2 StreamPipes Wallet Simulator
+Managed transform: compact adapter transform renamed runtime field temperature -> amount.
+Managed sink: StreamPipes-created Data Lake persist pipeline.
+Internal queue/broker: StreamPipes NATS deployment selected by preferredBroker=nats.
+Adapter running: True
+Persist pipeline running: True
+Measurement: Phase2 StreamPipes Wallet Simulator
+Measurement count: 70
+Sample query status: OK
+Sample headers: time, amount, density, mass_flow, sensorId, sensor_fault_flags, volume_flow
+Runtime schema fields: sensorId, mass_flow, volume_flow, amount, density, sensor_fault_flags
+Verification: amount exists in schema/sample headers and temperature is absent from persisted headers.

@@ -85,6 +85,22 @@ kubectl logs -n etl-research-phase2 job/phase2-scdf-proof -c run-proof
 
 This proof starts Spring Cloud Data Flow and Skipper pods, then runs a purpose-built Spring Cloud Stream Kafka function app in the proof job. The job creates fresh Kafka-compatible Redpanda topics, writes source wallet events, consumes them through the Spring Cloud Stream Kafka binder, applies JSON filtering/enrichment for authorized payments with amount >= 100, and verifies the filtered Kafka sink records. The image is rebuilt locally from tracked source; generated Maven output and local runtime state are not tracked.
 
+For the Apache StreamPipes phase-2 proof:
+
+```bash
+git clone --depth 1 --filter=blob:none --sparse --branch release/0.98.0 https://github.com/apache/streampipes.git /tmp/streampipes-0.98.0
+git -C /tmp/streampipes-0.98.0 sparse-checkout set installer/k8s
+kubectl create namespace etl-research-phase2 --dry-run=client -o yaml | kubectl apply -f -
+helm template phase2-streampipes /tmp/streampipes-0.98.0/installer/k8s \
+  --namespace etl-research-phase2 \
+  --values local-setup/phase2-k8s/streampipes-values.yaml | kubectl apply -f -
+kubectl wait -n etl-research-phase2 --for=condition=available \
+  deployment/backend deployment/ui deployment/couchdb deployment/influxdb deployment/nats deployment/extensions-all-iiot \
+  --timeout=15m
+```
+
+After the runtime is ready, the proof uses the generated `sp-secrets` Kubernetes secret only inside API calls to install the elements listed in `local-setup/phase2-k8s/streampipes-elements.jsonl`, then posts `local-setup/phase2-k8s/streampipes-compact-adapter.json` to `/api/v2/connect/compact-adapters`. StreamPipes starts a managed source adapter, applies a compact adapter transform that renames `temperature` to `amount`, uses the internal NATS broker runtime, creates a Data Lake persist pipeline, and verifies stored rows through the Data Lake API. Generated passwords/tokens are not printed or tracked.
+
 For the Dinky phase-2 proof:
 
 ```bash

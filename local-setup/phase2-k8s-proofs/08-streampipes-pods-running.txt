@@ -1,0 +1,21 @@
+NAME                                      READY   STATUS      RESTARTS   AGE     IP           NODE     NOMINATED NODE   READINESS GATES
+backend-7c667bfc5b-mnvsm                  1/1     Running     0          9m35s   10.42.0.56   colima   <none>           <none>
+couchdb-7898448d44-mc6ds                  1/1     Running     0          9m35s   10.42.0.57   colima   <none>           <none>
+extensions-all-iiot-69f98d79d5-v4dnx      1/1     Running     0          9m35s   10.42.0.49   colima   <none>           <none>
+influxdb-69768584db-j9jkx                 1/1     Running     0          9m35s   10.42.0.58   colima   <none>           <none>
+nats-7bf85686d7-q4z4z                     1/1     Running     0          9m35s   10.42.0.52   colima   <none>           <none>
+phase2-beam-kch87                         0/1     Completed   0          7h1m    <none>       colima   <none>           <none>
+phase2-dinky-proof-k5zvj                  0/1     Completed   0          73m     10.42.0.28   colima   <none>           <none>
+phase2-flink-fhbpr                        0/1     Completed   0          6h55m   <none>       colima   <none>           <none>
+phase2-kafka-connect-setup-kllkj          0/1     Completed   0          4h10m   <none>       colima   <none>           <none>
+phase2-nifi-setup-772hs                   0/1     Completed   0          124m    <none>       colima   <none>           <none>
+phase2-pulsar-setup-rhm4q                 0/1     Completed   0          6h45m   <none>       colima   <none>           <none>
+phase2-redpanda-69bfdc558b-8ctxf          1/1     Running     0          87m     10.42.0.16   colima   <none>           <none>
+phase2-rocketmq-connect-setup-s9lp7       0/1     Completed   0          3h20m   <none>       colima   <none>           <none>
+phase2-rocketmq-eventbridge-setup-8m88s   0/1     Completed   0          157m    <none>       colima   <none>           <none>
+phase2-rocketmq-streams-setup-24kzk       0/1     Completed   0          3h53m   <none>       colima   <none>           <none>
+phase2-seatunnel-wr29f                    0/1     Completed   0          7h14m   <none>       colima   <none>           <none>
+phase2-spark-z5hdj                        0/1     Completed   0          7h8m    <none>       colima   <none>           <none>
+phase2-storm-9jkp4                        0/1     Completed   0          3h33m   <none>       colima   <none>           <none>
+phase2-streampark-proof-lsvzk             0/1     Completed   0          54m     10.42.0.36   colima   <none>           <none>
+ui-78d587dcbb-bfznz                       1/1     Running     0          9m35s   10.42.0.50   colima   <none>           <none>
