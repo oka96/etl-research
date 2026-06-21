@@ -2,6 +2,8 @@
 
 Per-candidate reports generated from the main research report and existing proof screenshots.
 
+Top combination reports for the e-wallet ETL decision are in [combinations/README.md](combinations/README.md).
+
 | Rank | Candidate | Report |
 |---:|---|---|
 | 1 | Apache Flink | [01-apache-flink.md](01-apache-flink.md) |
